@@ -1,38 +1,59 @@
-package de.adoplix.tools;
+package de.adoplix.internal.tools;
 
-import java.io.*;
-
-import org.xml.sax.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StringReader;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
 
 public class XMLParser {
 
     private StringReader _inputStreamString = null;
     private FileReader _inputStreamFile = null;
+    private XMLObject _xmlObject = null;
 
     public static void main(String[] args) {
         try {
-            String fileName = "/home/dgo01/workspace/uebungen/testxml.xml";
-            XMLParser myTest = new XMLParser();
+            String fileName = "C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/testxml.xml";
             FileReader fReader = new FileReader(fileName);
-            myTest.setInputStream(fReader);
+            XMLObject  xmlObject = new XMLObject();
+            XMLParser myTest = new XMLParser(fReader, xmlObject);
             myTest.parse();
+            
+            for (int i = 0; i < xmlObject.getXMLElementList ().size (); i++) {
+                XMLElement xmlElement = xmlObject.getXMLElement (i);
+                System.out.println("QName: " + xmlElement.getQName ());
+                for (int y = 0; y < xmlElement.getAttributes ().getLength (); y++) {
+                    System.out.println("Element: " + xmlElement.getAttributes ().getQName (y));
+                    System.out.println("Wert:    " + xmlElement.getAttributes ().getValue (y));
+                }
+            }
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public void setInputStream(StringReader inputStreamString) {
+    public XMLParser() {
+      System.out.println("aöjjfsdkjfaöklj");
+    }
+    
+    public XMLParser (StringReader inputStreamString, XMLObject xmlObject) {
         _inputStreamString = inputStreamString;
+        _xmlObject = xmlObject;
     }
-
-    public void setInputStream(FileReader inputStreamFile) {
+    
+    public XMLParser (FileReader inputStreamFile, XMLObject xmlObject) {
         _inputStreamFile = inputStreamFile;
+        _xmlObject = xmlObject;
     }
-
+    
     public void parse() {
         InputSource inputSource = null;
-        XMLDocumentHandler xmlDocumentHandler = new XMLDocumentHandler();
+        XMLDocumentHandler xmlDocumentHandler = new XMLDocumentHandler(_xmlObject);
 
         try {
             // org.xml.sax.Parser
@@ -55,5 +76,6 @@ public class XMLParser {
             System.err.println("SAX Fehler beim parsen: ");
             System.err.println(saxEx);
         }
+        
     }
 }
