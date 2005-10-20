@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+
+<ServerConfiguration>
+	<ServerHandling>
+		<ServerId>ServerId</ServerId>
+		<Pwd>Password</Pwd>
+	</ServerHandling>
+
+	<Communication>
+		<RequestPort>RequestPort</RequestPort>
+		<ServicePort>ServicePort</ServicePort>
+	</Communication>
+
+	<ClientHandling>
+		<MaxClientThreads>MaxNumberOfClientThreads</MaxClientThreads>
+		<TimeoutClientMillis>Milliseconds</TimeoutClientMillis>
+	</ClientHandling>
+
+	<TaskConfiguration>
+		<PathTaskConfiguration>Pfad-XML-Datei</PathTaskConfiguration>
+	</TaskConfiguration>
+
+	<Security>
+		<PwdAdministration>Password</PwdAdministration>
+		<ServerValidation>
+			<ValidServer>
+				<ServerId>ServerId 1</ServerId>
+			</ValidServer>
+			<ValidServer>
+				<ServerId>ServerId 2</ServerId>
+			</ValidServer>
+		</ServerValidation>
+	</Security>
+
+	<ActiveConfiguration>
+		<IntervalGetProjectSec>Seconds</IntervalGetProjectSec>
+	</ActiveConfiguration>
+</ServerConfiguration>
