@@ -2,37 +2,37 @@
 
 <ServerConfiguration>
 	<ServerHandling>
-		<ServerId>ServerId</ServerId>
-		<Pwd>Password</Pwd>
+		<ServerId>i_ServerId</ServerId>
+		<Pwd>i_Password</Pwd>
 	</ServerHandling>
 
 	<Communication>
-		<RequestPort>RequestPort</RequestPort>
-		<ServicePort>ServicePort</ServicePort>
+		<RequestPort>i_RequestPort</RequestPort>
+		<ServicePort>i_ServicePort</ServicePort>
 	</Communication>
 
 	<ClientHandling>
-		<MaxClientThreads>MaxNumberOfClientThreads</MaxClientThreads>
-		<TimeoutClientMillis>Milliseconds</TimeoutClientMillis>
+		<MaxClientThreads>i_MaxNumberOfClientThreads</MaxClientThreads>
+		<TimeoutClientMillis>i_Milliseconds</TimeoutClientMillis>
 	</ClientHandling>
 
 	<TaskConfiguration>
-		<PathTaskConfiguration>Pfad-XML-Datei</PathTaskConfiguration>
+		<PathTaskConfiguration>i_Pfad-XML-Datei</PathTaskConfiguration>
 	</TaskConfiguration>
 
 	<Security>
-		<PwdAdministration>Password</PwdAdministration>
+		<PwdAdministration>i_Password</PwdAdministration>
 		<ServerValidation>
 			<ValidServer>
-				<ServerId>ServerId 1</ServerId>
+				<ServerId>i_ServerId 1</ServerId>
 			</ValidServer>
 			<ValidServer>
-				<ServerId>ServerId 2</ServerId>
+				<ServerId>i_ServerId 2</ServerId>
 			</ValidServer>
 		</ServerValidation>
 	</Security>
 
 	<ActiveConfiguration>
-		<IntervalGetProjectSec>Seconds</IntervalGetProjectSec>
+		<IntervalGetProjectSec>i_Seconds</IntervalGetProjectSec>
 	</ActiveConfiguration>
 </ServerConfiguration>

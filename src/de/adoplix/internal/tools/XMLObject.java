@@ -24,7 +24,7 @@ public class XMLObject {
     }
     
     public void add(XMLElement xmlElement) {
-//        _xmlElementList.add (xmlElement);
+        _xmlElementList.add (xmlElement);
     }
     
     public void setXMLStyle(String xmlStyle) {

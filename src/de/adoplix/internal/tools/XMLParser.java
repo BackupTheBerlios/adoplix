@@ -54,6 +54,7 @@ public class XMLParser {
     public void parse() {
         InputSource inputSource = null;
         XMLDocumentHandler xmlDocumentHandler = new XMLDocumentHandler(_xmlObject);
+        xmlDocumentHandler.setDocumentLocator ();
 
         try {
             // org.xml.sax.Parser
@@ -66,8 +67,9 @@ public class XMLParser {
             } else {
                 inputSource = new InputSource(_inputStreamFile);
             }
-            reader.parse(inputSource);
             reader.setContentHandler(xmlDocumentHandler);
+            reader.parse(inputSource);
+//            reader.setContentHandler(xmlDocumentHandler);
 
         } catch (IOException ioEx) {
             System.err.println("IO Fehler beim parsen: ");
