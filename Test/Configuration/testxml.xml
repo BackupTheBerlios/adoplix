@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='iso-8859-1'?>
 
 <ServerConfiguration>
-	<ServerHandling>
+	<ServerHandling>blubb
 		<ServerId>i_ServerId</ServerId>
 		<Pwd>i_Password</Pwd>
 	</ServerHandling>

@@ -1,17 +1,15 @@
 package de.adoplix.internal.tools;
 
 import org.xml.sax.Attributes;
+import java.util.*;
 
-/**
- *
- * @author  dirk
- */
 public class XMLElement {
     
-    private String _elementQName = null;
-    private String _elementLName = null;
-    private String _elementUri = null;
-    private Attributes _attributeList = null;
+    protected String _elementQName = "";
+    protected String _elementLName = "";
+    protected String _elementUri = "";
+    protected String _elementValue = "";
+    protected Attributes _attributeList = null;
     
     /** Creates a new instance of XMLElement */
     public XMLElement () {
@@ -34,5 +32,21 @@ public class XMLElement {
     
     public Attributes getAttributes() {
         return _attributeList;
+    }
+    
+    public void setQName(String qName) {
+        _elementQName = qName;
+    }
+    
+    public void setLName(String lName) {
+        _elementLName = lName;
+    }
+    
+    public void setValue(String elementValue) {
+        _elementValue = elementValue;
+    }
+    
+    public String getValue () {
+        return _elementValue;
     }
 }

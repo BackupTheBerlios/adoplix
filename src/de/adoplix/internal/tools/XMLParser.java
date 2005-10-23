@@ -23,14 +23,7 @@ public class XMLParser {
             XMLParser myTest = new XMLParser(fReader, xmlObject);
             myTest.parse();
             
-            for (int i = 0; i < xmlObject.getXMLElementList ().size (); i++) {
-                XMLElement xmlElement = xmlObject.getXMLElement (i);
-                System.out.println("QName: " + xmlElement.getQName ());
-                for (int y = 0; y < xmlElement.getAttributes ().getLength (); y++) {
-                    System.out.println("Element: " + xmlElement.getAttributes ().getQName (y));
-                    System.out.println("Wert:    " + xmlElement.getAttributes ().getValue (y));
-                }
-            }
+            xmlObject.rollOut ("");
             
         } catch (Exception ex) {
             ex.printStackTrace();

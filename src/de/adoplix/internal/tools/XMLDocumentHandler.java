@@ -28,6 +28,7 @@ public class XMLDocumentHandler implements ContentHandler {
     }
     
     public void characters (char[] chars, int start, int length) throws SAXException {
+        _xmlObject.setValue(new String (chars, start, length).trim());
         System.out.print (new String (chars, start, length));
     }
     
@@ -36,13 +37,16 @@ public class XMLDocumentHandler implements ContentHandler {
     }
     
     public void startElement (String uri, String localName, String qName, Attributes attributeList) throws SAXException {
-        XMLElement xmlElement = new XMLElement(uri, qName, localName, attributeList);
-        _xmlObject.add(xmlElement);
+//        XMLElement xmlElement = new XMLElement(uri, qName, localName, attributeList);
+        XMLObject xmlObject = new XMLObject(uri, qName, localName, attributeList, _xmlObject);
+        _xmlObject.addXMLSubObject(xmlObject);
+        _xmlObject = xmlObject;
         System.out.print ("</" + qName + ">");
     }
     
     public void endElement (String uri, String localName, String qName) throws SAXException {
         System.out.print ("</" + qName + ">");
+        _xmlObject = _xmlObject.getParent();
     }
     
     public void startPrefixMapping (String a, String b) {
