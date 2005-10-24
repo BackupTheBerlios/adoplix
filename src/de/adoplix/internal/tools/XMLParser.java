@@ -1,3 +1,9 @@
+/**
+ * Dient dem generellen Parsen einfacher XML-Dateien.
+ * Wird vorlaeufig nur fuer das Einlesen der Konfigurationsdateien verwendet.
+ * @author dirkg
+ */
+
 package de.adoplix.internal.tools;
 
 import java.io.FileReader;
@@ -30,30 +36,49 @@ public class XMLParser {
         }
     }
 
+    /**
+     * Dieser Konstruktor macht bisher keinen Sinn
+     */
     public XMLParser() {
       System.out.println("aöjjfsdkjfaöklj");
     }
     
+    /**
+     * Konstruktor fuer die Bearbeitung von Daten, die nicht aus einer
+     * Datei kommen.
+     * @param inputStreamString XML-Daten z.B. von einer Anwendung
+     * @param xmlObject Wird waehrend des Parsens mit Daten gefuellt und spaeter
+     * vom aufrufenden Objekt verwendet
+     */
     public XMLParser (StringReader inputStreamString, XMLObject xmlObject) {
         _inputStreamString = inputStreamString;
         _xmlObject = xmlObject;
     }
     
+    /**
+     * Konstruktor fuer die Bearbeitung von Daten, die aus einer Datei kommen.
+     * @param inputStreamFile XML-Daten aus einer Datei
+     * @param xmlObject Wird waehrend des Parsens mit Daten gefuellt
+     * @see XMLObject
+     */
     public XMLParser (FileReader inputStreamFile, XMLObject xmlObject) {
         _inputStreamFile = inputStreamFile;
         _xmlObject = xmlObject;
     }
     
+    /**
+     * Veranlasst das Parsen der XML-Daten.
+     * Verwendet die Klasse XMLDocumentHandler zur 'Verwaltung' der geparsten
+     * Element.
+     * @see XMLDocumentHandler
+     */
     public void parse() {
         InputSource inputSource = null;
         XMLDocumentHandler xmlDocumentHandler = new XMLDocumentHandler(_xmlObject);
         xmlDocumentHandler.setDocumentLocator ();
 
         try {
-            // org.xml.sax.Parser
-            // XMLReader reader = XMLReaderFactory.createXMLReader("org.xml.sax.Parser");
             XMLReader reader = XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
-            // XMLReader reader = XMLReaderFactory.createXMLReader();
             
             if (_inputStreamString != null) {
                 inputSource = new InputSource(_inputStreamString);
@@ -62,7 +87,6 @@ public class XMLParser {
             }
             reader.setContentHandler(xmlDocumentHandler);
             reader.parse(inputSource);
-//            reader.setContentHandler(xmlDocumentHandler);
 
         } catch (IOException ioEx) {
             System.err.println("IO Fehler beim parsen: ");
@@ -71,6 +95,5 @@ public class XMLParser {
             System.err.println("SAX Fehler beim parsen: ");
             System.err.println(saxEx);
         }
-        
     }
 }

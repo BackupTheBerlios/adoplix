@@ -1,11 +1,25 @@
+/**
+ * Ist die Klasse, die vom Parser verwendet wird, um XML-Inhalte abzulegen.
+ * Hier wird die Hierarchie der XMLObjects aufgebaut.
+ * Der Parser verwendet die von ContentHandler abgeleiteten Methoden als CallBack
+ * Funktionen, die er bei Auftreten eines Ereignisse aufruft.
+ * @author dirkg
+ */
+
 package de.adoplix.internal.tools;
 
 import org.xml.sax.*;
 
 
 public class XMLDocumentHandler implements ContentHandler {
+    
     private XMLObject _xmlObject = null;
     
+    /**
+     * Konstruktor.
+     * @param xmlObject ist das 'oberste' XMLObject in der Hierarchie aller
+     * XMLObjects (innerhalb einer Anwendung)
+     */
     public XMLDocumentHandler(XMLObject xmlObject) {
         super();
         System.out.println("Konstruktor");
@@ -15,11 +29,24 @@ public class XMLDocumentHandler implements ContentHandler {
     public void setDocumentLocator () {}
     public void setDocumentLocator (Locator loc) {}
     
+    /**
+     * Das Parsen des Dokuments beginnt.
+     */
     public void startDocument () {
         System.out.println("startDocument");
     }
+    
+    /**
+     * Parsen ist abgeschlossen.
+     */
     public void endDocument () {}
     
+    /**
+     * Eine Instruktion wurde gefunden.
+     * Instruktionen dienen dem Aufruf von entferntem Code ;-)
+     * @param target Ist die Ziel-Anwendung
+     * @param data Sind die Daten der Zielanwendung (unformatiert).
+     */
     public void processingInstruction (String target, String data) throws SAXException {
         _xmlObject.setTarget(target);
         if (data != null && data.length () > 0) {
@@ -27,6 +54,14 @@ public class XMLDocumentHandler implements ContentHandler {
         }
     }
     
+    /**
+     * Wird vom Parser aufgerufen, wenn eine Zeichenkette gefunden wurde.
+     * Das passiert i.d.R. zwischen startElement() und endElement().
+     * @param chars Ist die gesamte Datei (glaube ich)
+     * @param start Zeigt an, wo die fuer das aktuelle Element interessanten
+     * Character innerhalb des char-Arrays beginnen
+     * @param length Gibt die Anzahl Zeichen ab start an, die interessant sind
+     */
     public void characters (char[] chars, int start, int length) throws SAXException {
         _xmlObject.setValue(new String (chars, start, length).trim());
         System.out.print (new String (chars, start, length));
@@ -36,6 +71,15 @@ public class XMLDocumentHandler implements ContentHandler {
         characters (chars, start, length);
     }
     
+    /**
+     * Ein neues Element wurde gefunden.
+     * Die Methode legt ein neues XMLObject an und fuegt es dem aktuellen
+     * (zuletzt instanziiertes) hinzu.
+     * @param uri ???
+     * @param localName ???
+     * @param qName ???
+     * @param attributeList Liste aller Attribute des gerade gefundenen Elements
+     */
     public void startElement (String uri, String localName, String qName, Attributes attributeList) throws SAXException {
 //        XMLElement xmlElement = new XMLElement(uri, qName, localName, attributeList);
         XMLObject xmlObject = new XMLObject(uri, qName, localName, attributeList, _xmlObject);
@@ -44,6 +88,14 @@ public class XMLDocumentHandler implements ContentHandler {
         System.out.print ("</" + qName + ">");
     }
     
+    /**
+     * Zeigt den Abschluss eines Elements an.
+     * Nun wird das Eltern-Objekt rausgefischt, um die Bearbeitung dort
+     * fortzusetzen.
+     * @param uri ???
+     * @param localName ???
+     * @param qName ???
+     */
     public void endElement (String uri, String localName, String qName) throws SAXException {
         System.out.print ("</" + qName + ">");
         _xmlObject = _xmlObject.getParent();
@@ -58,8 +110,7 @@ public class XMLDocumentHandler implements ContentHandler {
     public void startElement () {
         System.out.println("startElement");
     }
-    public void skippedEntity (String a)
-    {}
+    public void skippedEntity (String a) {}
     public void endElement () {
         System.out.println("endElement");
     }
