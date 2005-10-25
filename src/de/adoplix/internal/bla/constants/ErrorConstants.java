@@ -4,7 +4,7 @@
  * Created on 23. Oktober 2005, 22:41
  */
 
-package de.adoplix.internal.ErrorHandling;
+package de.adoplix.internal.ErrorHandling.constants;
 
 /**
  *
@@ -17,4 +17,5 @@ public abstract class ErrorConstants {
      * 100 - 200
      */
     public static final int CONFIGURATION_FILE_NOT_FOUND = 110;
+    public static final int CONFIGURATION_KEY_NOT_FOUND = 120;
 }
