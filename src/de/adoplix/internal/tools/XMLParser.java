@@ -1,9 +1,3 @@
-/**
- * Dient dem generellen Parsen einfacher XML-Dateien.
- * Wird vorlaeufig nur fuer das Einlesen der Konfigurationsdateien verwendet.
- * @author dirkg
- */
-
 package de.adoplix.internal.tools;
 
 import java.io.FileReader;
@@ -14,7 +8,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-
+/**
+ * Dient dem generellen Parsen einfacher XML-Dateien.
+ * Wird vorlaeufig nur fuer das Einlesen der Konfigurationsdateien verwendet.
+ * @author dirkg
+ */
 public class XMLParser {
 
     private StringReader _inputStreamString = null;

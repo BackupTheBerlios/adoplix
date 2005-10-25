@@ -1,22 +1,21 @@
-/**
- * XMLObject ist ein XML-Element, das weitere Elemente beinhalten kann.
- * Kann ein Kind von einem XMLObject sein.
- * Kann auch Werte annehmen.
- * Die Verschachtelungstiefe ist beliebig.
- * Bsp.: XMLObject A
- *            XMLObject AA
- *            XMLObject AB
- *                  XMLObject ABA
- *            XMLObject AC
- *       XMLObject B
- * @author  dirkg
- */
-
 package de.adoplix.internal.tools;
 
 import java.util.ArrayList;
 import org.xml.sax.Attributes;
 
+/**
+ * XMLObject ist ein XML-Element, das weitere Elemente beinhalten kann. <br>
+ * Kann ein Kind von einem XMLObject sein.  <br>
+ * Kann auch Werte annehmen.                <br>
+ * Die Verschachtelungstiefe ist beliebig.  <br>
+ * Bsp.: XMLObject A                        <br>
+ *            XMLObject AA                  <br>
+ *            XMLObject AB                  <br>
+ *                  XMLObject ABA           <br>
+ *            XMLObject AC                  <br>
+ *       XMLObject B                        <br>
+ * @author  dirkg
+ */
 public class XMLObject extends XMLElement {
     
     private String _xmlStyle = null;

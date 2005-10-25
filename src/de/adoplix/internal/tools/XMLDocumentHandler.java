@@ -1,16 +1,14 @@
-/**
- * Ist die Klasse, die vom Parser verwendet wird, um XML-Inhalte abzulegen.
- * Hier wird die Hierarchie der XMLObjects aufgebaut.
- * Der Parser verwendet die von ContentHandler abgeleiteten Methoden als CallBack
- * Funktionen, die er bei Auftreten eines Ereignisse aufruft.
- * @author dirkg
- */
-
 package de.adoplix.internal.tools;
 
 import org.xml.sax.*;
 
-
+/**
+ * Ist die Klasse, die vom Parser verwendet wird, um XML-Inhalte abzulegen.
+ * Hier wird die Hierarchie der XMLObjects aufgebaut.
+ * Der Parser verwendet die von ContentHandler abgeleiteten Methoden als CallBack
+ * Funktionen, die er bei Auftreten eines Ereignisses aufruft.
+ * @author dirkg
+ */
 public class XMLDocumentHandler implements ContentHandler {
     
     private XMLObject _xmlObject = null;

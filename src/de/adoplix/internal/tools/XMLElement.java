@@ -1,17 +1,13 @@
-/**
- * Hilfsklasse zur Verwaltung von Werten, die zu XMLObject gehoeren.
- * Koennte auch in XMLObject 'integriert' werden.
- * Ist ein Kandidat fuer Aufraeumaktionen.
- * @author dirkg
- */
-
 package de.adoplix.internal.tools;
 
 import org.xml.sax.Attributes;
 import java.util.*;
 
 /**
- * Standardkonstruktor.
+ * Hilfsklasse zur Verwaltung von Werten, die zu XMLObject gehoeren.
+ * Koennte auch in XMLObject 'integriert' werden.
+ * Ist ein Kandidat fuer Aufraeumaktionen.
+ * @author dirkg
  */
 public class XMLElement {
     
