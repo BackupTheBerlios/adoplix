@@ -1,46 +1,44 @@
-/*
- * ServerConfiguration.java
- *
- * Created on 23. Oktober 2005, 22:24
- */
-
 package de.adoplix.internal.server;
 
+import de.adoplix.internal.ErrorHandling.constants.ErrorConstants;
+import de.adoplix.internal.ErrorHandling.constants.ErrorConstantsText_Ger;
+import de.adoplix.internal.ErrorHandling.exceptions.ConfigurationKeyNotFoundException;
 import java.io.*;
 import de.adoplix.internal.tools.*;
-import de.adoplix.internal.ErrorHandling.*;
 
 /**
- *
- * @author  dirk
+ * Veranlasst das Auslesen der Serverkonfiguration und stellt diese
+ * zur Laufzeit zur Verfuegung.
+ * @author dirkg
  */
 public class ServerConfiguration {
-    
     private XMLObject _xmlObject = null;
+    private Configuration conf = null;
     
     /** Creates a new instance of ServerConfiguration */
     public ServerConfiguration (String configurationFile) {
 
         try {
-        FileReader fReader = new FileReader(configurationFile);
-        _xmlObject = new XMLObject();
-        XMLParser serverParser = new XMLParser(fReader, _xmlObject);
+            _xmlObject = new XMLObject();
+            conf = new Configuration(_xmlObject, configurationFile);
         }
-        catch (IOException ioEx) {
-            System.out.println("ERROR " + ErrorConstants.CONFIGURATION_FILE_NOT_FOUND + ": " + ErrorConstantsText_Ger.CONFIGURATION_FILE_NOT_FOUND);
-            System.out.println(ioEx.getMessage ());
+        catch (Exception ex) {
+            System.out.println("ERROR " + "---: " + ex.getMessage ());
         }
     }
     
     public String getServerId() {
         try {
-        XMLObject xmlServerHandling = _xmlObject.getXMLSubObject (ServerConfigurationConstants.SERVER_HANDLING);
-        XMLObject xmlServerId = xmlServerHandling.getXMLSubObject (ServerConfigurationConstants.SERVER_ID);
-        return xmlServerId.getValue();
+            return conf.readParam (ServerConfigurationConstants.SERVER_ID);
         }            
-        catch (Exception ex) {}
+        catch (ConfigurationKeyNotFoundException confEx) {
+            System.out.println(confEx.getMessage ());
+        }
         
-        
+        return null;
+    }
+    
+    public String getPwd() {
         return "";
     }
     
