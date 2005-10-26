@@ -1,9 +1,5 @@
 package de.adoplix.internal.server;
-
-import de.adoplix.internal.ErrorHandling.constants.ErrorConstants;
-import de.adoplix.internal.ErrorHandling.constants.ErrorConstantsText_Ger;
-import de.adoplix.internal.ErrorHandling.exceptions.ConfigurationKeyNotFoundException;
-import java.io.*;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
 import de.adoplix.internal.tools.*;
 
 /**

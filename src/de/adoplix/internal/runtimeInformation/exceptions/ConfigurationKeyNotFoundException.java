@@ -1,7 +1,7 @@
-package de.adoplix.internal.errorHandling.exceptions;
+package de.adoplix.internal.runtimeInformation.exceptions;
 
-import de.adoplix.internal.errorHandling.constants.ErrorConstants;
-import de.adoplix.internal.errorHandling.constants.ErrorConstantsText_Ger;
+import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
+import de.adoplix.internal.runtimeInformation.constants.ErrorConstantsText_Ger;
 import javax.naming.ConfigurationException;
 
 /**

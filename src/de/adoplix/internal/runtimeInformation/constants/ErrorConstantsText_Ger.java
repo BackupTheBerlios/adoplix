@@ -4,7 +4,7 @@
  * Created on 23. Oktober 2005, 22:44
  */
 
-package de.adoplix.internal.errorHandling.constants;
+package de.adoplix.internal.runtimeInformation.constants;
 
 /**
  *
