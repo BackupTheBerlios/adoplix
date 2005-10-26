@@ -17,7 +17,12 @@ import java.io.FileReader;
 public class Configuration {
     private XMLObject _xmlObject = null;
     
-    /** Creates a new instance of Configuration */
+    /** 
+     * Mit diesem Konstruktor wird Configuration veranlasst, eine Datei zu
+     * parsen, und den Inhalt strukturiert in ein XMLObject zu schreiben.
+     * @param xmlObject Ein (hoffentlich) noch leeres XMLObject
+     * @param confFileName Die zu parsende Datei
+     */
     public Configuration (XMLObject xmlObject, String confFileName) {
         _xmlObject = xmlObject;
         
@@ -30,12 +35,20 @@ public class Configuration {
             System.out.println("ERROR " + ErrorConstants.CONFIGURATION_FILE_NOT_FOUND + //
                                ": " + ErrorConstantsText_Ger.CONFIGURATION_FILE_NOT_FOUND);
         }
-        
     }
     
-    public String readParam(String key) throws ConfigurationKeyNotFoundException {
-    // ServerHandling.ServerId
-        
+    /**
+     * Dieser Konstruktor unterstützt das Auslesen von Werten aus einem bereits
+     * existierenden XMLObject.
+     * Wird z.B. benutzt, wenn nach Substrukturen gesucht werden soll, die 
+     * innerhalb eines Zweiges mehrfach vorkommen (Arrays).
+     * @param xmlObject Das Objekt, das die Substruktur beinhaltet.
+     */
+    public Configuration (XMLObject xmlObject) {
+        _xmlObject = xmlObject;
+    }
+    
+    private XMLObject getParentXMLObject (String key) throws ConfigurationKeyNotFoundException {
         /* Beim naechsten Aufruf soll wieder ganz oben begonnen werden.
          * Daher das Original XMLObject sichern.
          */
@@ -53,7 +66,30 @@ public class Configuration {
                 key = key.substring(dotPos + 1);
                 xmlObject = xmlObject.searchXMLSubObject(preKey);
             }
-            xmlObject = xmlObject.getXMLSubObject (key);
+            return xmlObject;
+        }            
+        catch (Exception ex) {
+            throw new ConfigurationKeyNotFoundException();
+        }
+    }
+    
+    private String getKeySuffix(String key) throws ConfigurationKeyNotFoundException {
+        try {
+            while (key.indexOf (".") > -1) {
+                int dotPos = key.indexOf (".");
+                key = key.substring(dotPos + 1);
+            }
+        }            
+        catch (Exception ex) {
+            throw new ConfigurationKeyNotFoundException();
+        }
+        return key;
+    }
+    
+    public String readParam(String key) throws ConfigurationKeyNotFoundException {
+        try {
+            XMLObject xmlObject = getParentXMLObject(key);
+            xmlObject = xmlObject.getXMLSubObject (getKeySuffix(key));
             return xmlObject.getValue ();
         }            
         catch (Exception ex) {
@@ -61,8 +97,17 @@ public class Configuration {
         }
     }
     
-    public ArrayList readParamList(String key) {
-        return new ArrayList();
+    public String readParamFromList(String key, int index) throws ConfigurationKeyNotFoundException {
+        try {
+            XMLObject xmlObject = getParentXMLObject(key);
+            ArrayList xmlObjectList = xmlObject.getXMLSubObjectList (getKeySuffix(key));
+            
+            xmlObject = (XMLObject)xmlObjectList.get (index);
+            return xmlObject.getValue ();
+        }            
+        catch (Exception ex) {
+            throw new ConfigurationKeyNotFoundException();
+        }
     }
     
 }

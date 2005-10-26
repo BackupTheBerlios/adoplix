@@ -33,7 +33,7 @@ public abstract class ServerConfigurationConstants {
             
     public static final String PWD_ADMINISTRATION = SECURITY + ".PwdAdministration";
 
-    public static final String SERVER_VALIDATION = "ServerValidation";
+    public static final String SERVER_VALIDATION = SECURITY + ".ServerValidation";
     public static final String VALID_SERVER = SERVER_VALIDATION + ".ValidServer";
     public static final String VALID_SERVER_ID = VALID_SERVER + ".ValidServerId";
     

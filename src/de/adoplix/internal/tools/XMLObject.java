@@ -107,6 +107,23 @@ public class XMLObject extends XMLElement {
     }
     
     /**
+     * Liefert mehrere Kind-XMLObject aus der internen Liste mit gleichem QNamen.
+     * @param objectName Der Name (qName) des gesuchten Objekts
+     * @return Das n-te Element oder null
+     */
+    public ArrayList getXMLSubObjectList (String objectName) {
+        ArrayList xmlObjectList = new ArrayList();
+        
+        for (int i = 0; i < _xmlObjectList.size (); i++) {
+            XMLObject anObject = getXMLSubObject(i);
+            if (anObject.getQName ().equalsIgnoreCase (objectName)) {
+                xmlObjectList.add (anObject);
+            }
+        }
+        return xmlObjectList;
+    }
+
+    /**
      * Durchsucht rekursiv den gesamten Baum aller XMLObjects nach einem
      * bestimmten XMLObject. Dazu zaehlt auch das auf der obersten Ebene.
      * Referenz fuer die Suche ist der Name (qName).

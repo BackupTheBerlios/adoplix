@@ -35,7 +35,25 @@ public class ServerConfiguration {
     }
     
     public String getPwd() {
-        return "";
+        try {
+            return conf.readParam (ServerConfigurationConstants.SERVER_PWD);
+        }            
+        catch (ConfigurationKeyNotFoundException confEx) {
+            System.out.println(confEx.getMessage ());
+        }
+        
+        return null;
+    }
+    
+    public String getValidServerServerId(int index) {
+        try {
+            return conf.readParamFromList (ServerConfigurationConstants.VALID_SERVER_ID, index);
+        }            
+        catch (ConfigurationKeyNotFoundException confEx) {
+            System.out.println(confEx.getMessage ());
+        }
+        
+        return null;
     }
     
 }
