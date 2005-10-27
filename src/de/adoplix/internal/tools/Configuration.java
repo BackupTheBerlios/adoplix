@@ -15,7 +15,7 @@ import java.io.FileReader;
  * @author dirk
  */
 public class Configuration {
-    private XMLObject _xmlObject = null;
+    private XMLObjectList _xmlObjectList = null;
     
     /** 
      * Mit diesem Konstruktor wird Configuration veranlasst, eine Datei zu
@@ -24,17 +24,17 @@ public class Configuration {
      * @param confFileName Die zu parsende Datei
      */
     public Configuration (XMLObject xmlObject, String confFileName) {
-        _xmlObject = xmlObject;
-        
         try {
             FileReader fReader = new FileReader(confFileName);
-            XMLParser xmlParser = new XMLParser(fReader, _xmlObject);
+            XMLParser xmlParser = new XMLParser(fReader, xmlObject);
             xmlParser.parse();
         }
         catch (FileNotFoundException fnfEx) {
             System.out.println("ERROR " + ErrorConstants.CONFIGURATION_FILE_NOT_FOUND + //
                                ": " + ErrorConstantsText_Ger.CONFIGURATION_FILE_NOT_FOUND);
         }
+
+        _xmlObjectList = new XMLObjectList(xmlObject);
     }
     
     /**
@@ -45,10 +45,10 @@ public class Configuration {
      * @param xmlObject Das Objekt, das die Substruktur beinhaltet.
      */
     public Configuration (XMLObject xmlObject) {
-        _xmlObject = xmlObject;
+        _xmlObjectList = new XMLObjectList(xmlObject);
     }
     
-    private XMLObject getParentXMLObject (String key) throws ConfigurationKeyNotFoundException {
+    private XMLObject getXMLObjectByKey (String key) throws ConfigurationKeyNotFoundException {
         /* Beim naechsten Aufruf soll wieder ganz oben begonnen werden.
          * Daher das Original XMLObject sichern.
          */
@@ -97,13 +97,10 @@ public class Configuration {
         }
     }
     
-    public String readParamFromList(String key, int index) throws ConfigurationKeyNotFoundException {
+    public XMLObjectList getObjectsByKey (String key, int index) throws ConfigurationKeyNotFoundException {
         try {
-            XMLObject xmlObject = getParentXMLObject(key);
-            ArrayList xmlObjectList = xmlObject.getXMLSubObjectList (getKeySuffix(key));
-            
-            xmlObject = (XMLObject)xmlObjectList.get (index);
-            return xmlObject.getValue ();
+            _xmlRetriever.setXMLObjectByKey(key);
+            return _xmlRetriever.getChildren();
         }            
         catch (Exception ex) {
             throw new ConfigurationKeyNotFoundException();

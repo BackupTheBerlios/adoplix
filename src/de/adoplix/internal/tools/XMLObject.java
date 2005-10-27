@@ -1,6 +1,5 @@
 package de.adoplix.internal.tools;
 
-import java.util.ArrayList;
 import org.xml.sax.Attributes;
 
 /**
@@ -19,7 +18,7 @@ import org.xml.sax.Attributes;
 public class XMLObject extends XMLElement {
     
     private String _xmlStyle = null;
-    private ArrayList _xmlObjectList = new ArrayList();
+    private XMLObjectList _xmlObjectList = new XMLObjectList();
     private String _target = null;
     private String _data = null;
     private XMLObject _parentObject = null;
@@ -111,8 +110,8 @@ public class XMLObject extends XMLElement {
      * @param objectName Der Name (qName) des gesuchten Objekts
      * @return Das n-te Element oder null
      */
-    public ArrayList getXMLSubObjectList (String objectName) {
-        ArrayList xmlObjectList = new ArrayList();
+    public XMLObjectList getXMLSubObjectList (String objectName) {
+        XMLObjectList xmlObjectList = new XMLObjectList();
         
         for (int i = 0; i < _xmlObjectList.size (); i++) {
             XMLObject anObject = getXMLSubObject(i);
@@ -145,7 +144,7 @@ public class XMLObject extends XMLElement {
      * Liefert die Liste aller direkt untergeordneten Kind-XML-Objekte.
      * Diese Funktion ist nicht rekursiv.
      */
-    public ArrayList getXMLObjectList() {
+    public XMLObjectList getXMLObjectList() {
         return _xmlObjectList;
     }
     
