@@ -13,9 +13,9 @@ public class AdoplixServer {
             ServerConfiguration serverConf = new ServerConfiguration(fileName);
             String myId = serverConf.getServerId ();
             String serverPwd = serverConf.getPwd ();
-            String validServerId = serverConf.getValidServerServerId (0);
-            validServerId = serverConf.getValidServerServerId (1);
-            validServerId = serverConf.getValidServerServerId (2);
+            String validServerId = serverConf.getValidServerId (0);
+            validServerId = serverConf.getValidServerId (1);
+//            validServerId = serverConf.getValidServerServerId (2);
             System.out.println("MyId ist..." + myId);
         } catch (Exception ex) {
             ex.printStackTrace();
