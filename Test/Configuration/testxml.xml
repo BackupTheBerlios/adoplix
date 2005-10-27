@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='iso-8859-1'?>
 
 <ServerConfiguration>
-	<ServerHandling>blubb
+	<ServerHandling>
 		<ServerId>i_ServerId</ServerId>
 		<Pwd>i_Password</Pwd>
 	</ServerHandling>
@@ -9,6 +9,7 @@
 	<Communication>
 		<RequestPort>i_RequestPort</RequestPort>
 		<ServicePort>i_ServicePort</ServicePort>
+                <ClientPort>i_ClientPort</ClientPort>
 	</Communication>
 
 	<ClientHandling>
