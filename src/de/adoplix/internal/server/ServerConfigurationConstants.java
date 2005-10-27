@@ -33,9 +33,15 @@ public abstract class ServerConfigurationConstants {
             
     public static final String PWD_ADMINISTRATION = SECURITY + ".PwdAdministration";
 
+    /** Security.ServerValidation */
     public static final String SERVER_VALIDATION = SECURITY + ".ServerValidation";
-    public static final String VALID_SERVER = SERVER_VALIDATION + ".ValidServer";
-    public static final String VALID_SERVER_ID = VALID_SERVER + ".ValidServerId";
+    /** Security.ServerValidation.ValidServer */
+    public static final String VALIDATION_VALID_SERVER = SERVER_VALIDATION + ".ValidServer";
+    public static final String VALIDATION_VALID_SERVER_ID = VALIDATION_VALID_SERVER + ".ServerId";
+    public static final String VALID_SERVER = "ValidServer";
+    
+    /** ValidServerId */
+    public static final String VALID_SERVER_ID = "ServerId";
     
     public static final String INTERVAL_GET_PROJECT_SEC = ACTIVE_CONFIGURATION + ".IntervalGetProjectSec";
 }

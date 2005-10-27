@@ -1,6 +1,7 @@
 package de.adoplix.internal.server;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
 import de.adoplix.internal.tools.*;
+import java.util.ArrayList;
 
 /**
  * Veranlasst das Auslesen der Serverkonfiguration und stellt diese
@@ -8,15 +9,43 @@ import de.adoplix.internal.tools.*;
  * @author dirkg
  */
 public class ServerConfiguration {
-    private XMLObject _xmlObject = null;
-    private Configuration conf = null;
+
+    private String _serverId = null;
+    private String _serverPwd = null;
+    private String _pathTaskConfiguration = null;
+    private String _securityPwdAdmin = null;
+    private int _portRequest = 0;
+    private int _portService = 0;
+    private int _portClient = 0;
+    private int _maxClientThreads = 0;
+    private int _timeoutClientMillis = 0;
+    private ArrayList _validServerIds = new ArrayList();
+    
     
     /** Creates a new instance of ServerConfiguration */
     public ServerConfiguration (String configurationFile) {
 
         try {
-            _xmlObject = new XMLObject();
-            conf = new Configuration(_xmlObject, configurationFile);
+            Configuration conf = new Configuration(configurationFile);
+            
+            // ServerId
+            conf.setXMLObjectByKey (ServerConfigurationConstants.SERVER_ID);
+            _serverId = conf.getElementValue ();
+            
+            // ServerPwd
+            conf.setXMLParentObject ();
+            conf.setXMLObjectByKey (ServerConfigurationConstants.SERVER_PWD);
+            _serverPwd = conf.getElementValue ();
+            
+            // ValidServers
+            conf.setXMLRootObject ();
+            conf.setXMLObjectByKey (ServerConfigurationConstants.SERVER_VALIDATION);
+            XMLObjectList xmlObjectList = conf.getChildren (ServerConfigurationConstants.VALID_SERVER);
+            for (int i = 0; i < xmlObjectList.size (); i++) {
+                XMLRetriever retriever = new XMLRetriever(xmlObjectList.get(i));
+                retriever.setXMLObjectByKey(ServerConfigurationConstants.VALID_SERVER_ID);
+                _validServerIds.add(retriever.getElementValue ());
+            }
         }
         catch (Exception ex) {
             System.out.println("ERROR " + "---: " + ex.getMessage ());
@@ -24,36 +53,18 @@ public class ServerConfiguration {
     }
     
     public String getServerId() {
-        try {
-            return conf.readParam (ServerConfigurationConstants.SERVER_ID);
-        }            
-        catch (ConfigurationKeyNotFoundException confEx) {
-            System.out.println(confEx.getMessage ());
-        }
-        
-        return null;
+        return _serverId;
     }
     
     public String getPwd() {
-        try {
-            return conf.readParam (ServerConfigurationConstants.SERVER_PWD);
-        }            
-        catch (ConfigurationKeyNotFoundException confEx) {
-            System.out.println(confEx.getMessage ());
-        }
-        
-        return null;
+        return _serverPwd;
     }
     
-    public String getValidServerServerId(int index) {
-        try {
-            return conf.readParamFromList (ServerConfigurationConstants.VALID_SERVER_ID, index);
-        }            
-        catch (ConfigurationKeyNotFoundException confEx) {
-            System.out.println(confEx.getMessage ());
-        }
-        
-        return null;
+    public int countValidServerIds() {
+        return _validServerIds.size ();
     }
     
+    public String getValidServerId(int index) {
+        return (String)_validServerIds.get(index);
+    }
 }

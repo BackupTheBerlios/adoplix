@@ -12,8 +12,14 @@ import java.io.FileReader;
  * @author dirk
  */
 public class XMLRetriever {
-    private XMLObject _xmlRootObject = null;
-    private XMLObject _xmlObject = null;
+    protected XMLObject _xmlRootObject = null;
+    protected XMLObject _xmlObject = null;
+    
+    /**
+     * Konstruktor, da diese Klasse als Basisklasse verwendet wird.
+     */
+    public XMLRetriever () {
+    }
     
     /** 
      * Standard-Konstruktor.
@@ -25,14 +31,22 @@ public class XMLRetriever {
     }
 
     public XMLObject setXMLRootObject () throws ConfigurationKeyNotFoundException {
-	return _xmlRootObject;
+        _xmlObject = _xmlRootObject;
+	return _xmlObject;
+    }
+    
+    public XMLObject setXMLParentObject () throws ConfigurationKeyNotFoundException {
+        if (_xmlObject != _xmlRootObject) {
+            _xmlObject = _xmlObject.getParent ();
+        }
+        return _xmlObject;
     }
 
     public XMLObject setXMLObjectByKey (String key, boolean startAtRoot)  throws ConfigurationKeyNotFoundException {
 	if (startAtRoot) {
 	     _xmlObject = _xmlRootObject;
 	}
-	return getXMLObjectByKey (key);
+	return setXMLObjectByKey (key);
     }
     
     public XMLObject setXMLObjectByKey (String key) throws ConfigurationKeyNotFoundException {
@@ -44,12 +58,11 @@ public class XMLRetriever {
         try {
             while (key.indexOf (".") > -1) {
                 int dotPos = key.indexOf (".");
-                key = key.substring (0, dotPos);
-                _xmlObject = _xmlObject.searchXMLSubObject(key);
+                String preKey = key.substring (0, dotPos);
+                _xmlObject = _xmlObject.searchXMLSubObject(preKey);
                 key = key.substring(dotPos + 1);
             }
-            key = key.substring(
-            _xmlObject = _xmlObject.getXMLSubObject (getKeySuffix(key));
+            _xmlObject = _xmlObject.getXMLSubObject (key);
             return _xmlObject;
         }            
         catch (Exception ex) {
@@ -67,8 +80,22 @@ public class XMLRetriever {
     /**
      * Liefert die Anzahl aller untergeordneten Objekte abhaengig vom Schluessel
      */
-    public int countChildren() {
-        return _xmlObject.getXMLSubObjectList().size();
+    public int countChildren(String key) {
+        return _xmlObject.getXMLSubObjectList(key).size();
+    }
+
+    /**
+     * Liefert das Kind-Objekt eines Elements zurück.
+     * Dabei wird davon ausgegangen, dass es nur eines gibt.
+     * Gibt's mehrere, wird das erste zurückgeliefert.
+     */
+    public XMLObject getChild ()  throws ConfigurationKeyNotFoundException {
+        try {
+            return getChildren().get(0);
+        }
+        catch (Exception ex) {
+            throw new ConfigurationKeyNotFoundException();
+        }
     }
 
     public XMLObject getChild (int index) throws ConfigurationKeyNotFoundException {
@@ -88,6 +115,14 @@ public class XMLRetriever {
     }
     
     /**
+     * Liefert über einen Schlüssel ein Kind-Objekt. Dabei wird davon ausgegangen,
+     * dass es nur ein Kind gibt. Bei mehreren Kindern wird das erste zurückgeliefert.
+     */
+    public XMLObject getChild (String key) throws ConfigurationKeyNotFoundException {
+        return getChildren (key).get(0);
+    }
+    
+    /**
      * Liefert alle Kinder des aktuellen Objekts mit einem bestimmten Namen
      */
     public XMLObjectList getChildren(String key) throws ConfigurationKeyNotFoundException {
@@ -100,5 +135,14 @@ public class XMLRetriever {
             }
         }
         return filterList;
+    }
+    
+    public String getElementValue() {
+        try {
+            return _xmlObject.getValue ();
+        }
+        catch (Exception ex) {
+            return null;
+        }
     }
 }

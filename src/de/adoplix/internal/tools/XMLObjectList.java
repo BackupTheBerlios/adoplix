@@ -14,24 +14,24 @@ public class XMLObjectList {
         _xmlObjects = new ArrayList();
     }
 
-    public add(XMLObject xmlObject) {
+    public void add(XMLObject xmlObject) {
         _xmlObjects.add(xmlObject);
     }
 
-    public get(int index) {
-        return _xmlObjects.get(index);
+    public XMLObject get(int index) {
+        return (XMLObject)_xmlObjects.get(index);
     }
 
-    public get (String xmlObjectElementName) {
+    public XMLObject get (String key) {
         for (int i = 0; i < size(); i++) {
-            if (get(i).getLName().equalsIgnoreCase(xmlElementName)) {
+            if (get(i).getLName().equalsIgnoreCase(key)) {
                 return get(i);
             }
         }
         return null;
     }
 
-    public size() {
+    public int size() {
         return _xmlObjects.size();
     }
 }

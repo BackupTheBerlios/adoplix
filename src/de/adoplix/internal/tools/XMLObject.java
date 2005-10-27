@@ -123,6 +123,14 @@ public class XMLObject extends XMLElement {
     }
 
     /**
+     * Liefert die Liste aller direkt untergeordneten Kind-XML-Objekte.
+     * Diese Funktion ist nicht rekursiv.
+     */
+    public XMLObjectList getXMLSubObjectList() {
+        return _xmlObjectList;
+    }
+    
+    /**
      * Durchsucht rekursiv den gesamten Baum aller XMLObjects nach einem
      * bestimmten XMLObject. Dazu zaehlt auch das auf der obersten Ebene.
      * Referenz fuer die Suche ist der Name (qName).
@@ -138,14 +146,6 @@ public class XMLObject extends XMLElement {
             }
         }
         return null;
-    }
-    
-    /**
-     * Liefert die Liste aller direkt untergeordneten Kind-XML-Objekte.
-     * Diese Funktion ist nicht rekursiv.
-     */
-    public XMLObjectList getXMLObjectList() {
-        return _xmlObjectList;
     }
     
     /**
