@@ -11,12 +11,18 @@ public class AdoplixServer {
             String fileName = "C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/testxml.xml";
             
             ServerConfiguration serverConf = new ServerConfiguration(fileName);
-            String myId = serverConf.getServerId ();
-            String serverPwd = serverConf.getPwd ();
-            String validServerId = serverConf.getValidServerId (0);
-            validServerId = serverConf.getValidServerId (1);
+            System.out.println( serverConf.getServerId ());
+            System.out.println( serverConf.getPwd ());
+            System.out.println( serverConf.getIntervalGetProjectSec ());
+            System.out.println( serverConf.getMaxClientThreads ());
+            System.out.println( serverConf.getPathTaskConfiguration ());
+            System.out.println( serverConf.getPortExternal ());
+            System.out.println( serverConf.getPortService ());
+            System.out.println( serverConf.getPortLocal ());
+            System.out.println( serverConf.getTimeoutClientMillis ());
+            System.out.println( serverConf.getValidServerId (0));
+            System.out.println( serverConf.getValidServerId (1));
 //            validServerId = serverConf.getValidServerServerId (2);
-            System.out.println("MyId ist..." + myId);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

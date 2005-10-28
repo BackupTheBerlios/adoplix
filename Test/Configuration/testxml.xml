@@ -7,9 +7,9 @@
 	</ServerHandling>
 
 	<Communication>
-		<RequestPort>i_RequestPort</RequestPort>
+		<ExternalPort>i_RequestPort</ExternalPort>
 		<ServicePort>i_ServicePort</ServicePort>
-                <ClientPort>i_ClientPort</ClientPort>
+                <LocalPort>i_ClientPort</LocalPort>
 	</Communication>
 
 	<ClientHandling>

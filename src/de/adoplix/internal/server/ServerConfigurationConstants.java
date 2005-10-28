@@ -12,36 +12,66 @@ package de.adoplix.internal.server;
  */
 public abstract class ServerConfigurationConstants {
 
+    /** ServerHandling <br> Wurzel ohne Wert */
     public static final String SERVER_HANDLING = "ServerHandling";
+    /** Communication <br> Wurzel ohne Wert */
     public static final String SERVER_COMMUNICATION = "Communication";
+    /** ClientHandling <br> Wurzel ohne Wert */
     public static final String CLIENT_HANDLING = "ClientHandling";
+    /** TaskConfiguration <br> Wurzel ohne Wert */
     public static final String TASK_CONFIGURATION = "TaskConfiguration";
+    /** Security <br> Wurzel ohne Wert */
     public static final String SECURITY = "Security";
+    /** ActiveConfiguration <br> Wurzel ohne Wert */
     public static final String ACTIVE_CONFIGURATION = "ActiveConfiguration";
 
-    public static final String SERVER_ID = SERVER_HANDLING + ".ServerId";
-    public static final String SERVER_PWD = SERVER_HANDLING + ".Pwd";
+    /** ServerHandling.ServerId <br> Eigene lokale ID */
+    public static final String X_SERVER_ID = SERVER_HANDLING + ".ServerId";
+    /** ServerHandling.Pwd <br> Passwort für ??? */
+    public static final String X_SERVER_PWD = SERVER_HANDLING + ".Pwd";
     
-    public static final String REQUEST_PORT = SERVER_COMMUNICATION + ".RequestPort";
-    public static final String SERVICE_PORT = SERVER_COMMUNICATION + ".ServicePort";
-    public static final String CLIENT_PORT = SERVER_COMMUNICATION + ".ClientPort";
+    /** Communication.ExternalPort <br> Port für Kommunikation nach aussen */
+    public static final String X_EXTERNAL_PORT = SERVER_COMMUNICATION + ".ExternalPort";
+    /** ExternalPort <br> Port für Kommunikation nach aussen */
+    public static final String EXTERNAL_PORT = SERVER_COMMUNICATION + "ExternalPort";
+    /** Communication.ServicePort <br> Port für Administration */
+    public static final String X_SERVICE_PORT = SERVER_COMMUNICATION + ".ServicePort";
+    /** ServicePort <br> Port für Administration */
+    public static final String SERVICE_PORT = SERVER_COMMUNICATION + "ServicePort";
+    /** Communication.LocalPort <br> Port für Kommunikation mit lokalen Clients */
+    public static final String X_LOCAL_PORT = SERVER_COMMUNICATION + ".LocalPort";
+    /** LocalPort <br> Port für Kommunikation mit lokalen Clients */
+    public static final String LOCAL_PORT = SERVER_COMMUNICATION + "LocalPort";
     
-    public static final String MAX_CLIENT_THREADS = CLIENT_HANDLING + ".MaxClientThreads";
-    public static final String TIMEOUT_CLIENT_MILLIS = CLIENT_HANDLING + ".TimeoutClientMillis";
+    /** ClientHandling.MaxClientThreads <br> Max. Anzahl externer Client-Threads insgesamt */
+    public static final String X_MAX_CLIENT_THREADS = CLIENT_HANDLING + ".MaxClientThreads";
+    /** MaxClientThreads <br> Max. Anzahl externer Client-Threads insgesamt */
+    public static final String MAX_CLIENT_THREADS = CLIENT_HANDLING + "MaxClientThreads";
+    /** ClientHandling.TimeoutClientMillis <br>
+     * Adapter unterbricht nach Ablauf Kommunikation zum Client */
+    public static final String X_TIMEOUT_CLIENT_MILLIS = CLIENT_HANDLING + ".TimeoutClientMillis";
+    /** TimeoutClientMillis <br>
+     * Adapter unterbricht nach Ablauf Kommunikation zum Client */
+    public static final String TIMEOUT_CLIENT_MILLIS = CLIENT_HANDLING + "TimeoutClientMillis";
+     
+    /** TaskConfiguration.PathTaskConfiguration <br> Pfad der XML-Datei für Tasks */
+    public static final String X_PATH_TASK_CONFIGURATION = TASK_CONFIGURATION + ".PathTaskConfiguration";      
             
-    public static final String PATH_TASK_CONFIGURATION = TASK_CONFIGURATION + ".PathTaskConfiguration";      
-            
-    public static final String PWD_ADMINISTRATION = SECURITY + ".PwdAdministration";
+    /** Security.PwdAdministration <br> Passwort für Service-Schnittstelle */
+    public static final String X_PWD_ADMINISTRATION = SECURITY + ".PwdAdministration";
 
-    /** Security.ServerValidation */
-    public static final String SERVER_VALIDATION = SECURITY + ".ServerValidation";
-    /** Security.ServerValidation.ValidServer */
-    public static final String VALIDATION_VALID_SERVER = SERVER_VALIDATION + ".ValidServer";
-    public static final String VALIDATION_VALID_SERVER_ID = VALIDATION_VALID_SERVER + ".ServerId";
+    /** Security.ServerValidation <br> Element ohne Wert */
+    public static final String X_SERVER_VALIDATION = SECURITY + ".ServerValidation";
+    /** Security.ServerValidation.ValidServer <br> Element ohne Wert */
+    public static final String X_VALIDATION_VALID_SERVER = X_SERVER_VALIDATION + ".ValidServer";
+    /** Security.ServerValidation.ValidServer.ServerId <br> Id eines berechtigten Rechners */
+    public static final String X_VALIDATION_VALID_SERVER_ID = X_VALIDATION_VALID_SERVER + ".ServerId";
+    /** ValidServer <br> Ohne Pfad aber mit Wert */
     public static final String VALID_SERVER = "ValidServer";
-    
-    /** ValidServerId */
+    /** ServerId  <br> Ohne Pfad aber mit Wert <br> ein validierter Rechner */
     public static final String VALID_SERVER_ID = "ServerId";
     
-    public static final String INTERVAL_GET_PROJECT_SEC = ACTIVE_CONFIGURATION + ".IntervalGetProjectSec";
+    /** ActiveConfiguration.IntervalGetProjectSec <br> Abstand, in dem Konfiguration gelesen wird. <br>
+     * Future Use */
+    public static final String X_INTERVAL_GET_PROJECT_SEC = ACTIVE_CONFIGURATION + ".IntervalGetProjectSec";
 }
