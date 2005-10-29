@@ -3,6 +3,8 @@ package de.adoplix.internal.tools;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstantsText_Ger;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,8 +49,16 @@ public class Configuration extends XMLRetriever {
      * innerhalb eines Zweiges mehrfach vorkommen (Arrays).
      * @param xmlObject Das Objekt, das die Substruktur beinhaltet.
      */
-    public Configuration (XMLObject xmlObject) {
+    public Configuration (XMLObject xmlObject){
         super(xmlObject);
     }
     
+    public int toInt (String intValue) throws ConfigurationTypeException {
+    	try {
+    		return Integer.parseInt(intValue);
+    	}
+    	catch(Exception ex) {
+    		throw new ConfigurationTypeException();
+    	}
+    }
 }

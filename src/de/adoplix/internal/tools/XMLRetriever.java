@@ -1,11 +1,6 @@
 package de.adoplix.internal.tools;
 
-import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
-import de.adoplix.internal.runtimeInformation.constants.ErrorConstantsText_Ger;
-import java.util.ArrayList;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 
 /**
  * Bietet den gezielten Zugriff auf Elemente, Attribute, etc. einer XML-Struktur.
@@ -41,6 +36,11 @@ public class XMLRetriever {
         }
         return _xmlObject;
     }
+    
+    public XMLObject setXMLObject(XMLObject selectedXMLObject) throws ConfigurationKeyNotFoundException {
+    	_xmlObject = selectedXMLObject;
+    	return _xmlObject;
+    }
 
     public XMLObject setXMLObjectByKey (String key, boolean startAtRoot)  throws ConfigurationKeyNotFoundException {
 	if (startAtRoot) {
@@ -62,7 +62,7 @@ public class XMLRetriever {
                 _xmlObject = _xmlObject.searchXMLSubObject(preKey);
                 key = key.substring(dotPos + 1);
             }
-            _xmlObject = _xmlObject.getXMLSubObject (key);
+            _xmlObject = _xmlObject.searchXMLSubObject(key);
             return _xmlObject;
         }            
         catch (Exception ex) {
@@ -93,8 +93,11 @@ public class XMLRetriever {
         try {
             return getChildren().get(0);
         }
+        catch (ConfigurationKeyNotFoundException confEx) {
+        	throw new ConfigurationKeyNotFoundException("Kein Kind-Element konnte gefunden werden: " + _xmlObject.getLName());
+        }
         catch (Exception ex) {
-            throw new ConfigurationKeyNotFoundException();
+            throw new ConfigurationKeyNotFoundException(ex.getMessage());
         }
     }
 
@@ -103,7 +106,7 @@ public class XMLRetriever {
             return getChildren().get(index);
         }
         catch (Exception ex) {
-            throw new ConfigurationKeyNotFoundException();
+            throw new ConfigurationKeyNotFoundException("Kind-Element konnte in interner Liste nicht gefunden werden: Index=" + index);
         }
     }
 
@@ -137,12 +140,12 @@ public class XMLRetriever {
         return filterList;
     }
     
-    public String getElementValue() {
+    public String getElementValue() throws ConfigurationKeyNotFoundException {
         try {
             return _xmlObject.getValue ();
         }
         catch (Exception ex) {
-            return null;
+            throw new ConfigurationKeyNotFoundException("ElementValue ist <null>");
         }
     }
 }

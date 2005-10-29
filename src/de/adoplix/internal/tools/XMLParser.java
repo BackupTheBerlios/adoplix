@@ -27,7 +27,7 @@ public class XMLParser {
             XMLParser myTest = new XMLParser(fReader, xmlObject);
             myTest.parse();
             
-            xmlObject.rollOut ("");
+//            xmlObject.rollOut ("");
             
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -1,5 +1,6 @@
 package de.adoplix.internal.server;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import de.adoplix.internal.tools.*;
 import java.util.ArrayList;
 
@@ -40,33 +41,25 @@ public class ServerConfiguration {
             
             // Ports
             conf.setXMLRootObject ();
-            conf.setXMLObjectByKey(ServerConfigurationConstants.X_EXTERNAL_PORT);
-            _portExternal = Integer.parseInt(conf.getElementValue ());
-            conf.setXMLParentObject ();
-            conf.getChild (ServerConfigurationConstants.SERVICE_PORT);
-            _portService = Integer.parseInt(conf.getElementValue ());
-            conf.setXMLParentObject ();
-            conf.getChild (ServerConfigurationConstants.LOCAL_PORT);
-            _portLocal = Integer.parseInt(conf.getElementValue ());
+            conf.setXMLObjectByKey(ServerConfigurationConstants.SERVER_COMMUNICATION);
+            _portExternal = conf.toInt(conf.getChild (ServerConfigurationConstants.EXTERNAL_PORT).getValue());
+            _portService = conf.toInt(conf.getChild (ServerConfigurationConstants.SERVICE_PORT).getValue());
+            _portLocal = conf.toInt(conf.getChild (ServerConfigurationConstants.LOCAL_PORT).getValue());
             
             // MaxClientThreads
             conf.setXMLRootObject ();
-            conf.setXMLObjectByKey (ServerConfigurationConstants.X_MAX_CLIENT_THREADS);
-            _maxClientThreads = Integer.parseInt (conf.getElementValue ());
+            conf.setXMLObjectByKey (ServerConfigurationConstants.CLIENT_HANDLING);
+            _maxClientThreads = conf.toInt (conf.getChild (ServerConfigurationConstants.MAX_CLIENT_THREADS).getValue());
             // TimeoutClientMillis
-            conf.setXMLParentObject ();
-            conf.getChild (ServerConfigurationConstants.TIMEOUT_CLIENT_MILLIS);
-            _timeoutClientMillis = Integer.parseInt (conf.getElementValue ());
+            _timeoutClientMillis = conf.toInt (conf.getChild (ServerConfigurationConstants.TIMEOUT_CLIENT_MILLIS).getValue());
             
             // PathTaskConfiguration
             conf.setXMLRootObject ();
-            conf.setXMLObjectByKey (ServerConfigurationConstants.X_PATH_TASK_CONFIGURATION);
-            _pathTaskConfiguration = conf.getElementValue ();
+            _pathTaskConfiguration = conf.setXMLObjectByKey (ServerConfigurationConstants.X_PATH_TASK_CONFIGURATION).getValue();
             
             // Active Configuration
             conf.setXMLRootObject ();
-            conf.setXMLObjectByKey (ServerConfigurationConstants.X_INTERVAL_GET_PROJECT_SEC);
-            _intervalGetProjectSec = Integer.parseInt (conf.getElementValue ());
+            _intervalGetProjectSec = conf.toInt (conf.setXMLObjectByKey (ServerConfigurationConstants.X_INTERVAL_GET_PROJECT_SEC).getValue());
             
             // ValidServers
             conf.setXMLRootObject ();
@@ -77,6 +70,12 @@ public class ServerConfiguration {
                 retriever.setXMLObjectByKey(ServerConfigurationConstants.VALID_SERVER_ID);
                 _validServerIds.add(retriever.getElementValue ());
             }
+        }
+        catch (ConfigurationKeyNotFoundException confEx){
+        	System.out.println(confEx.getMessage());
+        }
+        catch (ConfigurationTypeException typeEx) {
+        	System.out.println(typeEx.getMessage());
         }
         catch (Exception ex) {
             System.out.println("ERROR " + "---: " + ex.getMessage ());

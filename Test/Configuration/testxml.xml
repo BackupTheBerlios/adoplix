@@ -7,14 +7,14 @@
 	</ServerHandling>
 
 	<Communication>
-		<ExternalPort>i_RequestPort</ExternalPort>
-		<ServicePort>i_ServicePort</ServicePort>
-                <LocalPort>i_ClientPort</LocalPort>
+		<ExternalPort>2001</ExternalPort>
+		<ServicePort>2002</ServicePort>
+        <LocalPort>2003</LocalPort>
 	</Communication>
 
 	<ClientHandling>
-		<MaxClientThreads>i_MaxNumberOfClientThreads</MaxClientThreads>
-		<TimeoutClientMillis>i_Milliseconds</TimeoutClientMillis>
+		<MaxClientThreads>200</MaxClientThreads>
+		<TimeoutClientMillis>50000</TimeoutClientMillis>
 	</ClientHandling>
 
 	<TaskConfiguration>
@@ -34,6 +34,6 @@
 	</Security>
 
 	<ActiveConfiguration>
-		<IntervalGetProjectSec>i_Seconds</IntervalGetProjectSec>
+		<IntervalGetProjectSec>80000</IntervalGetProjectSec>
 	</ActiveConfiguration>
 </ServerConfiguration>

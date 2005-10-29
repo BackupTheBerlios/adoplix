@@ -18,4 +18,5 @@ public abstract class ErrorConstants {
      */
     public static final int CONFIGURATION_FILE_NOT_FOUND = 110;
     public static final int CONFIGURATION_KEY_NOT_FOUND = 120;
+    public static final int CONFIGURATION_TYPE_FALSE = 122;
 }
