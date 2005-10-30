@@ -1,13 +1,12 @@
 package de.adoplix.internal.tools;
 
-import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
-import de.adoplix.internal.runtimeInformation.constants.ErrorConstantsText_Ger;
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
+import de.adoplix.internal.runtimeInformation.constants.ErrorConstantsText_Ger;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 
 /**
  * Auslesen von Konfigurationsdaten mit Hilfe des XMLObject. <br>

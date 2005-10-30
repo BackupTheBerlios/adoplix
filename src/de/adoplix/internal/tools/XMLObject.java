@@ -17,10 +17,10 @@ import org.xml.sax.Attributes;
  */
 public class XMLObject extends XMLElement {
     
-    private String _xmlStyle = null;
+//    private String _xmlStyle = null;
     private XMLObjectList _xmlObjectList = new XMLObjectList();
-    private String _target = null;
-    private String _data = null;
+//    private String _target = null;
+//    private String _data = null;
     private XMLObject _parentObject = null;
     
     /** Creates a new instance of XMLObject */
@@ -46,7 +46,7 @@ public class XMLObject extends XMLElement {
      * @param xmlStyle Der Style ???
      */
     public void setXMLStyle(String xmlStyle) {
-        _xmlStyle = xmlStyle;
+//        _xmlStyle = xmlStyle;
     }
     
     /**
@@ -54,7 +54,7 @@ public class XMLObject extends XMLElement {
      * @param target Ziel
      */
     public void setTarget(String target) {
-        _target = target;
+//        _target = target;
     }
     
     /**
@@ -65,7 +65,7 @@ public class XMLObject extends XMLElement {
      * werden
      */
     public void setData (String data) {
-        _data = data;
+//        _data = data;
     }
     
     /**
@@ -78,7 +78,6 @@ public class XMLObject extends XMLElement {
 
     /**
      * Liefert ein Kind-XMLObject aus der internen Liste.
-     * Wird vermutlich nicht von 'aussen' benoetigt.
      * @param index Ist der Index innerhalb der Liste
      * @return Das n-te Element oder null
      */

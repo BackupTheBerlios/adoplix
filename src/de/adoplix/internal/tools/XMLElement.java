@@ -1,7 +1,6 @@
 package de.adoplix.internal.tools;
 
 import org.xml.sax.Attributes;
-import java.util.*;
 
 /**
  * Hilfsklasse zur Verwaltung von Werten, die zu XMLObject gehoeren.

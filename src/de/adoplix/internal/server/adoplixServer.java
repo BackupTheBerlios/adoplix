@@ -3,8 +3,8 @@ package de.adoplix.internal.server;
 import de.adoplix.internal.tasks.TaskConfiguration;
 
 /**
- *
- * @author dirk
+ * This class implements the central server functionality
+ * @author dirkg
  */
 public class AdoplixServer {
 	
@@ -39,10 +39,10 @@ public class AdoplixServer {
     	_serverConfiguration = new ServerConfiguration(_pathConfiguration);
         timeToReadConfiguration = System.currentTimeMillis() - timeToReadConfiguration;
         System.out.println(timeToReadConfiguration);
+        
     	taskConfiguration = _serverConfiguration.getPathTaskConfiguration();
     	if (null != taskConfiguration &&
     			taskConfiguration.length() > 0) {
-    		
     		_taskConfiguration = new TaskConfiguration(taskConfiguration);
     	}
 
