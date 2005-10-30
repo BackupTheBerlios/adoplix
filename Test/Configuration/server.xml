@@ -18,7 +18,7 @@
 	</ClientHandling>
 
 	<TaskConfiguration>
-		<PathTaskConfiguration>i_Pfad-XML-Datei</PathTaskConfiguration>
+		<PathTaskConfiguration>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/tasks.xml</PathTaskConfiguration>
 	</TaskConfiguration>
 
 	<Security>

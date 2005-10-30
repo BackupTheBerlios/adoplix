@@ -1,195 +1,198 @@
-<?xml version=â€™1.0â€™ encoding=â€™iso-8859-1â€™?>
-
+<?xml version='1.0' encoding='iso-8859-1'?>
 <TaskConfiguration>
+
 	<TaskList>
-	    <TaskTypes0>
-	        <-- Shutdown -->
-			<LocalTaskId>0.0</LocalTaskId>
-			<LocalTaskId>0.11</LocalTaskId>
-			<LocalTaskId>1.0</LocalTaskId>
-			<LocalTaskId>1.11</LocalTaskId>
-			<LocalTaskId>2.0</LocalTaskId>
-			<LocalTaskId>2.11</LocalTaskId>
-		</TaskTypes0>
-	    <TaskTypes1>
-			<LocalTaskId>2.50</LocalTaskId>
-			<LocalTaskId>2.51</LocalTaskId>
-			<LocalTaskId>2.52</LocalTaskId>
-			<LocalTaskId>2.53</LocalTaskId>
-			<LocalTaskId>2.54</LocalTaskId>
-			<LocalTaskId>2.55</LocalTaskId>
-		</TaskTypes1>
+	    <!-- Tasks used as Service when Request comes in -->
+	    <TaskTypesService>
+	        <!-- Shutdown -->
+			<LocalTaskId>S0.0</LocalTaskId>
+			<LocalTaskId>S0.11</LocalTaskId>
+			<LocalTaskId>S1.0</LocalTaskId>
+			<LocalTaskId>S1.11</LocalTaskId>
+			<!-- Retrieves count of people -->
+			<LocalTaskId>S2.0</LocalTaskId>
+			<LocalTaskId>S2.11</LocalTaskId>
+		</TaskTypesService>
+		<!-- Tasks used as Client by RequestAdapters -->
+	    <TaskTypesClient>
+	        <!-- Call countPeople() -->
+			<LocalTaskId>C2.50</LocalTaskId>
+			<LocalTaskId>C2.51</LocalTaskId>
+			<LocalTaskId>C2.52</LocalTaskId>
+			<LocalTaskId>C2.53</LocalTaskId>
+			<LocalTaskId>C2.54</LocalTaskId>
+			<LocalTaskId>C2.55</LocalTaskId>
+		</TaskTypesClient>
 	</TaskList>
 
-
 	<TaskDetails>
-		<0.0>
-			<TaskName>Shutdown</TaskName>
+		<S0.0>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</0.0>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</S0.0>
 	
-		<0.11>
+		<S0.11>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</0.11>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</S0.11>
 	
-		<1.0>
+		<S1.0>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</1.0>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</S1.0>
 	
-		<1.11>
+		<S1.11>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</1.11>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</S1.11>
 	
-		<2.0>
+		<S2.0>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.0>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</S2.0>
 	
-		<2.11>
+		<S2.11>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.11>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</S2.11>
 	
-		<2.50>
+		<C2.50>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.50>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</C2.50>
 	
-		<2.51>
+		<C2.51>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.51>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</C2.51>
 	
-		<2.52>
+		<C2.52>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.52>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</C2.52>
 	
-		<2.53>
+		<C2.53>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.53>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</C2.53>
 	
-		<2.54>
+		<C2.54>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.54>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</C2.54>
 	
-		<2.55>
+		<C2.55>
 			<TaskName>Shutdown</TaskName>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
-			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</ LocalAdapterClass>
+			<LocalAdapterClass>de.adoplix.adapter.MyAdapter</LocalAdapterClass>
 			<AcknInitiator>0</AcknInitiator>
 			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
 			<PathAdapterConfig>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/adapter1.xml</PathAdapterConfig>
-			<DefaultData>[CDATA[
-			langsam wird's ja. Ob > oder < - hier sollte @lles klaÃŸpen...
-			]]</DefaultData>
-		</2.55>
+			<DefaultData><![CDATA[
+			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
+			]]></DefaultData>
+		</C2.55>
 	
 	</TaskDetails>
 
