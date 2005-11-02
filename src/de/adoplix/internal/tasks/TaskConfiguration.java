@@ -1,5 +1,6 @@
 package de.adoplix.internal.tasks;
 import java.util.ArrayList;
+import java.util.Map;
 
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
 import de.adoplix.internal.tools.Configuration;
@@ -13,8 +14,7 @@ import de.adoplix.internal.tools.XMLObjectList;
  */
 public class TaskConfiguration {
 
-    private ArrayList _taskList = new ArrayList();
-    
+    private Map    _taskList = null;
     private String _taskAlias = "";
     private int _taskType = 0;
     private String _remoteServerAddress = "";
@@ -29,6 +29,7 @@ public class TaskConfiguration {
     
     /** Creates a new instance of TaskConfiguration */
     public TaskConfiguration (String configurationFile) {
+        ArrayList taskArray = new ArrayList();
 
         try {
             Configuration conf = new Configuration(configurationFile);
@@ -38,7 +39,7 @@ public class TaskConfiguration {
             conf.setXMLObjectByKey(TaskConfigurationConstants.X_TASK_TYPES_SERVICE);
             XMLObjectList xmlObjectList = conf.getChildren ();
             for (int i = 0; i < xmlObjectList.size (); i++) {
-                _taskList.add(xmlObjectList.get(i));
+                taskArray.add(xmlObjectList.get(i));
             }
             
             // Typ Client
@@ -46,24 +47,29 @@ public class TaskConfiguration {
             conf.setXMLObjectByKey(TaskConfigurationConstants.TASK_TYPES_CLIENT);
             xmlObjectList = conf.getChildren ();
             for (int i = 0; i < xmlObjectList.size (); i++) {
-                _taskList.add(xmlObjectList.get(i));
+                taskArray.add(xmlObjectList.get(i));
             }
             
             // Jetzt für jede Task die Details
             conf.setXMLRootObject();
             conf.setXMLObjectByKey(TaskConfigurationConstants.TASK_DETAILS);
-            for (int i = 0; i < _taskList.size(); i++) {
+            for (int i = 0; i < taskArray.size(); i++) {
+                Task task = new Task();
                 conf.setXMLParentObject();
-                conf.setXMLObjectByKey(((XMLObject)_taskList.get(i)).getValue());
-                _taskAlias = conf.getChild(TaskConfigurationConstants.TASK_ALIAS).getValue();
-                _taskType = conf.toInt(conf.getChild(TaskConfigurationConstants.TASK_TYPE).getValue());
-                _remoteServerAddress = conf.getChild(TaskConfigurationConstants.REMOTE_SERVER_ADDRESS).getValue();
-                _remoteTaskId = conf.getChild(TaskConfigurationConstants.REMOTE_TASK_ID).getValue();
-                _localAdapterClass = conf.getChild(TaskConfigurationConstants.LOCAL_ADAPTER_CLASS).getValue();
-                _acknInitiator = conf.toInt(conf.getChild(TaskConfigurationConstants.ACKN_INITIATOR).getValue());
-                _timeOutAcknMillis = conf.toInt(conf.getChild(TaskConfigurationConstants.TIME_OUT_ACKN_MILLIS).getValue());
-                _pathAdapterConfig = conf.getChild(TaskConfigurationConstants.PATH_ADAPTER_CONFIG).getValue();
-                _defaultData = conf.getChild(TaskConfigurationConstants.DEFAULT_DATA).getValue();
+                String taskId = ((XMLObject)taskArray.get(i)).getValue();
+                conf.setXMLObjectByKey(taskId);
+                task.setLocalTaskId(taskId);
+                task.setTaskAlias(conf.getChild(TaskConfigurationConstants.TASK_ALIAS).getValue());
+                task.setTaskType(conf.toInt(conf.getChild(TaskConfigurationConstants.TASK_TYPE).getValue()));
+                task.setRemoteServerAddress(conf.getChild(TaskConfigurationConstants.REMOTE_SERVER_ADDRESS).getValue());
+                task.setRemoteTaskId(conf.getChild(TaskConfigurationConstants.REMOTE_TASK_ID).getValue());
+                task.setLocalAdapterClass(conf.getChild(TaskConfigurationConstants.LOCAL_ADAPTER_CLASS).getValue());
+                task.setAcknInitiator(conf.toInt(conf.getChild(TaskConfigurationConstants.ACKN_INITIATOR).getValue()));
+                task.setTimeOutAcknMillis(conf.toInt(conf.getChild(TaskConfigurationConstants.TIME_OUT_ACKN_MILLIS).getValue()));
+                task.setPathAdapterConfig(conf.getChild(TaskConfigurationConstants.PATH_ADAPTER_CONFIG).getValue());
+                task.setDefaultData(new StringBuffer(conf.getChild(TaskConfigurationConstants.DEFAULT_DATA).getValue()));
+                
+                _taskList.put(task, taskId);
             }
         }
         catch (ConfigurationKeyNotFoundException confEx){
@@ -180,7 +186,7 @@ public class TaskConfiguration {
     /**
      * @return Returns the _taskList.
      */
-    public ArrayList getTaskList() {
+    public Map getTaskList() {
         return _taskList;
     }
 
