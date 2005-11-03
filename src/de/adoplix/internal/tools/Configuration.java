@@ -20,7 +20,6 @@ public class Configuration extends XMLRetriever {
     /** 
      * Mit diesem Konstruktor wird Configuration veranlasst, eine Datei zu
      * parsen, und den Inhalt strukturiert in ein XMLObject zu schreiben.
-     * @param xmlObject Ein (hoffentlich) noch leeres XMLObject
      * @param confFileName Die zu parsende Datei
      */
     public Configuration (String confFileName) {

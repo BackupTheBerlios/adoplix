@@ -1,8 +1,9 @@
 package de.adoplix.internal.tasks;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.*;
 import de.adoplix.internal.tools.Configuration;
 import de.adoplix.internal.tools.XMLObject;
 import de.adoplix.internal.tools.XMLObjectList;
@@ -14,22 +15,16 @@ import de.adoplix.internal.tools.XMLObjectList;
  */
 public class TaskConfiguration {
 
-    private Map    _taskList = null;
-    private String _taskAlias = "";
-    private int _taskType = 0;
-    private String _remoteServerAddress = "";
-    private String _remoteTaskId = "";
-    private String _localAdapterClass = "";
-    private int _acknInitiator = 0;
-    private int _timeOutAcknMillis = 0;
-    private String _pathAdapterConfig = "";
-    private String _defaultData = "";
+    private Map    _taskListByAlias = null;
+    private Map    _taskListById = null;
     
     
     
     /** Creates a new instance of TaskConfiguration */
     public TaskConfiguration (String configurationFile) {
         ArrayList taskArray = new ArrayList();
+        _taskListByAlias = new HashMap();
+        _taskListById = new HashMap();
 
         try {
             Configuration conf = new Configuration(configurationFile);
@@ -69,7 +64,9 @@ public class TaskConfiguration {
                 task.setPathAdapterConfig(conf.getChild(TaskConfigurationConstants.PATH_ADAPTER_CONFIG).getValue());
                 task.setDefaultData(new StringBuffer(conf.getChild(TaskConfigurationConstants.DEFAULT_DATA).getValue()));
                 
-                _taskList.put(task, taskId);
+                // Zwei Hashmaps, um sowohl über den Index, als auch über den Alias die Tasks schnell zu finden
+                _taskListById.put(taskId, task);
+                _taskListByAlias.put(task.getTaskAlias (), task);
             }
         }
         catch (ConfigurationKeyNotFoundException confEx){
@@ -79,142 +76,33 @@ public class TaskConfiguration {
 //        	System.out.println(typeEx.getMessage());
 //        }
         catch (Exception ex) {
-            System.out.println("ERROR " + "---: " + ex.getMessage ());
+            System.out.println("ERROR " + ": " + ex.getMessage ());
+        }
+    }
+    
+    public Task getTaskById (String key) throws TaskNotFoundException {
+        try {
+            Task aTask = (Task)_taskListById.get (key);
+            if (null == aTask) {
+                throw new TaskNotFoundException();
+            }
+            return aTask;
+        }
+        catch (Exception ex) {
+            throw new TaskNotFoundException();
         }
     }
 
-
-
-    /**
-     * @return Returns the _acknInitiator.
-     */
-    public int getAcknInitiator() {
-        return _acknInitiator;
-    }
-
-    /**
-     * @param initiator The _acknInitiator to set.
-     */
-    public void setAcknInitiator(int initiator) {
-        _acknInitiator = initiator;
-    }
-
-    /**
-     * @return Returns the _defaultData.
-     */
-    public String getDefaultData() {
-        return _defaultData;
-    }
-
-    /**
-     * @param data The _defaultData to set.
-     */
-    public void setDefaultData(String data) {
-        _defaultData = data;
-    }
-
-    /**
-     * @return Returns the _localAdapterClass.
-     */
-    public String getLocalAdapterClass() {
-        return _localAdapterClass;
-    }
-
-    /**
-     * @param adapterClass The _localAdapterClass to set.
-     */
-    public void setLocalAdapterClass(String adapterClass) {
-        _localAdapterClass = adapterClass;
-    }
-
-    /**
-     * @return Returns the _pathAdapterConfig.
-     */
-    public String getPathAdapterConfig() {
-        return _pathAdapterConfig;
-    }
-
-    /**
-     * @param adapterConfig The _pathAdapterConfig to set.
-     */
-    public void setPathAdapterConfig(String adapterConfig) {
-        _pathAdapterConfig = adapterConfig;
-    }
-
-    /**
-     * @return Returns the _remoteServerAddress.
-     */
-    public String getRemoteServerAddress() {
-        return _remoteServerAddress;
-    }
-
-    /**
-     * @param serverAddress The _remoteServerAddress to set.
-     */
-    public void setRemoteServerAddress(String serverAddress) {
-        _remoteServerAddress = serverAddress;
-    }
-
-    /**
-     * @return Returns the _remoteTaskId.
-     */
-    public String getRemoteTaskId() {
-        return _remoteTaskId;
-    }
-
-    /**
-     * @param taskId The _remoteTaskId to set.
-     */
-    public void setRemoteTaskId(String taskId) {
-        _remoteTaskId = taskId;
-    }
-
-    /**
-     * @return Returns the _taskAlias.
-     */
-    public String getTaskAlias() {
-        return _taskAlias;
-    }
-
-    /**
-     * @param alias The _taskAlias to set.
-     */
-    public void setTaskAlias(String alias) {
-        _taskAlias = alias;
-    }
-
-    /**
-     * @return Returns the _taskList.
-     */
-    public Map getTaskList() {
-        return _taskList;
-    }
-
-    /**
-     * @return Returns the _taskType.
-     */
-    public int getTaskType() {
-        return _taskType;
-    }
-
-    /**
-     * @param type The _taskType to set.
-     */
-    public void setTaskType(int type) {
-        _taskType = type;
-    }
-
-    /**
-     * @return Returns the _timeOutAcknMillis.
-     */
-    public int getTimeOutAcknMillis() {
-        return _timeOutAcknMillis;
-    }
-
-    /**
-     * @param outAcknMillis The _timeOutAcknMillis to set.
-     */
-    public void setTimeOutAcknMillis(int outAcknMillis) {
-        _timeOutAcknMillis = outAcknMillis;
+    public Task getTaskByAlias (String key) throws TaskNotFoundException {
+        try {
+            Task aTask = (Task)_taskListByAlias.get (key);
+            if (null == aTask) {
+                throw new TaskNotFoundException();
+            }
+            return aTask;
+        }
+        catch (Exception ex) {
+            throw new TaskNotFoundException();
+        }
     }
 }

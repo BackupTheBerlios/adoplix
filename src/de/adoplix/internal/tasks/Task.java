@@ -127,7 +127,7 @@ public class Task {
     }
 
     /**
-     * @param name The _taskName to set.
+     * @param alias The _taskName to set.
      */
     public void setTaskAlias(String alias) {
         _taskAlias = alias;
