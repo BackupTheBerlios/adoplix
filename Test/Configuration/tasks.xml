@@ -5,28 +5,28 @@
 	    <!-- Tasks used as Service when Request comes in -->
 	    <TaskTypesService>
 	        <!-- Shutdown -->
-			<LocalTaskId>S0.0</LocalTaskId>
-			<LocalTaskId>S0.11</LocalTaskId>
-			<LocalTaskId>S1.0</LocalTaskId>
-			<LocalTaskId>S1.11</LocalTaskId>
+			<LocalTaskId>S0-0</LocalTaskId>
+			<LocalTaskId>S0-11</LocalTaskId>
+			<LocalTaskId>S1-0</LocalTaskId>
+			<LocalTaskId>S1-11</LocalTaskId>
 			<!-- Retrieves count of people -->
-			<LocalTaskId>S2.0</LocalTaskId>
-			<LocalTaskId>S2.11</LocalTaskId>
+			<LocalTaskId>S2-0</LocalTaskId>
+			<LocalTaskId>S2-11</LocalTaskId>
 		</TaskTypesService>
 		<!-- Tasks used as Client by RequestAdapters -->
 	    <TaskTypesClient>
 	        <!-- Call countPeople() -->
-			<LocalTaskId>C2.50</LocalTaskId>
-			<LocalTaskId>C2.51</LocalTaskId>
-			<LocalTaskId>C2.52</LocalTaskId>
-			<LocalTaskId>C2.53</LocalTaskId>
-			<LocalTaskId>C2.54</LocalTaskId>
-			<LocalTaskId>C2.55</LocalTaskId>
+			<LocalTaskId>C2-50</LocalTaskId>
+			<LocalTaskId>C2-51</LocalTaskId>
+			<LocalTaskId>C2-52</LocalTaskId>
+			<LocalTaskId>C2-53</LocalTaskId>
+			<LocalTaskId>C2-54</LocalTaskId>
+			<LocalTaskId>C2-55</LocalTaskId>
 		</TaskTypesClient>
 	</TaskList>
 
 	<TaskDetails>
-		<S0.0>
+		<S0-0>
 			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
@@ -38,10 +38,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</S0.0>
+		</S0-0>
 	
-		<S0.11>
-			<TaskName>Shutdown</TaskName>
+		<S0-11>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -52,10 +52,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</S0.11>
+		</S0-11>
 	
-		<S1.0>
-			<TaskName>Shutdown</TaskName>
+		<S1-0>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -66,10 +66,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</S1.0>
+		</S1-0>
 	
-		<S1.11>
-			<TaskName>Shutdown</TaskName>
+		<S1-11>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -80,10 +80,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</S1.11>
+		</S1-11>
 	
-		<S2.0>
-			<TaskName>Shutdown</TaskName>
+		<S2-0>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -94,10 +94,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</S2.0>
+		</S2-0>
 	
-		<S2.11>
-			<TaskName>Shutdown</TaskName>
+		<S2-11>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -108,10 +108,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</S2.11>
+		</S2-11>
 	
-		<C2.50>
-			<TaskName>Shutdown</TaskName>
+		<C2-50>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -122,10 +122,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</C2.50>
+		</C2-50>
 	
-		<C2.51>
-			<TaskName>Shutdown</TaskName>
+		<C2-51>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -136,10 +136,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</C2.51>
+		</C2-51>
 	
-		<C2.52>
-			<TaskName>Shutdown</TaskName>
+		<C2-52>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -150,10 +150,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</C2.52>
+		</C2-52>
 	
-		<C2.53>
-			<TaskName>Shutdown</TaskName>
+		<C2-53>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -164,10 +164,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</C2.53>
+		</C2-53>
 	
-		<C2.54>
-			<TaskName>Shutdown</TaskName>
+		<C2-54>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -178,10 +178,10 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</C2.54>
+		</C2-54>
 	
-		<C2.55>
-			<TaskName>Shutdown</TaskName>
+		<C2-55>
+			<TaskAlias>Shutdown</TaskAlias>
 			<TaskType>0</TaskType>
 			<RemoteServerAddress>IP+:+Port</RemoteServerAddress>
 			<RemoteTaskId>000.000</RemoteTaskId>
@@ -192,7 +192,7 @@
 			<DefaultData><![CDATA[
 			langsam wird's ja. Ob > oder < - hier sollte @lles klaßpen...
 			]]></DefaultData>
-		</C2.55>
+		</C2-55>
 	
 	</TaskDetails>
 
