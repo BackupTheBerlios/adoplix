@@ -13,10 +13,16 @@ package de.adoplix.internal.runtimeInformation.constants;
 public abstract class ErrorConstants {
 
     /*
-     * Configuration - Errors
+     * Basic Configuration - Errors
      * 100 - 200
      */
     public static final int CONFIGURATION_FILE_NOT_FOUND = 110;
     public static final int CONFIGURATION_KEY_NOT_FOUND = 120;
     public static final int CONFIGURATION_TYPE_FALSE = 122;
+    
+    /*
+     * TaskConfiguration
+     * 400 - 600
+     */
+    public static final int CONFIGURATION_TASK_NOT_CONFIGURED = 400;
 }
