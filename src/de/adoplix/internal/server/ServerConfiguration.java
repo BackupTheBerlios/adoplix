@@ -23,10 +23,12 @@ public class ServerConfiguration {
     private int _intervalGetProjectSec = 0;
     private ArrayList _validServerIds = new ArrayList();
     
+    private static AdopLog logger = AdopLog.getLogger (ServerConfiguration.class);
     
     /** Creates a new instance of ServerConfiguration */
     public ServerConfiguration (String configurationFile) {
-
+        logger.info ("sdökljökljfsd");
+        
         try {
             Configuration conf = new Configuration(configurationFile);
             
