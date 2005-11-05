@@ -2,8 +2,7 @@ package de.adoplix.internal.server;
 
 import de.adoplix.internal.tasks.TaskConfiguration;
 import de.adoplix.internal.tools.AdopLog;
-import java.io.IOException;
-import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -19,7 +18,8 @@ public class AdoplixServer {
     /** Container of task configuration */
     private TaskConfiguration _taskConfiguration = null;
     
-    private static AdopLog logger = AdopLog.getLogger (AdoplixServer.class);
+    private static String vid = "$ID $";
+    private static Logger logger = AdopLog.getLogger (AdoplixServer.class);
     
     public static void main (String[] args) {
         parseArguments (args);
@@ -37,6 +37,7 @@ public class AdoplixServer {
      * @param args Arguments used when program was called
      */
     public AdoplixServer (String[] args) {
+        logger.info ("adoplix Server startet: " + );
         String taskConfiguration = "";
         System.out.println ("adoplix");
         System.out.flush ();
@@ -61,7 +62,6 @@ public class AdoplixServer {
      * [0] = F: File;  [1] = Dateiname
      */
     private static void parseArguments (String[] args) {
-        logger.info ("sdökljökljfsd");
         if (null != args) {
             if (args.length > 0) {
                 args[0] = args[0].toUpperCase ();
@@ -72,7 +72,6 @@ public class AdoplixServer {
                     if (args.length > 1) {
                         _pathConfiguration = args[1];
                     } else {
-                        logger.log ("hhh");
                         System.out.println ("Parameter F: Dateiangabe fehlt");
                         System.exit (1);
                     }
