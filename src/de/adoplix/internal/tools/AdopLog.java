@@ -11,9 +11,10 @@
 package de.adoplix.internal.tools;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -23,46 +24,69 @@ import java.util.logging.SimpleFormatter;
  */
 public class AdopLog {
     
-    public  static AdopLog adoplog;
-    private static Logger logger;
+//    public  static AdopLog adoplog;
     private static FileHandler fileHandler;
     private static Level level = Level.INFO;
+    private static List loggerList = new ArrayList();
+    private static String vid = "$ ID $";
     
-    public AdopLog (Class clazz) {
+    public AdopLog () {
+    }
+    
+    public static Logger getLogger (String canonicalClassName) {
+        // look if Logger exists
+        Logger returnLogger = searchLogger(canonicalClassName);
+        if (null != returnLogger) {
+            return returnLogger;
+        }
+        
+        // Logger doesn't exists yet
         String adoplixPath = System.getProperty ("ADOPLIX_PATH", ".");
         try{
             fileHandler = new FileHandler (adoplixPath + "/adoplix_server.log", 1000000, 10, Boolean.TRUE);
         } catch (IOException ioEx) {}
         
-        System.out.println(clazz.getCanonicalName ());
-        logger = Logger.getLogger (clazz.getCanonicalName ());
+        returnLogger = Logger.getLogger (canonicalClassName);
         fileHandler.setFormatter (new SimpleFormatter());
-        logger.addHandler (fileHandler);
-        String name = LogManager.getLogManager ().getLoggerNames ().nextElement ();
+        returnLogger.addHandler (fileHandler);
+        loggerList.add (returnLogger);
+        return returnLogger;
     }
     
-    public static AdopLog getLogger (Class clazz) {
-        if (null == adoplog) {
-            adoplog = new AdopLog(clazz);
+    public static Logger getLogger (Class clazz) {
+        return getLogger (clazz.getName ());
+    }
+    
+    public static void log(Class clazz, String msg) {
+        log (clazz.getCanonicalName (), msg);
+    }
+    
+    public static void log (String canonicalClassName, String msg) {
+        Logger classLogger = searchLogger(canonicalClassName);
+        if (null == classLogger) {
+            classLogger = getLogger(canonicalClassName);
         }
-        return adoplog;
+        classLogger.log(level, msg);
     }
     
-    public void log(String msg) {
-        logger.log(level, msg);
-    }
-    
-    public void setLevel (Level newLevel) {
+    public static void setLevel (Level newLevel) {
         level = newLevel;
     }
     
-    public void error (String errNr) {
-        logger.log(Level.SEVERE, errNr);
+    private static Logger searchLogger(String canonicalClassName) {
+        Logger returnLogger = null;
+        for (int i = 0; i < loggerList.size (); i++ ) {
+            if (((Logger)loggerList.get (i)).getName ().equals (canonicalClassName)) {
+                returnLogger = (Logger)loggerList.get (i);
+            }
+        }
+        if (null != returnLogger) {
+            return returnLogger;
+        }
+        return null;
     }
-    
-    public void info(String infoNr) {
-        
-        String name = logger.getName ();
-        logger.log(Level.INFO, infoNr);
+
+    private static Logger searchLogger(Class clazz) {
+        return searchLogger(clazz.getName ());
     }
 }

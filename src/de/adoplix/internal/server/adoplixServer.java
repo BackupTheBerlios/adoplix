@@ -18,7 +18,7 @@ public class AdoplixServer {
     /** Container of task configuration */
     private TaskConfiguration _taskConfiguration = null;
     
-    private static String vid = "$ID $";
+    private static String vid = "$ ID $";
     private static Logger logger = AdopLog.getLogger (AdoplixServer.class);
     
     public static void main (String[] args) {
@@ -37,7 +37,7 @@ public class AdoplixServer {
      * @param args Arguments used when program was called
      */
     public AdoplixServer (String[] args) {
-        logger.info ("adoplix Server startet: " + );
+        logger.info ("adoplix Server startet: " + vid);
         String taskConfiguration = "";
         System.out.println ("adoplix");
         System.out.flush ();
