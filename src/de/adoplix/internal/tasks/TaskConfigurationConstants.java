@@ -20,11 +20,11 @@ public abstract class TaskConfigurationConstants {
     /** TaskTypesService <br> Liste der Tasks, die der Server liest */
     public static final String TASK_TYPES_SERVICE = "TaskTypesService";
     /** TaskList.TaskTypesService <br> Liste der Tasks, die der Server liest */
-    public static final String X_TASK_TYPES_SERVICE = TASK_LIST + "." +TASK_TYPES_SERVICE; 
+    public static final String X_TASK_TYPES_SERVICE = TASK_LIST + "%" +TASK_TYPES_SERVICE; 
     /** TaskTypesClient <br> Liste der Tasks, die Client liest */
     public static final String TASK_TYPES_CLIENT = "TaskTypesClient";
     /** TaskList.TaskTypesClient <br> Liste der Tasks, die der Client liest */
-    public static final String X_TASK_TYPES_CLIENT = TASK_LIST + "." +TASK_TYPES_CLIENT; 
+    public static final String X_TASK_TYPES_CLIENT = TASK_LIST + "%" +TASK_TYPES_CLIENT; 
     
     /** LocalTaskId <br> ID einer lokalen Task */
     public final static String LOCAL_TASK_ID = "LocalTaskId";

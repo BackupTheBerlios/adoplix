@@ -65,8 +65,8 @@ public class XMLRetriever {
          * Wert mit get...() lesen. Bsp.: ServerHandling.ServerId
          */
         try {
-            while (key.indexOf(".") > -1) {
-                int dotPos = key.indexOf(".");
+            while (key.indexOf("%") > -1) {
+                int dotPos = key.indexOf("%");
                 String preKey = key.substring(0, dotPos);
                 _xmlObject = _xmlObject.searchXMLSubObject(preKey);
                 key = key.substring(dotPos + 1);

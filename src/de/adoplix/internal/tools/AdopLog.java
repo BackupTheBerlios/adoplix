@@ -28,7 +28,7 @@ public class AdopLog {
     private static FileHandler fileHandler;
     private static Level level = Level.INFO;
     private static List loggerList = new ArrayList();
-    private static String vid = "$ ID $";
+    private static String vid = "$Id$";
     
     public AdopLog () {
     }
@@ -57,18 +57,18 @@ public class AdopLog {
         return getLogger (clazz.getName ());
     }
     
-    public static void log(Class clazz, String msg) {
-        log (clazz.getCanonicalName (), msg);
-    }
-    
-    public static void log (String canonicalClassName, String msg) {
-        Logger classLogger = searchLogger(canonicalClassName);
-        if (null == classLogger) {
-            classLogger = getLogger(canonicalClassName);
-        }
-        classLogger.log(level, msg);
-    }
-    
+//    public static void log(Class clazz, String msg) {
+//        log (clazz.getCanonicalName (), msg);
+//    }
+//    
+//    public static void log (String canonicalClassName, String msg) {
+//        Logger classLogger = searchLogger(canonicalClassName);
+//        if (null == classLogger) {
+//            classLogger = getLogger(canonicalClassName);
+//        }
+//        classLogger.log(level, msg);
+//    }
+//    
     public static void setLevel (Level newLevel) {
         level = newLevel;
     }

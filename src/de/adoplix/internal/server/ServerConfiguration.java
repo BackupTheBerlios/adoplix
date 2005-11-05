@@ -3,6 +3,7 @@ import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoun
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import de.adoplix.internal.tools.*;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Veranlasst das Auslesen der Serverkonfiguration und stellt diese
@@ -22,6 +23,8 @@ public class ServerConfiguration {
     private int _timeoutClientMillis = 0;
     private int _intervalGetProjectSec = 0;
     private ArrayList _validServerIds = new ArrayList();
+    
+    private Logger logger = AdopLog.getLogger (ServerConfiguration.class);
     
     /** Creates a new instance of ServerConfiguration */
     public ServerConfiguration (String configurationFile) {
@@ -70,13 +73,16 @@ public class ServerConfiguration {
             }
         }
         catch (ConfigurationKeyNotFoundException confEx){
-        	System.out.println(confEx.getMessage());
+        	logger.severe(confEx.getMessage ());
+                System.out.println(confEx.getMessage ());
         }
         catch (ConfigurationTypeException typeEx) {
+                logger.severe(typeEx.getMessage ());
         	System.out.println(typeEx.getMessage());
         }
         catch (Exception ex) {
-            System.out.println("ERROR " + "---: " + ex.getMessage ());
+            logger.severe(ex.getMessage ());
+            System.out.println("ERROR " + ": " + ex.getMessage ());
         }
     }
     
