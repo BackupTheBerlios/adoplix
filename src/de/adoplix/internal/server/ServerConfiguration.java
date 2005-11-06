@@ -44,7 +44,7 @@ public class ServerConfiguration {
             conf.setXMLRootObject ();
             conf.setXMLObjectByKey(ServerConfigurationConstants.SERVER_COMMUNICATION);
             _portExternal = conf.toInt(conf.getChild (ServerConfigurationConstants.EXTERNAL_PORT).getValue());
-            _portService = conf.toInt(conf.getChild (ServerConfigurationConstants.SERVICE_PORT).getValue());
+            _portService = conf.toInt(conf.getChild (ServerConfigurationConstants.ADMIN_PORT).getValue());
             _portLocal = conf.toInt(conf.getChild (ServerConfigurationConstants.LOCAL_PORT).getValue());
             
             // MaxClientThreads

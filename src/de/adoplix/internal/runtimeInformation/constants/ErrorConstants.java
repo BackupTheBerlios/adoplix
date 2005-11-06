@@ -30,7 +30,7 @@ public abstract class ErrorConstants {
 
     /*
      * Basic Configuration - Errors
-     * 100 - 200
+     * 100 - 199
      */
     public static final int CONFIGURATION_FILE_NOT_FOUND = 110;
     public static final int CONFIGURATION_KEY_NOT_FOUND = 120;
@@ -38,9 +38,17 @@ public abstract class ErrorConstants {
     
     /*
      * TaskConfiguration
-     * 400 - 600
+     * 200 - 299
      */
-    public static final int CONFIGURATION_TASK_NOT_CONFIGURED = 400;
+    public static final int CONFIGURATION_TASK_NOT_CONFIGURED = 200;
+    
+    /*
+     * Communication (Sockets etc.)
+     * 300 - 399
+     */
+    public static final int COMMUNICATION_SOCKET_IO = 300;
+    public static final int COMMUNICATION_SOCKET_ACCEPT = 301;
+            
     
     private ErrorConstants() {
         errorMap.put (new Integer (STARTUP_NO_CONF_FILE_SELECTED), "Start ohne Angabe einer Konfigurationsdatei.");
@@ -50,6 +58,9 @@ public abstract class ErrorConstants {
         errorMap.put (new Integer(CONFIGURATION_TYPE_FALSE), "Konfigurierter Wert ist vom falschen Typ.");
 
         errorMap.put (new Integer(CONFIGURATION_TASK_NOT_CONFIGURED), "Task in interner Task-Liste nicht gefunden.");
+        
+        errorMap.put (new Integer(COMMUNICATION_SOCKET_IO), "Socket konnte nicht belauscht werden.");
+        errorMap.put (new Integer(COMMUNICATION_SOCKET_ACCEPT), "Annahme einer Nachricht über Socket ist fehlgeschlagen.");
     }
     
     public static String getErrorMsg (int errorNr) {

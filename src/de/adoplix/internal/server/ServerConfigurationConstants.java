@@ -35,9 +35,9 @@ public abstract class ServerConfigurationConstants {
     /** ExternalPort <br> Port für Kommunikation nach aussen */
     public static final String EXTERNAL_PORT = "ExternalPort";
     /** Communication.ServicePort <br> Port für Administration */
-    public static final String X_SERVICE_PORT = SERVER_COMMUNICATION + "%ServicePort";
-    /** ServicePort <br> Port für Administration */
-    public static final String SERVICE_PORT = "ServicePort";
+    public static final String X_ADMIN_PORT = SERVER_COMMUNICATION + "%AdminPort";
+    /** AdminPort <br> Port für Administration */
+    public static final String ADMIN_PORT = "AdminPort";
     /** Communication.LocalPort <br> Port für Kommunikation mit lokalen Clients */
     public static final String X_LOCAL_PORT = SERVER_COMMUNICATION + "%LocalPort";
     /** LocalPort <br> Port für Kommunikation mit lokalen Clients */
