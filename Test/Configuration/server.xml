@@ -8,8 +8,8 @@
 
 	<Communication>
 		<ExternalPort>2001</ExternalPort>
-		<ServicePort>2002</ServicePort>
-        <LocalPort>2003</LocalPort>
+                <AdminPort>2002</AdminPort>
+                <LocalPort>2003</LocalPort>
 	</Communication>
 
 	<ClientHandling>
