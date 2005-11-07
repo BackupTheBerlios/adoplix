@@ -22,7 +22,7 @@ public class WaitForConnectionThread implements I_WaitForConnectionThread {
     
     protected int _socketNr = 0;
     protected int _maxClientNumber = 0;
-    protected boolean _waitForConnections = false;
+    protected boolean _waitForConnections = true;
     protected Map _adapterConnectors = new HashMap();
     private Logger logger = AdopLog.getLogger (WaitForConnectionThread.class);
     
@@ -33,12 +33,16 @@ public class WaitForConnectionThread implements I_WaitForConnectionThread {
         this.run();
     }
     
+    public void stop() {
+        _waitForConnections=false;
+    }
+    
     public void run () {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket (_socketNr);
-            _waitForConnections = true;
         } catch (IOException ioEx) {
+            _waitForConnections = false;
             logger.severe (ErrorConstants.COMMUNICATION_SOCKET_IO + ": " + ErrorConstants.getErrorMsg (ErrorConstants.COMMUNICATION_SOCKET_IO) + "; Socket = " + _socketNr);
             System.out.println ("adoplix Error" + ErrorConstants.COMMUNICATION_SOCKET_IO + ": " + ErrorConstants.getErrorMsg (ErrorConstants.COMMUNICATION_SOCKET_IO) + "; Socket = " + _socketNr);
         }

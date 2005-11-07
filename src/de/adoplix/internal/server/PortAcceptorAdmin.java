@@ -10,7 +10,12 @@ import de.adoplix.internal.connection.WaitForConnectionThread;
 import java.net.Socket;
 
 /**
- * Takes ports (implementation in superclass) and starts client 
+ * Supports ports (implementation in superclass) and starts clients. 
+ * This PortAcceptor waits for requests (events) from AdapterAdmin-Clients.
+ * New client-requests are initialized by LocalRequests. LocalRequests in XML
+ * format at first are parsed by this class (PortAcceptor) and wrapped into
+ * a container called LocalRequest.
+ * Later the container will be given to a new Instance of an AdapterConnectorAdmin.
  * @author dirk
  */
 public class PortAcceptorAdmin extends WaitForConnectionThread {
