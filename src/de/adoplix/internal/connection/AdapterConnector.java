@@ -6,8 +6,7 @@
 package de.adoplix.internal.connection;
 
 import de.adoplix.internal.telegram.LocalConnection;
-import java.io.InputStream;
-import java.io.OutputStream;
+import de.adoplix.internal.telegram.XMLMessage;
 import java.net.Socket;
 
 /**
@@ -20,12 +19,12 @@ public class AdapterConnector implements I_AdapterConnector {
     
     protected boolean _talkToClient = true;
     protected Socket _clientSocket;
+    protected XMLMessage _xmlMessage;
     protected LocalConnection _localConnection;
     
     /** Creates a new instance of AdapterConnector */
-    public AdapterConnector (Socket clientSocket, LocalConnection localConnection) {
+    public AdapterConnector (Socket clientSocket, XMLMessage xmlMessage) {
         _clientSocket =  clientSocket;
-        _localConnection = localConnection;
         
         this.run();
     }

@@ -3,7 +3,10 @@ package de.adoplix.internal.server;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.tasks.TaskConfiguration;
 import de.adoplix.internal.tools.AdopLog;
-import java.util.logging.Level;
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -18,6 +21,9 @@ public class AdoplixServer {
     private ServerConfiguration _serverConfiguration = null;
     /** Container of task configuration */
     private TaskConfiguration _taskConfiguration = null;
+    /** Counter for generating ThreadID's */
+    private static int _threadCounter = 0;
+
     
     private static Logger logger = AdopLog.getLogger (AdoplixServer.class);
     
@@ -96,5 +102,17 @@ public class AdoplixServer {
                 taskConfiguration.length () > 0) {
             _taskConfiguration = new TaskConfiguration (taskConfiguration);
         }
+    }
+    
+    public static synchronized String generateThreadId(Object obj) {
+        String threadId = "";
+        Format dateF = new SimpleDateFormat ("ddMMYYhhmmss");
+        Date now = new Date();
+        threadId = dateF.format (now);
+        Format decF = new DecimalFormat("000");
+        threadId+= decF.format (_threadCounter++);
+        threadId+= obj.hashCode ();
+        
+        return threadId;
     }
 }

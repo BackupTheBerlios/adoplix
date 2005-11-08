@@ -11,18 +11,18 @@ package de.adoplix.internal.telegram;
  * (PortAcceptor) first time.
  * @author dirk
  */
-public class LocalConnection {
+public class LocalConnection extends XMLMessage {
     
     private String _type = "";
-    private String _name = "";
+    private String _adapterName = "";
     private int _aim = 0;
     private String _eventId = "";
     
     
     /** Creates a new instance of LocalConnection */
-    public LocalConnection (String type, String name, int aim,  String eventId) {
+    public LocalConnection (String type, String adapterName, int aim,  String eventId) {
         setType(type);
-        setName(name);
+        setName(adapterName);
         setAim(aim);
         setEventId(eventId);
     }
@@ -36,11 +36,11 @@ public class LocalConnection {
     }
 
     public String getName () {
-        return _name;
+        return _adapterName;
     }
 
-    public void setName (String _name) {
-        this._name = _name;
+    public void setName (String _adapterName) {
+        this._adapterName = _adapterName;
     }
 
     public int getAim () {

@@ -7,6 +7,7 @@
 
 package de.adoplix.internal.connection;
 
+import de.adoplix.internal.telegram.XMLMessage;
 import java.net.Socket;
 
 /**
@@ -14,6 +15,6 @@ import java.net.Socket;
  * @author dirk
  */
 public interface I_WaitForConnectionThread extends Runnable {
-    public AdapterConnector startAdapterConnector (Socket clientSocket);
+    public AdapterConnector startAdapterConnector (String threadId, Socket clientSocket);
     public void setMaxClientNumber (int maxClientNumber);
 }
