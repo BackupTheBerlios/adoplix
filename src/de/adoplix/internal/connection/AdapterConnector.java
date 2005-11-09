@@ -7,6 +7,9 @@ package de.adoplix.internal.connection;
 
 import de.adoplix.internal.telegram.LocalConnection;
 import de.adoplix.internal.telegram.XMLMessage;
+import de.adoplix.internal.tools.LittleHelper;
+import java.io.IOException;
+import java.io.StringReader;
 import java.net.Socket;
 
 /**
@@ -21,26 +24,43 @@ public class AdapterConnector implements I_AdapterConnector {
     protected Socket _clientSocket;
     protected XMLMessage _xmlMessage;
     protected LocalConnection _localConnection;
+    protected String _threadId;
+    protected boolean _run = true;
+
     
     /** Creates a new instance of AdapterConnector */
-    public AdapterConnector (Socket clientSocket, XMLMessage xmlMessage) {
+    public AdapterConnector (Socket clientSocket) {
         _clientSocket =  clientSocket;
-        
-        this.run();
+        StringReader dataInputReader;
+        registerAdapter();
+        try {
+            dataInputReader = LittleHelper.streamToStringReader(_clientSocket.getInputStream ());
+            _xmlMessage = new XMLMessage(dataInputReader);
+            run();
+        }
+        catch (IOException ioEx) {
+            
+        }
     }
     
-    public void run() {
-        
-//        while (_talkToClient)
-//                lesen auf inputstream
-//                abhängig von telegramm an eine methode weiterleiten
-//                methode sendet über outputstream
-//        Buffered...
-//                
-//        InputStream in = _clientSocket.getInputStream();
-//        OutputStream out = _clientSocket.getOutputStream();
-                
-//       am ende der run method nicht vergessen, 
-//       bei PortAcceptor abzumelden.  (clientThreadStopsWork)
+    public String getThreadId() {
+        return _threadId;
     }
+    
+    public void setThreadId(String threadId) {
+        _threadId = threadId;
+    }
+
+    public void stop() {
+        try {
+            _clientSocket.close ();
+        }
+        catch (IOException ioEx) {}
+        deregisterAdapter ();
+        _run = false;
+    }
+    
+    public void run() {}
+    public void registerAdapter() {}
+    public void deregisterAdapter() {}
 }

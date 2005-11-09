@@ -1,5 +1,5 @@
 package de.adoplix.internal.server;
-
+import de.adoplix.internal.connection.AdapterConnector;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.tasks.TaskConfiguration;
 import de.adoplix.internal.tools.AdopLog;
@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +25,16 @@ public class AdoplixServer {
     private TaskConfiguration _taskConfiguration = null;
     /** Counter for generating ThreadID's */
     private static int _threadCounter = 0;
+    /** Counter for max. number of Clients */
+    private static int _maxClientThreadNumber = 0;
+    /** Counter for active ClientThreads */
+    private static int _activeClientThreadsCount = 0;
+    /** Hashmap to find the event adaptors fast */
+    private static Map _adapterEventList = new HashMap();
+    /** Hashmap to find the service adaptors fast */
+    private static Map _adapterServiceList = new HashMap();
+    /** Hashmap to find the admin adaptors fast */
+    private static Map _adapterAdminList = new HashMap();
 
     
     private static Logger logger = AdopLog.getLogger (AdoplixServer.class);
@@ -113,6 +125,58 @@ public class AdoplixServer {
         threadId+= decF.format (_threadCounter++);
         threadId+= obj.hashCode ();
         
+        return threadId;
+    }
+    
+    public static synchronized void clientThreadStopped() {
+        if (_activeClientThreadsCount++ > _maxClientThreadNumber) {
+            _activeClientThreadsCount = _maxClientThreadNumber;
+        }
+    }
+    
+    public static synchronized boolean startClientThreadAllowed() {
+        if (_maxClientThreadNumber-- > 0) {
+            return true;
+        }
+        else {
+            _maxClientThreadNumber = 0;
+            return false;
+        }
+    }
+    
+    public static synchronized void deregisterAdapter(AdapterConnector adaptor) {
+        String threadId = adaptor.getThreadId();
+        if (adaptor.getClass().equals (AdapterConnectorAdmin.class)) {
+            _adapterAdminList.remove (threadId);
+        }
+        if (adaptor.getClass ().equals (AdapterConnectorLocal.class)) {
+            _adapterServiceList.remove (threadId);
+        }
+        if (adaptor.getClass ().equals (AdapterConnectorExternal.class)) {
+            _adapterEventList.remove (threadId);
+        }
+        _activeClientThreadsCount--;
+    }
+    
+    /**
+     * The adaptors register here to tell the server that they exist. <br>
+     * This is usefull e.g. when a response comes in and must be assigned to a
+     * adaptor.
+     */
+    public static synchronized String registerAdapter(AdapterConnector adaptor) {
+        String threadId = generateThreadId (adaptor);
+        adaptor.setThreadId(threadId);
+        
+        if (adaptor.getClass().equals (AdapterConnectorAdmin.class)) {
+            _adapterAdminList.put (threadId, adaptor);
+        }
+        if (adaptor.getClass ().equals (AdapterConnectorLocal.class)) {
+            _adapterServiceList.put (threadId, adaptor);
+        }
+        if (adaptor.getClass ().equals (AdapterConnectorExternal.class)) {
+            _adapterEventList.put (threadId, adaptor);
+        }
+        _activeClientThreadsCount++;
         return threadId;
     }
 }

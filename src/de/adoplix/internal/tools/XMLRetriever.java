@@ -22,8 +22,7 @@ public class XMLRetriever {
     /**
      * Standard-Konstruktor.
      * 
-     * @param xmlObject
-     *            Ein XMLObject-Baum
+     * @param xmlObject Ein XMLObject-Baum
      */
     public XMLRetriever(XMLObject xmlObject) {
         _xmlObject = xmlObject;

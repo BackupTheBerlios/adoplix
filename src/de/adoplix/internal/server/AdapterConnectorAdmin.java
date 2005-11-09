@@ -10,17 +10,36 @@ import de.adoplix.internal.telegram.XMLMessage;
 import java.net.Socket;
 
 /**
- * Gets a LocalRequest by the PortAcceptorAdmin. Issue is to be communication
- * partner of an AdapterAdmin.
- * Cyclic check if communication is stable and other typical aims of the
- * AdapterConnector are done by the superclass.
+ * Receives XML-Messages. <br>
+ * Decodes the Message and looks what to do <br>
+ * Calls the server-functions and waits for the responses.
  * @author dirk
  */
 public class AdapterConnectorAdmin extends AdapterConnector {
     
     /** Creates a new instance of AdapterConnectorAdmin */
-    public AdapterConnectorAdmin (Socket clientSocket, XMLMessage xmlMessage) {
-        super (clientSocket, xmlMessage);
+    public AdapterConnectorAdmin (Socket clientSocket) {
+        super (clientSocket);
     }
     
+    /**
+     * tells server that it exists
+     */
+    public void registerAdapter() {
+        _threadId = AdoplixServer.registerAdapter(this);        
+    }
+    
+    public void deregisterAdapter() {
+        AdoplixServer.deregisterAdapter (this);
+    }
+    
+    public void run() {
+        // when the process is here, the phase of initialization isn't 
+        // completely finished...
+        
+        
+        while (_run) {
+            
+        }
+    }
 }
