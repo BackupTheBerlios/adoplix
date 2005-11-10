@@ -7,7 +7,7 @@
 package de.adoplix.internal.runtimeInformation.constants;
 
 import de.adoplix.internal.server.AdoplixServer;
-import de.adoplix.internal.tools.AdopLog;
+import de.adoplix.internal.runtimeInformation.AdopLog;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -48,6 +48,14 @@ public abstract class ErrorConstants {
      */
     public static final int COMMUNICATION_SOCKET_IO = 300;
     public static final int COMMUNICATION_SOCKET_ACCEPT = 301;
+    
+    /*
+     * Communication message faults
+     * 400 - 499
+     */
+    public static final int MESSAGE_CONTENT_MISSED = 400;
+    public static final int MESSAGE_READ_ERROR = 401;
+    public static final int MESSAGE_VALUE_TYPE_ERROR = 402;
             
     
     private ErrorConstants() {
@@ -61,6 +69,10 @@ public abstract class ErrorConstants {
         
         errorMap.put (new Integer(COMMUNICATION_SOCKET_IO), "Socket konnte nicht belauscht werden.");
         errorMap.put (new Integer(COMMUNICATION_SOCKET_ACCEPT), "Annahme einer Nachricht über Socket ist fehlgeschlagen.");
+        
+        errorMap.put (new Integer(MESSAGE_CONTENT_MISSED), "Eine erforderliche Information innerhalb einer Nachricht fehlt.");
+        errorMap.put (new Integer(MESSAGE_READ_ERROR), "Eine Nachricht konnte nicht fehlerfrei gelesen werden.");
+        errorMap.put (new Integer(MESSAGE_VALUE_TYPE_ERROR), "Wert eines Nachrichtenelements ist vom falschen Typ.");
     }
     
     public static String getErrorMsg (int errorNr) {

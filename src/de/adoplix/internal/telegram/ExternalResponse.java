@@ -5,7 +5,7 @@
 
 package de.adoplix.internal.telegram;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
-import de.adoplix.internal.xml.XMLRetriever;
+import de.adoplix.internal.tools.xml.XMLRetriever;
 
 /**
  * Container which stores connection informations from a local adapter
