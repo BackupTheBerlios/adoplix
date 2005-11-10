@@ -1,8 +1,8 @@
 package de.adoplix.internal.server;
 import de.adoplix.internal.connection.AdapterConnector;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
-import de.adoplix.internal.tasks.TaskConfiguration;
-import de.adoplix.internal.tools.AdopLog;
+import de.adoplix.internal.configuration.TaskConfiguration;
+import de.adoplix.internal.runtimeInformation.AdopLog;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+import de.adoplix.internal.configuration.ServerConfiguration;
 
 /**
  * This class implements the central server functionality
@@ -121,9 +122,9 @@ public class AdoplixServer {
      * start the three listeners
      */
     private void startPortListener() {
-        PortListenerAdmin listenerAdmin = new PortListenerLocal(_serverConfiguration.getPortAdmin());
+        PortListenerAdmin listenerAdmin = new PortListenerAdmin(_serverConfiguration.getPortAdmin());
         PortListenerLocal listenerLocal = new PortListenerLocal(_serverConfiguration.getPortLocal());
-        PortListenerExternal listenerExternal = new PortListenerLocal(_serverConfiguration.getPortExternal());
+        PortListenerExternal listenerExternal = new PortListenerExternal(_serverConfiguration.getPortExternal());
 
 //        Runnable listenerAdmin = new PortListenerLocal(_serverConfiguration.getPortAdmin());
 //        Runnable listenerLocal = new PortListenerLocal(_serverConfiguration.getPortLocal());
