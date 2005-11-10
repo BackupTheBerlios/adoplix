@@ -8,7 +8,7 @@
  * Open. You can then make changes to the template in the Source Editor.
  */
 
-package de.adoplix.internal.tools;
+package de.adoplix.internal.runtimeInformation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class AdopLog {
     private static FileHandler fileHandler;
     private static Level level = Level.INFO;
     private static List loggerList = new ArrayList();
-    private static String vid = "$Id$";
+    private static String vid = "AdopLog.java,v 1.1 2005/11/10 22:33:29 dirkg Exp";
     
     public AdopLog () {
     }

@@ -1,6 +1,9 @@
-package de.adoplix.internal.tools;
+package de.adoplix.internal.tools.xml;
 
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
+import java.io.StringReader;
+
 
 /**
  * Bietet den gezielten Zugriff auf Elemente, Attribute, etc. einer
@@ -165,6 +168,11 @@ public class XMLRetriever {
         }
     }
 
+    /**
+     * Returns the selected xml-object value.
+     * @return Value of the actual selected XML-Tag.
+     * @throws ConfigurationKeyNotFoundExcepion
+     */
     public String getElementValue() throws ConfigurationKeyNotFoundException {
         try {
             return _xmlObject.getValue();
@@ -172,5 +180,24 @@ public class XMLRetriever {
             throw new ConfigurationKeyNotFoundException(
                     "ElementValue ist <null>");
         }
+    }
+
+    /**
+     * Returns the numeric (int) value of an element.
+     * @return int value of xml-object value.
+     * @see getElementValue
+     * @throws ConfigurationTypeException, ConfigurationKeyNotFoundException
+     */
+    public int getElementIntValue() throws ConfigurationTypeException, ConfigurationKeyNotFoundException {
+        return toInt(getElementValue());
+    }
+    
+    public int toInt (String intValue) throws ConfigurationTypeException {
+    	try {
+    		return Integer.parseInt(intValue);
+    	}
+    	catch(Exception ex) {
+    		throw new ConfigurationTypeException();
+    	}
     }
 }

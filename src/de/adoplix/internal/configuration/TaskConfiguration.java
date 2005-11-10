@@ -1,14 +1,15 @@
-package de.adoplix.internal.tasks;
+package de.adoplix.internal.configuration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.adoplix.internal.runtimeInformation.exceptions.*;
-import de.adoplix.internal.tools.AdopLog;
-import de.adoplix.internal.tools.Configuration;
-import de.adoplix.internal.tools.XMLObject;
-import de.adoplix.internal.tools.XMLObjectList;
+import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.configuration.Configuration;
+import de.adoplix.internal.xml.XMLObject;
+import de.adoplix.internal.xml.XMLObjectList;
 import java.util.logging.Logger;
+import de.adoplix.internal.tasks.*;
 
 /**
  * Reads and holds the server configuration. <p>

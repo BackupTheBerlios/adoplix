@@ -1,6 +1,7 @@
-package de.adoplix.internal.tools;
+package de.adoplix.internal.tools.xml;
 
 import java.util.ArrayList;
+
 
 
 public class XMLObjectList {

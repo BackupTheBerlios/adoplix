@@ -1,6 +1,7 @@
-package de.adoplix.internal.tools;
+package de.adoplix.internal.tools.xml;
 
 import org.xml.sax.Attributes;
+import de.adoplix.internal.tools.*;
 
 /**
  * XMLObject ist ein XML-Element, das weitere Elemente beinhalten kann. <br>

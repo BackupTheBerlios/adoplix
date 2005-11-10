@@ -1,4 +1,4 @@
-package de.adoplix.internal.tools;
+package de.adoplix.internal.tools.xml;
 
 import org.xml.sax.Attributes;
 

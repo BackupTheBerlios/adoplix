@@ -1,4 +1,4 @@
-package de.adoplix.internal.tools;
+package de.adoplix.internal.tools.xml;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
 
 /**
  * Dient dem generellen Parsen einfacher XML-Dateien.

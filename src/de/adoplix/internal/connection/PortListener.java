@@ -7,7 +7,7 @@ package de.adoplix.internal.connection;
 
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.server.AdoplixServer;
-import de.adoplix.internal.tools.AdopLog;
+import de.adoplix.internal.runtimeInformation.AdopLog;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

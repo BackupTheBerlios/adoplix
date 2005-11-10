@@ -4,7 +4,7 @@
  * Created on 23. Oktober 2005, 22:34
  */
 
-package de.adoplix.internal.server;
+package de.adoplix.internal.configuration;
 
 /**
  *

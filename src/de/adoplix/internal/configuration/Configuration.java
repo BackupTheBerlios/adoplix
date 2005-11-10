@@ -1,4 +1,4 @@
-package de.adoplix.internal.tools;
+package de.adoplix.internal.configuration;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,6 +7,10 @@ import java.io.IOException;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstantsText_Ger;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
+import de.adoplix.internal.tools.*;
+import de.adoplix.internal.xml.XMLObject;
+import de.adoplix.internal.xml.XMLParser;
+import de.adoplix.internal.xml.XMLRetriever;
 
 /**
  * Auslesen von Konfigurationsdaten mit Hilfe des XMLObject. <br>
@@ -49,14 +53,5 @@ public class Configuration extends XMLRetriever {
      */
     public Configuration (XMLObject xmlObject){
         super(xmlObject);
-    }
-    
-    public int toInt (String intValue) throws ConfigurationTypeException {
-    	try {
-    		return Integer.parseInt(intValue);
-    	}
-    	catch(Exception ex) {
-    		throw new ConfigurationTypeException();
-    	}
     }
 }
