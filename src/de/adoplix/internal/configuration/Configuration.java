@@ -8,9 +8,9 @@ import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstantsText_Ger;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import de.adoplix.internal.tools.*;
-import de.adoplix.internal.xml.XMLObject;
-import de.adoplix.internal.xml.XMLParser;
-import de.adoplix.internal.xml.XMLRetriever;
+import de.adoplix.internal.tools.xml.XMLObject;
+import de.adoplix.internal.tools.xml.XMLParser;
+import de.adoplix.internal.tools.xml.XMLRetriever;
 
 /**
  * Auslesen von Konfigurationsdaten mit Hilfe des XMLObject. <br>

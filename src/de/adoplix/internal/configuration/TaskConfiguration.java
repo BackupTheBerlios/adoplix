@@ -6,8 +6,8 @@ import java.util.Map;
 import de.adoplix.internal.runtimeInformation.exceptions.*;
 import de.adoplix.internal.runtimeInformation.AdopLog;
 import de.adoplix.internal.configuration.Configuration;
-import de.adoplix.internal.xml.XMLObject;
-import de.adoplix.internal.xml.XMLObjectList;
+import de.adoplix.internal.tools.xml.XMLObject;
+import de.adoplix.internal.tools.xml.XMLObjectList;
 import java.util.logging.Logger;
 import de.adoplix.internal.tasks.*;
 

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import de.adoplix.internal.server.*;
 import de.adoplix.internal.runtimeInformation.AdopLog;
-import de.adoplix.internal.xml.XMLObjectList;
-import de.adoplix.internal.xml.XMLRetriever;
+import de.adoplix.internal.tools.xml.XMLObjectList;
+import de.adoplix.internal.tools.xml.XMLRetriever;
 
 /**
  * Veranlasst das Auslesen der Serverkonfiguration und stellt diese
