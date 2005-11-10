@@ -9,31 +9,26 @@ package de.adoplix.internal.telegram;
  * Container which stores connection informations from a local adapter
  * (ServiceAdapter, EventAdapter, AdminAdapter) when it contacts to the server
  * (PortAcceptor) first time.
- * @author dirk
+ * @author dirkg
  */
-public class LocalConnection extends XMLMessage {
+public class LocalConnection extends XMLContainer {
     
-    private String _type = "";
     private String _adapterName = "";
     private int _aim = 0;
     private String _eventId = "";
     
-    
+    public LocalConnection (XMLObject xmlObject) {
+        super(xmlObject);
+        zerpflücken und passende Tags suchen
+    }
+
     /** Creates a new instance of LocalConnection */
-    public LocalConnection (String type, String adapterName, int aim,  String eventId) {
-        setType(type);
-        setName(adapterName);
-        setAim(aim);
-        setEventId(eventId);
-    }
-
-    public String getType () {
-        return _type;
-    }
-
-    public void setType (String _type) {
-        this._type = _type;
-    }
+//    public LocalConnection (String type, String adapterName, int aim,  String eventId) {
+//        setType(type);
+//        setName(adapterName);
+//        setAim(aim);
+//        setEventId(eventId);
+//    }
 
     public String getName () {
         return _adapterName;

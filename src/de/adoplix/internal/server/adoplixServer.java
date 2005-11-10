@@ -101,6 +101,7 @@ public class AdoplixServer {
         System.out.flush ();
         
         readConfigurations();
+        startPortListener();
     }
     
     private void readConfigurations () {
@@ -115,7 +116,34 @@ public class AdoplixServer {
             _taskConfiguration = new TaskConfiguration (taskConfiguration);
         }
     }
+
+    /*
+     * start the three listeners
+     */
+    private void startPortListener() {
+        PortListenerAdmin listenerAdmin = new PortListenerLocal(_serverConfiguration.getPortAdmin());
+        PortListenerLocal listenerLocal = new PortListenerLocal(_serverConfiguration.getPortLocal());
+        PortListenerExternal listenerExternal = new PortListenerLocal(_serverConfiguration.getPortExternal());
+
+//        Runnable listenerAdmin = new PortListenerLocal(_serverConfiguration.getPortAdmin());
+//        Runnable listenerLocal = new PortListenerLocal(_serverConfiguration.getPortLocal());
+//        Runnable listenerExternal = new PortListenerLocal(_serverConfiguration.getPortExternal());
+
+        Thread listenerAdminThread = new Thread(listenerAdmin);
+        Thread listenerLocalThread = new Thread(listenerLocal);
+        Thread listenerExternalThread = new Thread(listenerExternal);
+
+        listenerAdminThread.start();
+        listenerLocalThread.start();
+        listenerExternalThread.start();
+    }
     
+    /**
+     * Generate a unique ID for thread. <br>
+     * This ID later is used to identify or search a thread.
+     * @param obj Is the thread-object for what the id will be generated.
+     * @return The generated ThreadId
+     */
     public static synchronized String generateThreadId(Object obj) {
         String threadId = "";
         Format dateF = new SimpleDateFormat ("ddMMYYhhmmss");
@@ -144,6 +172,11 @@ public class AdoplixServer {
         }
     }
     
+    /**
+     * The system-adapters hare registered in lists. <br>
+     * Before they stop, they have to deregister here. This function removes them from the lists.
+     * @param adaptor Is the adapter to remove from internal lists.
+     */
     public static synchronized void deregisterAdapter(AdapterConnector adaptor) {
         String threadId = adaptor.getThreadId();
         if (adaptor.getClass().equals (AdapterConnectorAdmin.class)) {
@@ -159,9 +192,10 @@ public class AdoplixServer {
     }
     
     /**
-     * The adaptors register here to tell the server that they exist. <br>
-     * This is usefull e.g. when a response comes in and must be assigned to a
-     * adaptor.
+     * The system-adapters have to register here after they started. <br>
+     * Their ID is stored to lists and so they can later returned if recommended.
+     * @param adaptor Is the new adaptor which will be added to the lists.
+     * @return A generated unique ThreadId.
      */
     public static synchronized String registerAdapter(AdapterConnector adaptor) {
         String threadId = generateThreadId (adaptor);

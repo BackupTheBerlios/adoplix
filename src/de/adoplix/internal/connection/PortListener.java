@@ -33,7 +33,7 @@ public class PortListener implements I_PortListener {
     public PortListener (int socketNr) {
         _socketNr = socketNr;
         
-        this.run();
+//        this.run();
     }
     
     public void stop() {

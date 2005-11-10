@@ -17,7 +17,7 @@ public class ServerConfiguration {
     private String _pathTaskConfiguration = null;
     private String _securityPwdAdmin = null;
     private int _portExternal = 0;
-    private int _portService = 0;
+    private int _portAdmin = 0;
     private int _portLocal = 0;
     private int _maxClientThreads = 0;
     private int _timeoutClientMillis = 0;
@@ -44,7 +44,7 @@ public class ServerConfiguration {
             conf.setXMLRootObject ();
             conf.setXMLObjectByKey(ServerConfigurationConstants.SERVER_COMMUNICATION);
             _portExternal = conf.toInt(conf.getChild (ServerConfigurationConstants.EXTERNAL_PORT).getValue());
-            _portService = conf.toInt(conf.getChild (ServerConfigurationConstants.ADMIN_PORT).getValue());
+            _portAdmin = conf.toInt(conf.getChild (ServerConfigurationConstants.ADMIN_PORT).getValue());
             _portLocal = conf.toInt(conf.getChild (ServerConfigurationConstants.LOCAL_PORT).getValue());
             
             // MaxClientThreads
@@ -103,8 +103,8 @@ public class ServerConfiguration {
     public int getPortExternal() {
         return _portExternal;
     }
-    public int getPortService() {
-        return _portService;
+    public int getPortAdmin() {
+        return _portAdmin;
     }
     public int getPortLocal() {
         return _portLocal;

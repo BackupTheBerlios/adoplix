@@ -19,17 +19,22 @@ import java.io.StringReader;
  * @author dirk
  */
 public class XMLMessage extends XMLRetriever {
+    private I_XMLContainer _xmlContainer;
     
     /** 
-     * Mit diesem Konstruktor wird Configuration veranlasst, eine Datei zu
-     * parsen, und den Inhalt strukturiert in ein XMLObject zu schreiben.
-     * @param confFileName Die zu parsende Datei
+     * Mit diesem Konstruktor wird XMLMessage veranlasst, die XML-Daten zu parsen.
+     * @param stringReader Stream mit den zu parsenden Daten
      */
     public XMLMessage (StringReader stringReader) {
-        _xmlObject = new XMLObject();
-        XMLParser xmlParser = new XMLParser(stringReader, _xmlObject);
-        xmlParser.parse();
-        _xmlRootObject = _xmlObject;
+        super(stringReader);        
+        // next step: look what kind of adoplix-Telegram it is
+        // and wrap it into a container
+        createXMLContainer();
+        
     }
+
+    private createXMLContainer() {
+    }
+
     
 }

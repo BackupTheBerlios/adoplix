@@ -36,7 +36,6 @@ public class AdapterConnector implements I_AdapterConnector {
         try {
             dataInputReader = LittleHelper.streamToStringReader(_clientSocket.getInputStream ());
             _xmlMessage = new XMLMessage(dataInputReader);
-            run();
         }
         catch (IOException ioEx) {
             

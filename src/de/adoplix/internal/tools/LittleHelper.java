@@ -40,5 +40,40 @@ public class LittleHelper {
         }
         return new StringReader(dataInputString);
     }
+
+    public static synchronized I_XMLContainer createXMLContainer(StringReader stringReader) {
+        I_XMLContainer xmlContainer;
+        XMLRetriever retriever = new XMLRetriever (stringReader);
+        XMLObject xmlObject = retriever.setXMLObjectByKey ("Header.MsgType");
+        String msgType = getElementValue ();
+
+        if (msgType.equalsIgnoreCase("LocalConnection")) {
+            xmlContainer = new LocalConnection(xmlObject);
+        }
+
+        if (msgType.equalsIgnoreCase("LocalEvent")) {
+            xmlContainer = new LocalConnection(xmlObject);
+        }
+
+        if (msgType.equalsIgnoreCase("ExternalEvent")) {
+            xmlContainer = new LocalConnection(xmlObject);
+        }
+
+        if (msgType.equalsIgnoreCase("LocalConnection")) {
+            xmlContainer = new LocalConnection(xmlObject);
+        }
+
+        if (msgType.equalsIgnoreCase("Ping")) {
+            xmlContainer = new LocalConnection(xmlObject);
+        }
+
+        if (msgType.equalsIgnoreCase("Pong")) {
+            xmlContainer = new LocalConnection(xmlObject);
+        }
+
+
+
+        return xmlContainer;
+    }
     
 }

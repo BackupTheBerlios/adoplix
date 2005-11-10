@@ -10,7 +10,6 @@ import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoun
  */
 public class XMLRetriever {
     protected XMLObject _xmlRootObject = null;
-
     protected XMLObject _xmlObject = null;
 
     /**
@@ -27,6 +26,16 @@ public class XMLRetriever {
     public XMLRetriever(XMLObject xmlObject) {
         _xmlObject = xmlObject;
         _xmlRootObject = xmlObject;
+    }
+
+    /**
+     *
+     */
+    public XMLRetriever(StringReader stringReader) {
+        _xmlObject = new XMLObject();
+        XMLParser xmlParser = new XMLParser(stringReader, _xmlObject);
+        xmlParser.parse();
+        _xmlRootObject = _xmlObject;
     }
 
     public XMLObject setXMLRootObject()
