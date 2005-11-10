@@ -1,26 +1,36 @@
 /*
  * LittleHelper.java
  *
- * Created on 9. November 2005, 22:53
  *
- * To change this template, choose Tools | Options and locate the template under
- * the Source Creation and Management node. Right-click the template and choose
- * Open. You can then make changes to the template in the Source Editor.
  */
 
 package de.adoplix.internal.tools;
-
-import de.adoplix.internal.telegram.XMLMessage;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
+import de.adoplix.internal.telegram.Acknowledge;
+import de.adoplix.internal.telegram.ExternalEvent;
+import de.adoplix.internal.telegram.ExternalResponse;
+import de.adoplix.internal.telegram.LocalConnection;
+import de.adoplix.internal.telegram.Ping;
+import de.adoplix.internal.telegram.Pong;
+import de.adoplix.internal.telegram.XMLContainer;
+import de.adoplix.internal.telegram.XMLMessageConstants;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.logging.Logger;
+import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.tools.xml.XMLObject;
+import de.adoplix.internal.tools.xml.XMLRetriever;
 
 /**
  *
  * @author dirk
  */
 public class LittleHelper {
+    
+    private static Logger logger = AdopLog.getLogger (LittleHelper.class);
     
     /** Creates a new instance of LittleHelper */
     public LittleHelper () {
@@ -38,41 +48,56 @@ public class LittleHelper {
         } catch (IOException ioEx){
             dataInputString = "";
         }
-        return new StringReader(dataInputString);
+        return new StringReader (dataInputString);
     }
-
-    public static synchronized I_XMLContainer createXMLContainer(StringReader stringReader) {
-        I_XMLContainer xmlContainer;
+    
+    /**
+     * Creates an Class which is derived from superclass XMLContainer. <br>
+     * The container retrieves the properties by getters and setters.
+     * @param stringReader Is a buffer which holds the XML-data
+     * @return A subclass from XMLContainer, depending to the MsgType which is
+     * named within the XML-code.
+     */
+    public static synchronized XMLContainer createXMLContainer (StringReader stringReader) throws MessageContentException {
+        String msgType = "";
+        XMLObject xmlObject = null;
+        XMLContainer xmlContainer = null;
         XMLRetriever retriever = new XMLRetriever (stringReader);
-        XMLObject xmlObject = retriever.setXMLObjectByKey ("Header.MsgType");
-        String msgType = getElementValue ();
-
-        if (msgType.equalsIgnoreCase("LocalConnection")) {
-            xmlContainer = new LocalConnection(xmlObject);
+        try {
+            retriever.setXMLObjectByKey (XMLMessageConstants.MSG_HEADER);
+            msgType = retriever.getChild (XMLMessageConstants.MSG_TYPE).getValue ();
+            
+        } catch (ConfigurationKeyNotFoundException cknfEx) {
+            throw new MessageContentException();
         }
-
-        if (msgType.equalsIgnoreCase("LocalEvent")) {
-            xmlContainer = new LocalConnection(xmlObject);
+        
+        // the returned object depends to the msgtype.
+        // The type was read above
+        
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_LOCAL_CONNECTION)) {
+            xmlContainer = new LocalConnection (retriever);
         }
-
-        if (msgType.equalsIgnoreCase("ExternalEvent")) {
-            xmlContainer = new LocalConnection(xmlObject);
+        
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_EXTERNAL_EVENT)) {
+            xmlContainer = new ExternalEvent (retriever);
         }
-
-        if (msgType.equalsIgnoreCase("LocalConnection")) {
-            xmlContainer = new LocalConnection(xmlObject);
+        
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_EXTERNAL_RESPONSE)) {
+            xmlContainer = new ExternalResponse (retriever);
         }
-
-        if (msgType.equalsIgnoreCase("Ping")) {
-            xmlContainer = new LocalConnection(xmlObject);
+        
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_ACKNOWLEDGE)) {
+            xmlContainer = new Acknowledge (retriever);
         }
-
-        if (msgType.equalsIgnoreCase("Pong")) {
-            xmlContainer = new LocalConnection(xmlObject);
+        
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_PING)) {
+            xmlContainer = new Ping (retriever);
         }
-
-
-
+        
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_PONG)) {
+            xmlContainer = new Pong (retriever);
+        }
+        
         return xmlContainer;
     }
     
