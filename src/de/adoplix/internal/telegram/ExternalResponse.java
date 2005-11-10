@@ -4,8 +4,13 @@
  */
 
 package de.adoplix.internal.telegram;
+import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
+import de.adoplix.internal.runtimeInformation.exceptions.MessageValueTypeException;
 import de.adoplix.internal.tools.xml.XMLRetriever;
+import java.util.logging.Logger;
 
 /**
  * Container which stores connection informations from a local adapter
@@ -14,46 +19,80 @@ import de.adoplix.internal.tools.xml.XMLRetriever;
  * @author dirkg
  */
 public class ExternalResponse extends XMLContainer {
+
+    private Logger _logger = AdopLog.getLogger (LocalConnection.class);
     
-    private String _adapterName = "";
-    private int _aim = 0;
-    private String _eventId = "";
+    private String _initialEventId = "";
+    private String _initialAddress = "";
+    private String _timeStampSend = "";
+    private String _timeStampReceived = "";
+    private String _responseId = "";
+    private StringBuffer _cData = new StringBuffer();
+    
     
     public ExternalResponse (XMLRetriever retriever) throws MessageContentException {
         super(retriever);
+        try {
+            // HEADER was selected in super-constructor
+            setInitialAddress(retriever.getChild (XMLMessageConstants.INITIAL_ADDRESS).getValue ());
+            setInitialEventId(retriever.getChild (XMLMessageConstants.INITIAL_EVENT_ID).getValue ());
+            setTimeStampSend(retriever.getChild (XMLMessageConstants.TIME_STAMP_SEND).getValue ());
+            setTimeStampReceived(retriever.getChild (XMLMessageConstants.TIME_STAMP_RECEIVED).getValue ());
+            setResponseId(retriever.getChild (XMLMessageConstants.RESPONSE_ID).getValue ());
+            retriever.setXMLRootObject ();
+            retriever.setXMLObjectByKey (XMLMessageConstants.MSG_BODY);
+            getCData().append (retriever.getChild (XMLMessageConstants.CDATA).getValue ());
+        }
+        catch (ConfigurationKeyNotFoundException cknfEx) {
+            _logger.warning (new MessageContentException().getMessage ());
+        }
     }
 
-    /** Creates a new instance of LocalConnection */
-//    public LocalConnection (String type, String adapterName, int aim,  String eventId) {
-//        setType(type);
-//        setName(adapterName);
-//        setAim(aim);
-//        setEventId(eventId);
-//    }
-
-    public String getName () {
-        return _adapterName;
+    public String getInitialEventId () {
+        return _initialEventId;
     }
 
-    public void setName (String _adapterName) {
-        this._adapterName = _adapterName;
+    public void setInitialEventId (String _initialEventId) {
+        this._initialEventId = _initialEventId;
     }
 
-    public int getAim () {
-        return _aim;
+    public String getInitialAddress () {
+        return _initialAddress;
     }
 
-    public void setAim (int _aim) {
-        this._aim = _aim;
+    public void setInitialAddress (String _initialAddress) {
+        this._initialAddress = _initialAddress;
     }
 
-    public String getEventId () {
-        return _eventId;
+    public String getTimeStampSend () {
+        return _timeStampSend;
     }
 
-    public void setEventId (String _eventId) {
-        this._eventId = _eventId;
+    public void setTimeStampSend (String _timeStampSend) {
+        this._timeStampSend = _timeStampSend;
     }
-    
-    
+
+    public String getTimeStampReceived () {
+        return _timeStampReceived;
+    }
+
+    public void setTimeStampReceived (String _timeStampReceived) {
+        this._timeStampReceived = _timeStampReceived;
+    }
+
+    public String getResponseId () {
+        return _responseId;
+    }
+
+    public void setResponseId (String _responseId) {
+        this._responseId = _responseId;
+    }
+
+    public StringBuffer getCData () {
+        return _cData;
+    }
+
+    public void setCData (StringBuffer _cData) {
+        this._cData = _cData;
+    }
 }

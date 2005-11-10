@@ -11,7 +11,20 @@ import java.util.logging.Logger;
 public class XMLContainer implements I_XMLContainer {
     private Logger logger = AdopLog.getLogger (XMLContainer.class);
     protected String _msgType = "";
+    
+    /**
+     * Constructor for creating a blank container which is later used to
+     * write XML-data-format.
+     */
+    public XMLContainer () {
+        
+    }
 
+    /**
+     * Constructor with an XML-object-retriever. Takes the xml-formatted data
+     * and stores it to container members.
+     * @param retriever Is the class which contains prepared xml-data.
+     */
     public XMLContainer (XMLRetriever retriever) {
         try {
             retriever.setXMLRootObject ();

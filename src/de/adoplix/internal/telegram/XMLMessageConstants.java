@@ -62,4 +62,12 @@ public abstract class XMLMessageConstants {
     /** LocalConnection constants <br> Aim of partner: Awaits Response or Event */
     public static final String AIM = "Aim";
     
+    /** ExternalResponse constants <br> InitialEventId is the event which was
+      * send by the requesting client */
+    public static final String INITIAL_EVENT_ID = "InitialEventId";
+    /** ExternalResponse constants <br> TimeStampSend is the time when message was send */
+    public static final String TIME_STAMP_RECEIVED = "TimeStampReceived";
+    /** ExternalResponse constants <br> ResponseId is unique identifier for message */ 
+    public static final String RESPONSE_ID = "ResponseId";
+    
 }

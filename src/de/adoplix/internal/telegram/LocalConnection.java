@@ -28,15 +28,23 @@ public class LocalConnection extends XMLContainer {
     private int _aim = 0;
     private String _eventId = "";
     
+    /**
+     * Constructor for blank container which is be used to create an XML-Format.
+     */
+    public LocalConnection () {
+        super();
+    }
+    
     public LocalConnection (XMLRetriever retriever) {
         super(retriever);
         try {
+            // HEADER was selected in super-constructor
             retriever.setXMLRootObject ();
             retriever.setXMLObjectByKey (XMLMessageConstants.MSG_BODY);
-            _partnerName = retriever.getChild (XMLMessageConstants.PARTNER_NAME).getValue ();
-            _partnerType = retriever.getChild (XMLMessageConstants.PARTNER_TYPE).getValue ();
-            _aim = retriever.toInt(retriever.getChild (XMLMessageConstants.AIM).getValue ());
-            _eventId = retriever.getChild (XMLMessageConstants.EVENT_ID).getValue ();
+            setPartnerName(retriever.getChild (XMLMessageConstants.PARTNER_NAME).getValue ());
+            setPartnerType(retriever.getChild (XMLMessageConstants.PARTNER_TYPE).getValue ());
+            setAim (retriever.toInt(retriever.getChild (XMLMessageConstants.AIM).getValue ()));
+            setEventId (retriever.getChild (XMLMessageConstants.EVENT_ID).getValue ());
         }
         catch (ConfigurationKeyNotFoundException cknfEx) {
             logger.warning (new MessageContentException().getMessage ());
