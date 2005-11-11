@@ -10,7 +10,6 @@ import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException
 import de.adoplix.internal.telegram.Acknowledge;
 import de.adoplix.internal.telegram.ExternalEvent;
 import de.adoplix.internal.telegram.ExternalResponse;
-import de.adoplix.internal.telegram.LocalConnection;
 import de.adoplix.internal.telegram.Ping;
 import de.adoplix.internal.telegram.Pong;
 import de.adoplix.internal.telegram.XMLContainer;
@@ -21,6 +20,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.logging.Logger;
 import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.tools.xml.XMLObject;
 import de.adoplix.internal.tools.xml.XMLRetriever;
 
@@ -30,12 +30,15 @@ import de.adoplix.internal.tools.xml.XMLRetriever;
  */
 public class LittleHelper {
     
-    private static Logger logger = AdopLog.getLogger (LittleHelper.class);
+    private static Logger _logger = AdopLog.getLogger (LittleHelper.class);
     
     /** Creates a new instance of LittleHelper */
     public LittleHelper () {
     }
-    
+
+    /**
+     * Takes a Byte-Stream (InputStream) and copies the content to a StringReader
+     */
     public static synchronized StringReader streamToStringReader (InputStream dataInputStream) {
         int b;
         String dataInputString = "";
@@ -49,6 +52,18 @@ public class LittleHelper {
             dataInputString = "";
         }
         return new StringReader (dataInputString);
+    }
+    
+    /**
+     * Creates an Class which is derived from superclass XMLContainer. <br>
+     * The container retrieves the properties by getters and setters. <br>
+     * Simplifies the same method createXMLContainer with signature StringReader.
+     * @param dataInputStream Is a InputStream which holds the XML-data
+     * @return A subclass from XMLContainer, depending to the MsgType which is
+     * named within the XML-code.
+     */
+    public static synchronized XMLContainer createXMLContainer (InputStream dataInputStream) throws MessageContentException {
+        return createXMLContainer (streamToStringReader(dataInputStream));
     }
     
     /**
@@ -74,15 +89,15 @@ public class LittleHelper {
         // the returned object depends to the msgtype.
         // The type was read above
         
-        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_LOCAL_CONNECTION)) {
-            xmlContainer = new LocalConnection (retriever);
-        }
+//        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_LOCAL_CONNECTION)) {
+//            xmlContainer = new LocalConnection (retriever);
+//        }
         
-        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_EXTERNAL_EVENT)) {
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_EVENT)) {
             xmlContainer = new ExternalEvent (retriever);
         }
         
-        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_EXTERNAL_RESPONSE)) {
+        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_RESPONSE)) {
             xmlContainer = new ExternalResponse (retriever);
         }
         

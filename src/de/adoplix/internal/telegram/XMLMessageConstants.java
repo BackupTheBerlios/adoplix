@@ -19,9 +19,9 @@ public abstract class XMLMessageConstants {
     /** Message Type Pong */
     public static final String MSG_TYPE_PONG = "Pong";
     /** Message Type ExternalEvent */
-    public static final String MSG_TYPE_EXTERNAL_EVENT = "ExternalEvent";
+    public static final String MSG_TYPE_EVENT = "Event";
     /** Message Type ExternalResponse */
-    public static final String MSG_TYPE_EXTERNAL_RESPONSE = "ExternalResponse";
+    public static final String MSG_TYPE_RESPONSE = "Response";
     /** Message Type Acknowledge */
     public static final String MSG_TYPE_ACKNOWLEDGE = "Acknowledge";
     
@@ -69,5 +69,7 @@ public abstract class XMLMessageConstants {
     public static final String TIME_STAMP_RECEIVED = "TimeStampReceived";
     /** ExternalResponse constants <br> ResponseId is unique identifier for message */ 
     public static final String RESPONSE_ID = "ResponseId";
-    
+ 
+    /** Acknowledge constants <br> Result */
+    public static final String RESULT = "Result";
 }
