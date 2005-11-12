@@ -11,10 +11,6 @@ import de.adoplix.internal.runtimeInformation.AdopLog;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -76,7 +72,7 @@ public class PortListener implements I_PortListener {
      */
     public void startAdapterConnector (Socket clientSocket) {
         AdapterConnector adapterConnector = new AdapterConnector(clientSocket);
-//        Runnable adapterConnector = new AdapterConnectorAdmin(clientSocket);
+//        Runnable adapterConnector = new AdapterConnector(clientSocket);
         Thread connectorThread = new Thread(adapterConnector);
         connectorThread.start();
     }

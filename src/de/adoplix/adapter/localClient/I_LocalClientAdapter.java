@@ -3,12 +3,12 @@
  */
 package de.adoplix.adapter.localClient;
 
-import de.adoplix.adapter.basic.I_BasicAdapter;
+import de.adoplix.internal.adapter.I_Adapter;
 
 /**
  * @author dirkg
  *
  */
-public interface I_LocalClientAdapter extends I_BasicAdapter {
+public interface I_LocalClientAdapter extends I_Adapter {
 
 }

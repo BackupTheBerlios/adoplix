@@ -16,6 +16,7 @@ public class XMLContainer implements I_XMLContainer {
     private String _newMsg = "";
     private String _newMsgHeader = "";
     private String _newMsgBody = "";
+    private String _taskId = null;
     
     /**
      * Constructor for creating a blank container which is later used to
@@ -31,9 +32,9 @@ public class XMLContainer implements I_XMLContainer {
      * @param retriever Is the class which contains prepared xml-data.
      */
     public XMLContainer (XMLRetriever retriever) {
+        // Header is for every adoplix-messages the same
         try {
-            retriever.setXMLRootObject ();
-            retriever.setXMLObjectByKey (XMLMessageConstants.MSG_HEADER);
+            retriever.setXMLObjectByKey (XMLMessageConstants.MSG_HEADER, true);
             _msgType = retriever.getChild (XMLMessageConstants.MSG_TYPE).getValue ();
             _acknInitiator = retriever.toInt (retriever.getChild (XMLMessageConstants.ACKN_INITIATOR).getValue ());
             _awaitingResponse = retriever.toInt (retriever.getChild (XMLMessageConstants.AWAITING_RESPONSE).getValue ());
@@ -45,6 +46,15 @@ public class XMLContainer implements I_XMLContainer {
         catch (ConfigurationTypeException ctEx) {
             logger.warning (new MessageValueTypeException().getMessage ());
         }
+        
+        // TaskId is not set by all types of message.
+        // But here it is a good place to look for.
+        // If the taskId is not found, the member will be set to <null>
+        try {
+            retriever.setXMLObjectByKey (XMLMessageConstants.MSG_BODY, true);
+            _taskId = retriever.getChild (XMLMessageConstants.TASK_ID).getValue ();
+        }
+        catch (Throwable th) {}
     }
 
     /**
@@ -56,10 +66,24 @@ public class XMLContainer implements I_XMLContainer {
     }
     
     /**
+     * Delivers the TaskId of a message. <br>
+     * The TaskId is only set when the message is a kind of event (event or
+     * response). <br>
+     * When the message is of another kind, the TaskId can be <null> !.
+     * @return TaskId or <null>
+     */
+    public String getTaskId () throws ConfigurationKeyNotFoundException {
+        if (null== _taskId) {
+            throw new ConfigurationKeyNotFoundException();
+        }
+        return _taskId;
+    }
+    
+    /**
      * Creates a StringReader which delivers the message content in xml-format.
      * @return XML formatted buffered data
      */
-    public StringReader createStringReader() {
+    public StringReader getXMLStringReader() {
         _newMsg="<" + XMLMessageConstants.ADOPLIX_MESSAGE + ">";
         _newMsg+= "\n<" + XMLMessageConstants.MSG_HEADER + ">";
         _newMsg+= "\n<" + XMLMessageConstants.MSG_TYPE + ">" + _msgType + "</" + XMLMessageConstants.MSG_TYPE + ">";
@@ -101,6 +125,10 @@ public class XMLContainer implements I_XMLContainer {
     
     public boolean awaitingResponse () {
         return (1 ==_awaitingResponse);
+    }
+    
+    public String getXMLString() {
+        return _newMsg;
     }
     
     protected void addToHeader (String elementName, String elementValue){

@@ -1,8 +1,9 @@
 package de.adoplix.internal.server;
-import de.adoplix.internal.connection.AdapterConnector;
+import de.adoplix.adapter.TaskAdapter;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.configuration.TaskConfiguration;
 import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import de.adoplix.internal.configuration.ServerConfiguration;
+import de.adoplix.internal.tasks.Task;
+import de.adoplix.internal.telegram.XMLContainer;
 
 /**
  * This class implements the central server functionality
@@ -21,9 +24,9 @@ public class AdoplixServer {
     /** Absolute path of Configuration-File */
     private static String _pathConfiguration = "";
     /** Container of own configuration */
-    private ServerConfiguration _serverConfiguration = null;
+    private static ServerConfiguration _serverConfiguration = null;
     /** Container of task configuration */
-    private TaskConfiguration _taskConfiguration = null;
+    private static TaskConfiguration _taskConfiguration = null;
     /** Counter for generating ThreadID's */
     private static int _threadCounter = 0;
     /** Counter for max. number of Clients */
@@ -139,6 +142,22 @@ public class AdoplixServer {
         listenerExternalThread.start();
     }
     
+    public static synchronized TaskAdapter startTaskAdapter (XMLContainer xmlContainer) {
+        try {
+            Task task = _taskConfiguration.getTask (xmlContainer.getTaskId ());
+            switch (task.getLocalAdapterConnType ()) {
+                case (0):   // connection via port
+                    
+                    break;
+            }
+            
+            return new TaskAdapter(xmlContainer);
+        }
+        catch (ConfigurationKeyNotFoundException cknfEx) {
+            logger.warning(cknfEx.getMessage () + "; TaskId / TaskAdapter");
+        }
+    }
+    
     /**
      * Generate a unique ID for thread. <br>
      * This ID later is used to identify or search a thread.
@@ -173,45 +192,4 @@ public class AdoplixServer {
         }
     }
     
-    /**
-     * The system-adapters hare registered in lists. <br>
-     * Before they stop, they have to deregister here. This function removes them from the lists.
-     * @param adaptor Is the adapter to remove from internal lists.
-     */
-    public static synchronized void deregisterAdapter(AdapterConnector adaptor) {
-        String threadId = adaptor.getThreadId();
-        if (adaptor.getClass().equals (AdapterConnectorAdmin.class)) {
-            _adapterAdminList.remove (threadId);
-        }
-        if (adaptor.getClass ().equals (AdapterConnectorLocal.class)) {
-            _adapterServiceList.remove (threadId);
-        }
-        if (adaptor.getClass ().equals (AdapterConnectorExternal.class)) {
-            _adapterEventList.remove (threadId);
-        }
-        _activeClientThreadsCount--;
-    }
-    
-    /**
-     * The system-adapters have to register here after they started. <br>
-     * Their ID is stored to lists and so they can later returned if recommended.
-     * @param adaptor Is the new adaptor which will be added to the lists.
-     * @return A generated unique ThreadId.
-     */
-    public static synchronized String registerAdapter(AdapterConnector adaptor) {
-        String threadId = generateThreadId (adaptor);
-        adaptor.setThreadId(threadId);
-        
-        if (adaptor.getClass().equals (AdapterConnectorAdmin.class)) {
-            _adapterAdminList.put (threadId, adaptor);
-        }
-        if (adaptor.getClass ().equals (AdapterConnectorLocal.class)) {
-            _adapterServiceList.put (threadId, adaptor);
-        }
-        if (adaptor.getClass ().equals (AdapterConnectorExternal.class)) {
-            _adapterEventList.put (threadId, adaptor);
-        }
-        _activeClientThreadsCount++;
-        return threadId;
-    }
 }

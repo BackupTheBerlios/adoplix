@@ -80,20 +80,10 @@ public class TaskConfiguration {
     private void fillHashMaps (Configuration conf, ArrayList idList, Map objects, Map ids) {
         try {
             for (int i = 0; i < idList.size(); i++) {
-                Task task = new Task();
                 conf.setXMLParentObject();
                 String taskId = ((XMLObject)idList.get(i)).getValue();
                 conf.setXMLObjectByKey(taskId);
-                task.setLocalTaskId(taskId);
-                task.setTaskAlias(conf.getChild(TaskConfigurationConstants.TASK_ALIAS).getValue());
-                task.setTaskType(conf.toInt(conf.getChild(TaskConfigurationConstants.TASK_TYPE).getValue()));
-                task.setRemoteServerAddress(conf.getChild(TaskConfigurationConstants.REMOTE_SERVER_ADDRESS).getValue());
-                task.setRemoteTaskId(conf.getChild(TaskConfigurationConstants.REMOTE_TASK_ID).getValue());
-                task.setLocalAdapterClass(conf.getChild(TaskConfigurationConstants.LOCAL_ADAPTER_CLASS).getValue());
-                task.setAcknInitiator(conf.toInt(conf.getChild(TaskConfigurationConstants.ACKN_INITIATOR).getValue()));
-                task.setTimeOutAcknMillis(conf.toInt(conf.getChild(TaskConfigurationConstants.TIME_OUT_ACKN_MILLIS).getValue()));
-                task.setPathAdapterConfig(conf.getChild(TaskConfigurationConstants.PATH_ADAPTER_CONFIG).getValue());
-                task.setDefaultData(new StringBuffer(conf.getChild(TaskConfigurationConstants.DEFAULT_DATA).getValue()));
+                Task task = new Task(conf, taskId);
 
                 // append to hashmap for finding id's by alias
                 ids.put(task.getTaskAlias (), taskId);
@@ -102,17 +92,37 @@ public class TaskConfiguration {
             }
         }
         catch (ConfigurationKeyNotFoundException confEx){
-        	logger.severe(confEx.getMessage ());
+        	logger.warning(confEx.getMessage ());
         	System.out.println(confEx.getMessage());
         }
-        catch (ConfigurationTypeException typeEx) {
-            logger.severe(typeEx.getMessage ());
-        	System.out.println(typeEx.getMessage());
-        }
         catch (Exception ex) {
-            logger.severe(ex.getMessage ());
+            logger.warning(ex.getMessage ());
             System.out.println("ERROR " + ": " + ex.getMessage ());
         }
+    }
+    
+    public Task getTask(String idOrAlias)throws TaskNotFoundException {
+        try {
+            return getServiceTaskById (idOrAlias);
+        }
+        catch (TaskNotFoundException tnfEx) {}
+        
+        try {
+            return getClientTaskById (idOrAlias);
+        }
+        catch (TaskNotFoundException tnfEx) {}
+            
+        try {
+            return getServiceTaskByAlias (idOrAlias);
+        }
+        catch (TaskNotFoundException tnfEx) {}
+        
+        try {
+            return getClientTaskByAlias (idOrAlias);
+        }
+        catch (TaskNotFoundException tnfEx) {}
+        
+        throw new TaskNotFoundException();
     }
     
     /**

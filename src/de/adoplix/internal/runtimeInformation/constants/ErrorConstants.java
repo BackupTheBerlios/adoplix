@@ -48,6 +48,7 @@ public abstract class ErrorConstants {
      */
     public static final int COMMUNICATION_SOCKET_IO = 300;
     public static final int COMMUNICATION_SOCKET_ACCEPT = 301;
+    public static final int COMMUNICATION_SEND_ERROR = 302;
     
     /*
      * Communication message faults
@@ -56,6 +57,7 @@ public abstract class ErrorConstants {
     public static final int MESSAGE_CONTENT_MISSED = 400;
     public static final int MESSAGE_READ_ERROR = 401;
     public static final int MESSAGE_VALUE_TYPE_ERROR = 402;
+    public static final int MESSAGE_NOT_AVAILABLE = 403;
             
     
     private ErrorConstants() {
@@ -69,10 +71,12 @@ public abstract class ErrorConstants {
         
         errorMap.put (new Integer(COMMUNICATION_SOCKET_IO), "Socket konnte nicht belauscht werden.");
         errorMap.put (new Integer(COMMUNICATION_SOCKET_ACCEPT), "Annahme einer Nachricht über Socket ist fehlgeschlagen.");
+        errorMap.put (new Integer(COMMUNICATION_SEND_ERROR), "Problem bei Versand einer Nachricht.");
         
         errorMap.put (new Integer(MESSAGE_CONTENT_MISSED), "Eine erforderliche Information innerhalb einer Nachricht fehlt.");
         errorMap.put (new Integer(MESSAGE_READ_ERROR), "Eine Nachricht konnte nicht fehlerfrei gelesen werden.");
         errorMap.put (new Integer(MESSAGE_VALUE_TYPE_ERROR), "Wert eines Nachrichtenelements ist vom falschen Typ.");
+        errorMap.put (new Integer(MESSAGE_NOT_AVAILABLE), "Kein Kommunikationspartner, oder keine Nachricht verfügbar.");
     }
     
     public static String getErrorMsg (int errorNr) {

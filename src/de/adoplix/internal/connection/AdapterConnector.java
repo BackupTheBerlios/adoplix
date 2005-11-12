@@ -5,6 +5,8 @@
 
 package de.adoplix.internal.connection;
 
+import de.adoplix.adapter.Adapter;
+import de.adoplix.adapter.TaskAdapter;
 import de.adoplix.internal.runtimeInformation.AdopLog;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
@@ -23,7 +25,7 @@ import java.util.logging.Logger;
  *
  * @author dirk
  */
-public class AdapterConnector implements I_AdapterConnector {
+public class AdapterConnector extends Adapter {
     
     private static Logger _logger = AdopLog.getLogger (AdapterConnector.class);
     
@@ -37,17 +39,6 @@ public class AdapterConnector implements I_AdapterConnector {
     /** Creates a new instance of AdapterConnector */
     public AdapterConnector (Socket clientSocket) {
         _clientSocket =  clientSocket;
-        
-        // change xml-stream into xml-container with getters and setters
-        // the xml-container will be the right one for the derived subclass.
-        // The subclass will use it later in run-method
-        try {
-            _xmlContainer = LittleHelper.createXMLContainer (_clientSocket.getInputStream ());
-        } catch (MessageContentException mcEx) {
-            _logger.severe (mcEx.getMessage ());
-        } catch (IOException ioEx) {
-            _logger.severe (ErrorConstants.MESSAGE_READ_ERROR + ": " + ErrorConstants.getErrorMsg (ErrorConstants.MESSAGE_READ_ERROR));
-        }
     }
     
     public void stop () {
@@ -58,11 +49,21 @@ public class AdapterConnector implements I_AdapterConnector {
     }
     
     public void run () {
+        // change xml-stream into xml-container with getters and setters
+        // the xml-container will be the right one for the derived subclass.
+        // The subclass will use it later
+        try {
+            _xmlContainer = LittleHelper.createXMLContainer (_clientSocket.getInputStream ());
+        } catch (MessageContentException mcEx) {
+            _logger.severe (mcEx.getMessage ());
+        } catch (IOException ioEx) {
+            _logger.severe (ErrorConstants.MESSAGE_READ_ERROR + ": " + ErrorConstants.getErrorMsg (ErrorConstants.MESSAGE_READ_ERROR));
+        }
+
         // let server look for task and start TaskAdapter by server
-        TaskAdapter taskAdapter = AdoplixServer.startTaskAdapter();
         // server retrieves TaskAdapter
-        // set xml container to TaskAdapter (he must be able to handle the data)
-        taskAdapter.setXMLContainer(_xmlContainer);
+        // set xml container to TaskAdapter (enables the adapter to handle the data)
+        TaskAdapter taskAdapter = AdoplixServer.startTaskAdapter(_xmlContainer);
         
         if (_xmlContainer.acknByServer ()) {
             Acknowledge ackn = new Acknowledge();
@@ -70,7 +71,7 @@ public class AdapterConnector implements I_AdapterConnector {
         
         while (_run) {
             // wait for acknowledge by TaskAdapter... 
-            nur wenn so konf.
+//            nur wenn so konf.
         }
     }
 }

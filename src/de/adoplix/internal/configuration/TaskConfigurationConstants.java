@@ -48,4 +48,15 @@ public abstract class TaskConfigurationConstants {
     public final static String PATH_ADAPTER_CONFIG = "PathAdapterConfig";
     /** DefaultData <br> Optionale Standardwerte des Adapters */
     public final static String DEFAULT_DATA = "DefaultData";
+    
+    /** ResponseTaskId <br> The TaskId that identifies the Adapter which takes
+      * the response and forwards it to the initial client */
+    public final static String RESPONSE_TASK_ID = "ResponseTaskId";
+    /** LocalAdapterConnType <br> Is local Adapter reachable by Port or as
+      * a Class which must be instantiated as new object */
+    public final static String LOCAL_ADAPTER_CONN_TYPE = "LocalAdapterConnType";
+    /** LocalAdapterIP <br> IP-Adress of Local Adapter which waits for a job */
+    public final static String LOCAL_ADAPTER_IP = "LocalAdapterIP";
+    /** LocalAdapterPort <br> Port of Local Adapter which waits for a job */
+    public final static String LOCAL_ADAPTER_PORT = "LocalAdapterPort";
 }

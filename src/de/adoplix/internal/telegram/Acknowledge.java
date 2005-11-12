@@ -4,6 +4,8 @@
  */
 
 package de.adoplix.internal.telegram;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
 import de.adoplix.internal.tools.xml.XMLRetriever;
 import java.io.StringReader;
@@ -16,6 +18,7 @@ import java.io.StringReader;
  */
 public class Acknowledge extends XMLContainer {
     
+    private Logger _logger = AdopLog.getLogger (Acknowledge.class);
     private int _result = 0;
 
     public Acknowledge () {
@@ -23,7 +26,21 @@ public class Acknowledge extends XMLContainer {
     }
     
     public Acknowledge (XMLRetriever retriever) throws MessageContentException {
+        // super reads the header
         super(retriever);
+        
+        // read body
+        try {
+            retriever.setXMLObjectByKey (XMLMessageConstants.MSG_BODY, true);
+            _result = retriever.toInt (retriever.getChild (XMLMessageConstants.RESULT).getValue ());
+        }
+        catch (ConfigurationKeyNotFoundException cknfEx) {
+            throw new MessageContentException();
+        }
+        catch (ConfigurationTypeException ctEx) {
+            _logger.warning(ctEx.getMessage ());
+            throw new MessageContentException();
+        }
     }
     
     public int getResult () {
@@ -31,7 +48,7 @@ public class Acknowledge extends XMLContainer {
     }
 
     public StringReader createStringReader() {
-        addToHeader (XMLMessageConstants.RESULT, String.valueOf (_result));
+        addToHeader (XMLMessageConstants.RESULT, String.valueOf (_result).trim ());
         StringReader stringReader = super.createStringReader ();
         return stringReader;
     }
