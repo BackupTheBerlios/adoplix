@@ -185,7 +185,6 @@ public class XMLRetriever {
     /**
      * Returns the numeric (int) value of an element.
      * @return int value of xml-object value.
-     * @see getElementValue
      * @throws ConfigurationTypeException, ConfigurationKeyNotFoundException
      */
     public int getElementIntValue() throws ConfigurationTypeException, ConfigurationKeyNotFoundException {
@@ -195,6 +194,24 @@ public class XMLRetriever {
     public int toInt (String intValue) throws ConfigurationTypeException {
     	try {
     		return Integer.parseInt(intValue);
+    	}
+    	catch(Exception ex) {
+    		throw new ConfigurationTypeException();
+    	}
+    }
+    
+    /**
+     * Returns the numeric (long) value of an element.
+     * @return long value of xml-object value.
+     * @throws ConfigurationTypeException, ConfigurationKeyNotFoundException
+     */
+    public long getElementLongValue() throws ConfigurationTypeException, ConfigurationKeyNotFoundException {
+        return toLong(getElementValue());
+    }
+    
+    public long toLong (String longValue) throws ConfigurationTypeException {
+    	try {
+    		return Long.parseLong(longValue);
     	}
     	catch(Exception ex) {
     		throw new ConfigurationTypeException();

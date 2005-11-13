@@ -63,15 +63,13 @@ public class AdapterConnector extends Adapter {
         // let server look for task and start TaskAdapter by server
         // server retrieves TaskAdapter
         // set xml container to TaskAdapter (enables the adapter to handle the data)
-        TaskAdapter taskAdapter = AdoplixServer.startTaskAdapter(_xmlContainer);
+        AdoplixServer.startTaskAdapter (_xmlContainer);
         
         if (_xmlContainer.acknByServer ()) {
             Acknowledge ackn = new Acknowledge();
-        }
-        
-        while (_run) {
-            // wait for acknowledge by TaskAdapter... 
-//            nur wenn so konf.
+            
+//     @TODO      senden ackn an socket...
+//            dann ist adapterconnector fertig, weil taskadapter weiter macht.
         }
     }
 }

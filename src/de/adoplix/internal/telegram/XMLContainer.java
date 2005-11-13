@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 public class XMLContainer implements I_XMLContainer {
     private Logger logger = AdopLog.getLogger (XMLContainer.class);
     protected String _msgType = "";
+    protected String _timeStampSend = "";
     protected int _acknInitiator = 0;
     protected int _awaitingResponse = 0;
     private String _newMsg = "";
@@ -36,6 +37,7 @@ public class XMLContainer implements I_XMLContainer {
         try {
             retriever.setXMLObjectByKey (XMLMessageConstants.MSG_HEADER, true);
             _msgType = retriever.getChild (XMLMessageConstants.MSG_TYPE).getValue ();
+            _timeStampSend = retriever.getChild (XMLMessageConstants.TIME_STAMP_SEND).getValue ();
             _acknInitiator = retriever.toInt (retriever.getChild (XMLMessageConstants.ACKN_INITIATOR).getValue ());
             _awaitingResponse = retriever.toInt (retriever.getChild (XMLMessageConstants.AWAITING_RESPONSE).getValue ());
             

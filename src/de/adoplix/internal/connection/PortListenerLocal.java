@@ -1,6 +1,6 @@
 /*
  * PortListenerAdmin.java
- *
+ * @deprecated
  */
 
 package de.adoplix.internal.server;
@@ -11,9 +11,10 @@ import de.adoplix.internal.telegram.XMLMessage;
 import java.net.Socket;
 
 /**
- * PortListener which starts AdaptorConnectorAdmin. <br>
+ * PortListener which starts AdaptorConnector. <br>
  * Nothing more nothing less.
  * @author dirk
+ * @deprecated No more reasons to use this class because the concept has changed...
  */
 public class PortListenerLocal extends PortListener {
     
@@ -24,15 +25,4 @@ public class PortListenerLocal extends PortListener {
         super (socketNr);
     }
     
-    /**
-     * Starts a new AdaptorConnector.
-     * Here it is an adapter for communicate with a client which uses the
-     * administration port.
-     */
-    public void startAdapterConnector (Socket clientSocket) {
-        AdapterConnectorLocal adapterConnector = new AdapterConnectorLocal(clientSocket);
-//        Runnable adapterConnector = new AdapterConnectorLocal(clientSocket);
-        Thread connectorThread = new Thread(adapterConnector);
-        connectorThread.start();
-    }
 }

@@ -11,6 +11,7 @@
 package de.adoplix.adapter;
 import de.adoplix.internal.tasks.Task;
 import de.adoplix.internal.telegram.Acknowledge;
+import de.adoplix.internal.telegram.ExternalEvent;
 import de.adoplix.internal.telegram.XMLContainer;
 import java.io.IOException;
 import java.net.Socket;
@@ -38,15 +39,24 @@ public class TaskAdapterToPort extends TaskAdapter {
             super.sendAdoplixMsg (clientSocket, _xmlContainer);
             
             if (1 == _task.getAcknInitiator ()) {
+                Acknowledge acknowledge = null;
+//                long millisNow = System.currentTimeMillis () + ((ExternalEvent)_xmlContainer).g;
+                
                 // Adapter has to acknolewdge
-                while (true) {
+                while (1<2) {
 //                wait for quit...
+                    break;
+                }
+                
+                if (null != acknowledge) {
+                    
                 }
             }
         } catch (IOException ioEx) {
             
         }
         
+        return null;
     }
     
 }

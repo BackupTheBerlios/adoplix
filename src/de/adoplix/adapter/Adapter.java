@@ -5,7 +5,6 @@
 
 package de.adoplix.adapter;
 import de.adoplix.internal.runtimeInformation.AdopLog;
-import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageSendException;
 import de.adoplix.internal.telegram.XMLContainer;
 import java.io.IOException;
@@ -14,6 +13,7 @@ import java.net.Socket;
 import java.util.logging.Logger;
 import de.adoplix.internal.adapter.I_Adapter;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageNotAvailableException;
+import de.adoplix.internal.tasks.Task;
 
 /**
  *
@@ -48,5 +48,4 @@ public class Adapter implements I_Adapter {
     protected XMLContainer getAdoplixMsg () throws MessageNotAvailableException {
         throw new MessageNotAvailableException();
     }
-    
 }

@@ -4,11 +4,13 @@
  */
 
 package de.adoplix.internal.telegram;
+import de.adoplix.internal.runtimeInformation.AdopLog;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
 import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
 import de.adoplix.internal.tools.xml.XMLRetriever;
 import java.io.StringReader;
+import java.util.logging.Logger;
 
 /**
  * Container which stores connection informations from a local adapter
@@ -47,9 +49,9 @@ public class Acknowledge extends XMLContainer {
         return _result;
     }
 
-    public StringReader createStringReader() {
-        addToHeader (XMLMessageConstants.RESULT, String.valueOf (_result).trim ());
-        StringReader stringReader = super.createStringReader ();
+    public StringReader getXMLStringReader () {
+        addToBody (XMLMessageConstants.RESULT, String.valueOf (_result).trim ());
+        StringReader stringReader = super.getXMLStringReader ();
         return stringReader;
     }
 }

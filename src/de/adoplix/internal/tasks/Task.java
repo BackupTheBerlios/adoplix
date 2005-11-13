@@ -21,7 +21,7 @@ public class Task {
     private String _remoteTaskId = "";
     private String _responseTaskId = "";
     private String _localAdapterIP = "";
-    private int _localAdapterPort = "";
+    private int _localAdapterPort = 0;
     private String _localAdapterClass = "";
     private int _localAdapterConnType = 0;
     private int _timeOutAcknMillis = 0;

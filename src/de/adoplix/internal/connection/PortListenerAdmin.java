@@ -4,11 +4,10 @@
  */
 
 package de.adoplix.internal.server;
-
-import de.adoplix.internal.connection.AdapterConnector;
 import de.adoplix.internal.connection.PortListener;
-import de.adoplix.internal.telegram.XMLMessage;
+import de.adoplix.internal.runtimeInformation.AdopLog;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 /**
  * PortListener which starts AdaptorConnectorAdmin. <br>
@@ -17,6 +16,8 @@ import java.net.Socket;
  */
 public class PortListenerAdmin extends PortListener {
     
+    private Logger logger = AdopLog.getLogger (PortListener.class);
+
     /**
      * Creates a new instance of PortListenerAdmin 
      */
@@ -24,15 +25,9 @@ public class PortListenerAdmin extends PortListener {
         super (socketNr);
     }
     
-    /**
-     * Starts a new AdaptorConnector.
-     * Here it is an adapter for communicate with a client which uses the
-     * administration port.
-     */
-    public void startAdapterConnector (Socket clientSocket) {
-        AdapterConnectorAdmin adapterConnector = new AdapterConnectorAdmin(clientSocket);
-//        Runnable adapterConnector = new AdapterConnectorAdmin(clientSocket);
-        Thread connectorThread = new Thread(adapterConnector);
-        connectorThread.start();
+    public void run() {
+        // TODO
+        // Admin Listener benutzt keine weiteren Adapter, sondern ruft
+        // direkt die Methoden des Servers auf...
     }
 }
