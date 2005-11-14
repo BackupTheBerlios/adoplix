@@ -49,7 +49,6 @@ public class PortListener implements I_PortListener {
                 try {
                 /* don't start a new client (adapterconnector) when max. number
                  * of clients is reached */
-                if (AdoplixServer.startClientThreadAllowed ()) {
                     Socket clientSocket = null;
                     // accept a new client for communicate with
                     clientSocket = serverSocket.accept ();
@@ -57,10 +56,9 @@ public class PortListener implements I_PortListener {
                     // spend a little time to other processes
                     this.wait (50);
                     // process data coming from client socket
-                } 
                 }catch (InterruptedException irEx)  {
                 }
-            serverSocket.close ();
+                serverSocket.close ();
             }
         } catch (IOException e) {
             logger.severe (ErrorConstants.COMMUNICATION_SOCKET_ACCEPT + ": " + ErrorConstants.getErrorMsg (ErrorConstants.COMMUNICATION_SOCKET_ACCEPT) + "; Socket = " + _socketNr);
@@ -71,10 +69,10 @@ public class PortListener implements I_PortListener {
      * Used to start a new AdapterConnector (client) by extended class.
      */
     public void startAdapterConnector (Socket clientSocket) {
-        AdapterConnector adapterConnector = new AdapterConnector(clientSocket);
+        AdapterConnector adapterConnector = new AdapterConnector (clientSocket);
 //        Runnable adapterConnector = new AdapterConnector(clientSocket);
-        Thread connectorThread = new Thread(adapterConnector);
-        connectorThread.start();
+        Thread connectorThread = new Thread (adapterConnector);
+        connectorThread.start ();
     }
     
 }

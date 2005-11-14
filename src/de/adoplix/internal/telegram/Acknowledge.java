@@ -24,6 +24,7 @@ public class Acknowledge extends XMLContainer {
     private int _result = 0;
 
     public Acknowledge () {
+        _msgType = XMLMessageConstants.MSG_TYPE_ACKNOWLEDGE;
         
     }
     
@@ -47,6 +48,10 @@ public class Acknowledge extends XMLContainer {
     
     public int getResult () {
         return _result;
+    }
+    
+    public void setResult(int result) {
+        _result = result;
     }
 
     public StringReader getXMLStringReader () {

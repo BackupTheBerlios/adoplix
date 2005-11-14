@@ -1,5 +1,4 @@
 package de.adoplix.internal.server;
-import de.adoplix.adapter.TaskAdapter;
 import de.adoplix.adapter.TaskAdapterToClass;
 import de.adoplix.adapter.TaskAdapterToPort;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
@@ -15,7 +14,7 @@ import java.util.logging.Logger;
 import de.adoplix.internal.configuration.ServerConfiguration;
 import de.adoplix.internal.tasks.Task;
 import de.adoplix.internal.telegram.XMLContainer;
-import de.adoplix.internal.connection.PortListener;
+import java.net.Socket;
 
 /**
  * This class implements the central server functionality
@@ -31,7 +30,7 @@ public class AdoplixServer {
     private static TaskConfiguration _taskConfiguration = null;
     /** Counter for generating ThreadID's */
     private static int _threadCounter = 0;
-    /** Counter for max. number of Clients */
+    /** Max. number of Clients allowed */
     private static int _maxClientThreadNumber = 0;
     /** Counter for active ClientThreads */
     private static int _activeClientThreadsCount = 0;
@@ -41,12 +40,12 @@ public class AdoplixServer {
 //    private static Map _adapterServiceList = new HashMap();
 //    /** Hashmap to find the admin adaptors fast */
 //    private static Map _adapterAdminList = new HashMap();
-
+    
     
     private static Logger logger = AdopLog.getLogger (AdoplixServer.class);
     
     public static void main (String[] args) {
-        logger.info("adoplix start");
+        logger.info ("adoplix start");
         parseArguments (args);
         AdoplixServer server = new AdoplixServer (args);
         while (null != server) {
@@ -65,7 +64,7 @@ public class AdoplixServer {
      */
     private static void parseArguments (String[] args) {
         logger.info ("try to analyse arguments");
-
+        
         if (null != args) {
             if (args.length > 0) {
                 args[0] = args[0].toUpperCase ();
@@ -80,8 +79,7 @@ public class AdoplixServer {
                         System.out.println (ErrorConstants.getErrorMsg (10));
                         System.exit (1);
                     }
-                }
-                else {
+                } else {
                     // no configuration file selected - server exit
                     logger.severe (ErrorConstants.getErrorMsg (10));
                 }
@@ -106,8 +104,8 @@ public class AdoplixServer {
         System.out.println ("adoplix");
         System.out.flush ();
         
-        readConfigurations();
-        startPortListener();
+        readConfigurations ();
+        startPortListener ();
     }
     
     private void readConfigurations () {
@@ -122,17 +120,17 @@ public class AdoplixServer {
             _taskConfiguration = new TaskConfiguration (taskConfiguration);
         }
     }
-
+    
     /*
-     * start the three listeners
+     * start the listeners to the admin port and to the external port
      */
-    private void startPortListener() {
-        PortListenerExternal portListenerExternal = new PortListenerExternal(_serverConfiguration.getPortExternal());
-        PortListenerAdmin portListenerAdmin = new PortListenerAdmin(_serverConfiguration.getPortAdmin ());
-        Thread portListenerExternalThread = new Thread(portListenerExternal);
-        Thread portListenerAdminThread = new Thread(portListenerAdmin);
-        portListenerExternalThread.start();
-        portListenerAdminThread.start();
+    private void startPortListener () {
+        PortListenerExternal portListenerExternal = new PortListenerExternal (_serverConfiguration.getPortExternal ());
+        PortListenerAdmin portListenerAdmin = new PortListenerAdmin (_serverConfiguration.getPortAdmin ());
+        Thread portListenerExternalThread = new Thread (portListenerExternal);
+        Thread portListenerAdminThread = new Thread (portListenerAdmin);
+        portListenerAdminThread.start ();
+        portListenerExternalThread.start ();
     }
     
     /**
@@ -140,25 +138,27 @@ public class AdoplixServer {
      * AdoplixServer knows what to do.
      * @param xmlContainer Transports the message received from a client-application.
      */
-    public static synchronized void startTaskAdapter (XMLContainer xmlContainer) {
-        try {
-            Task task = _taskConfiguration.getTask (xmlContainer.getTaskId ());
-            switch (task.getLocalAdapterConnType ()) {
-                case (0):   // connection via port
-                    TaskAdapterToPort taskAdapterPort = new TaskAdapterToPort(task, xmlContainer);
-                    Thread taskAdapterPortThread = new Thread(taskAdapterPort);
-                    taskAdapterPortThread.start();
-                    
-                case (1):
-                    TaskAdapterToClass taskAdapterClass = new TaskAdapterToClass(task, xmlContainer);
-                    Thread taskAdapterClassThread = new Thread(taskAdapterClass);
-                    taskAdapterClassThread.start();
+    public static synchronized void startTaskAdapter (Socket clientSocket, XMLContainer xmlContainer) {
+        if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
+            try {
+                Task task = _taskConfiguration.getTask (xmlContainer.getTaskId ());
+                switch (task.getLocalAdapterConnType ()) {
+                    case (0):   // connection via port
+                        TaskAdapterToPort taskAdapterPort = new TaskAdapterToPort (task, clientSocket, xmlContainer);
+                        Thread taskAdapterPortThread = new Thread (taskAdapterPort);
+                        taskAdapterPortThread.start ();
+                        
+                    case (1):
+                        TaskAdapterToClass taskAdapterClass = new TaskAdapterToClass (task, clientSocket, xmlContainer);
+                        Thread taskAdapterClassThread = new Thread (taskAdapterClass);
+                        taskAdapterClassThread.start ();
+                }
+                _activeClientThreadsCount++;
+            } catch (ConfigurationKeyNotFoundException cknfEx) {
+                logger.warning (cknfEx.getMessage () + "; TaskId / TaskAdapter");
+            } catch (TaskNotFoundException tnfEx) {
+                logger.warning (tnfEx.getMessage ());
             }
-        }
-        catch (ConfigurationKeyNotFoundException cknfEx) {
-            logger.warning(cknfEx.getMessage () + "; TaskId / TaskAdapter");
-        } catch (TaskNotFoundException tnfEx) {
-            logger.warning(tnfEx.getMessage());
         }
     }
     
@@ -168,32 +168,21 @@ public class AdoplixServer {
      * @param obj Is the thread-object for what the id will be generated.
      * @return The generated ThreadId
      */
-    public static synchronized String generateThreadId(Object obj) {
+    public static synchronized String generateThreadId (Object obj) {
         String threadId = "";
         Format dateF = new SimpleDateFormat ("ddMMYYhhmmss");
-        Date now = new Date();
+        Date now = new Date ();
         threadId = dateF.format (now);
-        Format decF = new DecimalFormat("000");
+        Format decF = new DecimalFormat ("000");
         threadId+= decF.format (_threadCounter++);
         threadId+= obj.hashCode ();
         
         return threadId;
     }
     
-    public static synchronized void clientThreadStopped() {
-        if (_activeClientThreadsCount++ > _maxClientThreadNumber) {
+    public static synchronized void clientThreadStopped () {
+        if (_activeClientThreadsCount-- > _maxClientThreadNumber) {
             _activeClientThreadsCount = _maxClientThreadNumber;
         }
     }
-    
-    public static synchronized boolean startClientThreadAllowed() {
-        if (_maxClientThreadNumber-- > 0) {
-            return true;
-        }
-        else {
-            _maxClientThreadNumber = 0;
-            return false;
-        }
-    }
-    
 }

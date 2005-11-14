@@ -7,6 +7,7 @@ package de.adoplix.adapter;
 
 import de.adoplix.internal.tasks.Task;
 import de.adoplix.internal.telegram.XMLContainer;
+import java.net.Socket;
 
 
 /**
@@ -21,8 +22,8 @@ public class TaskAdapter extends Adapter {
     public TaskAdapter () {
     }
     
-    public TaskAdapter (Task task, XMLContainer xmlContainer) {
-        super(xmlContainer);
+    public TaskAdapter (Task task, Socket clientSocket, XMLContainer xmlContainer) {
+        super(clientSocket, xmlContainer);
         _task = task;
     }   
 }

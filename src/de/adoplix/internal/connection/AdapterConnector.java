@@ -6,7 +6,6 @@
 package de.adoplix.internal.connection;
 
 import de.adoplix.adapter.Adapter;
-import de.adoplix.adapter.TaskAdapter;
 import de.adoplix.internal.runtimeInformation.AdopLog;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
@@ -16,6 +15,7 @@ import de.adoplix.internal.telegram.LocalConnection;
 import de.adoplix.internal.telegram.XMLContainer;
 import de.adoplix.internal.tools.LittleHelper;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Logger;
 
@@ -59,17 +59,25 @@ public class AdapterConnector extends Adapter {
         } catch (IOException ioEx) {
             _logger.severe (ErrorConstants.MESSAGE_READ_ERROR + ": " + ErrorConstants.getErrorMsg (ErrorConstants.MESSAGE_READ_ERROR));
         }
-
+        
         // let server look for task and start TaskAdapter by server
         // server retrieves TaskAdapter
         // set xml container to TaskAdapter (enables the adapter to handle the data)
-        AdoplixServer.startTaskAdapter (_xmlContainer);
+        AdoplixServer.startTaskAdapter (_clientSocket, _xmlContainer);
         
-        if (_xmlContainer.acknByServer ()) {
-            Acknowledge ackn = new Acknowledge();
-            
-//     @TODO      senden ackn an socket...
-//            dann ist adapterconnector fertig, weil taskadapter weiter macht.
+        try {
+            if (_xmlContainer.acknByServer ()) {
+                Acknowledge ackn = new Acknowledge ();
+                ackn.setResult (0);
+                String msg = ackn.getXMLString ();
+                
+                PrintWriter socketOut = new PrintWriter ( _clientSocket.getOutputStream () );
+                socketOut.println (msg);
+                socketOut.flush ();
+            }
+            _clientSocket.close ();
+        } catch (IOException ioEx) {
+            _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
     }
 }
