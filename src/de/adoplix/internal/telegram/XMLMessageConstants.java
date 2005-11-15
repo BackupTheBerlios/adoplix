@@ -24,6 +24,8 @@ public abstract class XMLMessageConstants {
     public static final String MSG_TYPE_RESPONSE = "Response";
     /** Message Type Acknowledge */
     public static final String MSG_TYPE_ACKNOWLEDGE = "Acknowledge";
+    /** Message Type AdminFunction */
+    public static final String MSG_TYPE_FUNCTION = "AdminFunction";
     
     
     /** AdoplixMessage <br> Zeigt, dass es sich um eine adoplix-Nachricht handelt */
@@ -74,4 +76,10 @@ public abstract class XMLMessageConstants {
  
     /** Acknowledge constants <br> Result */
     public static final String RESULT = "Result";
+    
+    /** AdminFunction constants <br> MethodName */
+    public static final String METHOD_NAME = "MethodName";
+    /** AdminFunction constants <br> ParameterValue */
+    public static final String PARAMETER_VALUE = "ParameterValue";
+    
 }

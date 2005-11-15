@@ -55,7 +55,7 @@ public class TaskAdapterToPort extends TaskAdapter {
                 boolean acknSent = false;
                 while (System.currentTimeMillis () < millisTimeOut) {
                     BufferedReader socketIn = new BufferedReader (new InputStreamReader ( serverSocket.getInputStream ()) );
-                    if (socketIn.ready()) {
+                    if (socketIn.ready ()) {
                         String responseOfServer = socketIn.readLine ();
                         writeToClientSocket (_clientSocket, responseOfServer);
                         acknSent = true;
@@ -65,7 +65,7 @@ public class TaskAdapterToPort extends TaskAdapter {
                 }
                 
                 if (! acknSent) {
-                    Acknowledge ackn = new Acknowledge();
+                    Acknowledge ackn = new Acknowledge ();
                     ackn.setResult (1);
                     writeToClientSocket (_clientSocket, ackn.getXMLString ());
                 }
@@ -74,18 +74,17 @@ public class TaskAdapterToPort extends TaskAdapter {
             serverSocket.close ();
             
         } catch (IOException ioEx) {
-            _logger.warning("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+            _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
     }
     
-    private void writeToClientSocket(Socket socket, String msg) {
+    private void writeToClientSocket (Socket socket, String msg) {
         try {
-        PrintWriter socketOut = new PrintWriter( _clientSocket.getOutputStream() );
-        socketOut.println(msg);
-        socketOut.flush ();
-        }
-        catch (IOException ioEx) {
-            _logger.warning("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+            PrintWriter socketOut = new PrintWriter ( _clientSocket.getOutputStream () );
+            socketOut.println (msg);
+            socketOut.flush ();
+        } catch (IOException ioEx) {
+            _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
     }
 }

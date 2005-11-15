@@ -1,4 +1,5 @@
 package de.adoplix.internal.server;
+import de.adoplix.adapter.TaskAdapterToAdmin;
 import de.adoplix.adapter.TaskAdapterToClass;
 import de.adoplix.adapter.TaskAdapterToPort;
 import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
@@ -152,6 +153,12 @@ public class AdoplixServer {
                         TaskAdapterToClass taskAdapterClass = new TaskAdapterToClass (task, clientSocket, xmlContainer);
                         Thread taskAdapterClassThread = new Thread (taskAdapterClass);
                         taskAdapterClassThread.start ();
+                        
+                    case (2):
+                        TaskAdapterToAdmin taskAdapterAdmin = new TaskAdapterToAdmin (task, clientSocket, xmlContainer);
+                        Thread taskAdapterAdminThread = new Thread (taskAdapterAdmin);
+                        taskAdapterAdminThread.start ();
+                        
                 }
                 _activeClientThreadsCount++;
             } catch (ConfigurationKeyNotFoundException cknfEx) {
