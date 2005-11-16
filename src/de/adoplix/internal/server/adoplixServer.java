@@ -192,4 +192,110 @@ public class AdoplixServer {
             _activeClientThreadsCount = _maxClientThreadNumber;
         }
     }
+    
+    /**
+     * Lets the server shut down.
+     * @param hardOrSoft Two values are valid here: 'hard' or 'soft' (not case sensitive). <br>
+     * If 'hard' the server stops immediately itself without taking care in which state the adaptor-threads are.<br>
+     * If 'soft' the server stops the threads (adapors) regulary by using their 'stop'-mechanism.
+     */
+    public static void shutdown(String hardOrSoft){
+    }
+
+    /**
+     * Restarts the server.
+     * @param hardOrSoft Two values are valid here: 'hard' or 'soft' (not case sensitive). <br>
+     * Restart means: Stopping all adaptors, cleaning runtime values, rereading the server-configuration.
+     * Rereading the tasks-configuration and start up.
+     * If 'hard' the server kills all threads immediately independent to their states. <>
+     * If 'soft' the server waits until the adaptors have finished their jobs.
+     */
+    public static void restart(String hardOrSoft){
+    }
+    
+    /**
+     * Sets the local system time.
+     * @param timeInMillis The new time to set.
+     */
+    public static void setTime(String timeInMillis){
+    }
+    
+    /**
+     * Retrieves the local system time.
+     * @return Time in millis, stored in a String
+     */
+    public static String getTime() {
+        return "";
+    }
+    
+    /**
+     * Retrieves the uptime of server (not new initialized by restart).
+     * @return The millis since the server was started.
+     */
+    public static String getLifetimeMillis(){
+        return "";
+    }
+    
+    /**
+     * Forces the server to read the server configuration again.
+     * After this moment the new values are valid.
+     */
+    public static void reReadServerConf() {
+    }
+    
+    /**
+     * Forces the server to read the task configuration again.
+     * After this moment the new values are valid.
+     */
+    public static void reReadTaskConf() {
+    }
+    
+    /**
+     * Retrieves the software version of the server.
+     * @param A version String e.g. like '1.1.0 Beta 01.01.2006'
+     */
+    public static String getVersion(){
+        return "";
+    }
+    
+    /**
+     * Forces the server to 'send' the message to the port listener.
+     * The behaviour should nearly the same as if the message was sent by a client to the server.
+     * @param cData Is an event as described in the specification and wrapped in XML-format.
+     */
+    public static String sendEvent(String cData) {
+        return "";
+    }
+    
+    /**
+     * Forces the server to send cyclic messages which contain the situation of runtime-
+     * depending parts.
+     */
+    public static void startMonitor(){
+    }
+    
+    /**
+     * Stops the monitoring.
+     */
+    public static void stopMonitor(){
+    }
+    
+    /**
+     * Sets the debug level. Affects to all software components which are part of the
+     * server. Does not affect to external adaptors (AdapterService, AdapterEvent).
+     * @param loggingLevel Valid values are the same like them of java.util.logging.Logger. <br>
+     * The parameter is not case sensitiv.
+     * all    \t - all messages are logged
+     * finest \t - high detailed logging
+     * finer  \t - fairly detailed logging
+     * fine   \t - a kind of debugging; but not showing every detail
+     * config \t - shows runtime information, system properties, ...
+     * info   \t - important messages which should be recognized asap by user; output to console
+     * warning\t - problems which potentially make the system unstable
+     * severe \t - failures which should not be ignored by administrators
+     * off    \t - no logging, no messages.
+     */
+    public static void setLoggingLevel(String loggingLevel) {
+        
+    }  
 }

@@ -23,7 +23,7 @@ public class AdminFunction extends XMLContainer {
     private Logger _logger = AdopLog.getLogger (Acknowledge.class);
     private String _cData;
     private String _methodName = "";
-    private String _parameter = "";
+    private String _parameterValue = "";
 
     public AdminFunction () {
         _msgType = XMLMessageConstants.MSG_TYPE_FUNCTION;
@@ -46,7 +46,7 @@ public class AdminFunction extends XMLContainer {
             XMLRetriever cDataRetriever = new XMLRetriever(new StringReader(getCData()));
             cDataRetriever.setXMLObjectByKey (XMLMessageConstants.MSG_BODY, true);
             setMethodName(cDataRetriever.getChild (XMLMessageConstants.METHOD_NAME).getValue ());
-            setParameter(cDataRetriever.getChild(XMLMessageConstants.PARAMETER_VALUE).getValue ());
+            setParameterValue(cDataRetriever.getChild(XMLMessageConstants.PARAMETER_VALUE).getValue ());
         }
         catch (ConfigurationKeyNotFoundException cknfEx) {
             throw new MessageContentException();
@@ -62,7 +62,7 @@ public class AdminFunction extends XMLContainer {
     public StringReader getXMLStringReader () {
         setCData("\n<" + XMLMessageConstants.MSG_BODY + ">");
         setCData(getCData() + ("\n<" + XMLMessageConstants.METHOD_NAME + ">" + getMethodName() + "</" + XMLMessageConstants.METHOD_NAME + ">"));
-        setCData(getCData() + ("\n<" + XMLMessageConstants.PARAMETER_VALUE + ">" + getParameter() + "</" + XMLMessageConstants.PARAMETER_VALUE + ">"));
+        setCData(getCData() + ("\n<" + XMLMessageConstants.PARAMETER_VALUE + ">" + getParameterValue() + "</" + XMLMessageConstants.PARAMETER_VALUE + ">"));
         setCData(getCData() + ("\n</" + XMLMessageConstants.MSG_BODY + ">"));
         
         addToBody (XMLMessageConstants.CDATA, getCData());
@@ -86,11 +86,11 @@ public class AdminFunction extends XMLContainer {
         this._methodName = _methodName;
     }
 
-    public String getParameter () {
-        return _parameter;
+    public String getParameterValue () {
+        return _parameterValue;
     }
 
-    public void setParameter (String _parameter) {
-        this._parameter = _parameter;
+    public void setParameterValue (String _parameterValue) {
+        this._parameterValue = _parameterValue;
     }
 }

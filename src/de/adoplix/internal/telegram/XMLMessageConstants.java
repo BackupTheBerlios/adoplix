@@ -76,7 +76,7 @@ public abstract class XMLMessageConstants {
  
     /** Acknowledge constants <br> Result */
     public static final String RESULT = "Result";
-    
+
     /** AdminFunction constants <br> MethodName */
     public static final String METHOD_NAME = "MethodName";
     /** AdminFunction constants <br> ParameterValue */

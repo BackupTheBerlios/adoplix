@@ -7,7 +7,7 @@
 package de.adoplix.internal.configuration;
 
 /**
- *
+ * Constants around the task configuration.
  * @author  dirk
  */
 public abstract class TaskConfigurationConstants {

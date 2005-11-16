@@ -4,15 +4,16 @@
  */
 
 package de.adoplix.adapter;
+import de.adoplix.internal.server.*;
 import de.adoplix.internal.server.AdoplixServer;
 import de.adoplix.internal.tasks.Task;
 import de.adoplix.internal.telegram.Acknowledge;
+import de.adoplix.internal.telegram.AdminFunction;
 import de.adoplix.internal.telegram.XMLContainer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
 import java.net.Socket;
 
 /**
@@ -31,17 +32,27 @@ public class TaskAdapterToAdmin extends TaskAdapter {
     }
     
     private void executeServerAdmin() {
-        // XMLContainer contains the Method-Name, Parameters and Return-Results.
+        // XMLContainer contains the Method-Name and Parameter
         // Task is not configured but fix implemented in console application
         try {
             // use server admin method
-            StringBuffer strBuffer = _xmlContainer.get
-            String _function = _task.getTaskAlias ();
-    Method method = AdoplixServer.getClass().getMethod( _function, null );
-    String returnType = method.getReturnType().getName();
-    System.out.print( "(" + returnType + ") " );
-    Object returnValue = method.invoke( p, null );
-    System.out.println( returnValue );
+            String _function = ((AdminFunction)_xmlContainer).getMethodName ().toUpperCase ();
+            String _parameterValue = ((AdminFunction)_xmlContainer).getParameterValue ().toUpperCase ();
+            String serverReturnValue = "";
+            
+            if (_function.equals(AdminFunctionConstants.F_SHUTDOWN)) {AdoplixServer.shutdown(_parameterValue);}
+            if (_function.equals(AdminFunctionConstants.F_RESTART)) {AdoplixServer.restart(_parameterValue);}
+            if (_function.equals(AdminFunctionConstants.F_SET_TIME)) {AdoplixServer.setTime(_parameterValue);}
+            if (_function.equals(AdminFunctionConstants.F_GET_TIME)) {serverReturnValue = AdoplixServer.getTime();}
+            if (_function.equals(AdminFunctionConstants.F_GET_LIFETIME_MILLIS)) {serverReturnValue = AdoplixServer.getLifetimeMillis();}
+            if (_function.equals(AdminFunctionConstants.F_REREAD_SERVER_CONF)) {AdoplixServer.reReadServerConf();}
+            if (_function.equals(AdminFunctionConstants.F_REREAD_TASK_CONF)) {AdoplixServer.reReadTaskConf();}
+            if (_function.equals(AdminFunctionConstants.F_GET_VERSION)) {serverReturnValue = AdoplixServer.getVersion();}
+            if (_function.equals(AdminFunctionConstants.F_SEND_EVENT)) {serverReturnValue = AdoplixServer.sendEvent(_parameterValue);}
+            if (_function.equals(AdminFunctionConstants.F_START_MONITOR)) {AdoplixServer.startMonitor();}
+            if (_function.equals(AdminFunctionConstants.F_STOP_MONITOR)) {AdoplixServer.stopMonitor();}
+            if (_function.equals(AdminFunctionConstants.F_SET_LOGGING_LEVEL)) {AdoplixServer.setLoggingLevel(_parameterValue);}
+            
             
             // if client awaits acknowledge from adapter
             // wait here for ackn
