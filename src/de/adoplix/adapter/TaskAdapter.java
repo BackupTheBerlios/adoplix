@@ -14,12 +14,12 @@ import java.net.Socket;
  *
  * @author dirk
  */
-public class TaskAdapter extends Adapter {
+public class TaskAdapter extends AdapterSocketCommunication {
     
     protected Task _task;
     
-    /** Creates a new instance of TaskAdapter */
-    public TaskAdapter () {
+    public TaskAdapter (int port, String ip) {
+        super (port, ip);
     }
     
     public TaskAdapter (Task task, Socket clientSocket, XMLContainer xmlContainer) {

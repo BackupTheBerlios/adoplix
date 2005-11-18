@@ -20,9 +20,9 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.logging.Logger;
 import de.adoplix.internal.runtimeInformation.AdopLog;
-import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 import de.adoplix.internal.tools.xml.XMLObject;
 import de.adoplix.internal.tools.xml.XMLRetriever;
+import java.io.BufferedReader;
 
 /**
  *
@@ -34,6 +34,16 @@ public class LittleHelper {
     
     /** Creates a new instance of LittleHelper */
     public LittleHelper () {
+    }
+    
+    public static synchronized StringReader streamBufferToStringReader(BufferedReader dataInputBuffer) {
+        String dataInputString = "";
+        try {
+            dataInputString = dataInputBuffer.readLine ();
+        } catch (IOException ioEx){
+            dataInputString = "";
+        }
+        return new StringReader(dataInputString);
     }
 
     /**
@@ -52,6 +62,10 @@ public class LittleHelper {
             dataInputString = "";
         }
         return new StringReader (dataInputString);
+    }
+    
+    public static synchronized XMLContainer createXMLContainer (BufferedReader dataInputBuffer) throws MessageContentException {
+        return createXMLContainer (streamBufferToStringReader(dataInputBuffer));
     }
     
     /**

@@ -29,7 +29,8 @@ public class TaskAdapterToPort extends TaskAdapter {
     private Logger _logger = AdopLog.getLogger (TaskAdapterToPort.class);
     
     /** Creates a new instance of TaskAdapterToPort */
-    public TaskAdapterToPort () {
+    public TaskAdapterToPort (int port, String ip) {
+        super (port, ip);
     }
     
     public TaskAdapterToPort (Task task, Socket clientSocket, XMLContainer xmlContainer) {
@@ -39,52 +40,20 @@ public class TaskAdapterToPort extends TaskAdapter {
     
     public void sendMessageToAdapterServerAndAckn () {
         // in taskid there is the ip and the port for connection...
-        String ip = _task.getLocalAdapterIP ();
-        int port = _task.getLocalAdapterPort ();
-        try {
-            Socket serverSocket = new Socket ( ip, port );
-            super.sendAdoplixMsg (serverSocket, _xmlContainer);
-            
-            // if client awaits acknowledge from adapter
-            // wait here for ackn
-            if (1 == _task.getAcknInitiator ()) {
-                Acknowledge acknowledge = null;
-                long millisTimeOut = System.currentTimeMillis () + _task.getTimeOutAcknMillis ();
-                
-                // wait for ackn
-                boolean acknSent = false;
-                while (System.currentTimeMillis () < millisTimeOut) {
-                    BufferedReader socketIn = new BufferedReader (new InputStreamReader ( serverSocket.getInputStream ()) );
-                    if (socketIn.ready ()) {
-                        String responseOfServer = socketIn.readLine ();
-                        writeToClientSocket (_clientSocket, responseOfServer);
-                        acknSent = true;
-                    }
-                    // spend a little time for whole system
-                    try {wait (10);} catch (Throwable th){}
-                }
-                
-                if (! acknSent) {
-                    Acknowledge ackn = new Acknowledge ();
-                    ackn.setResult (1);
-                    writeToClientSocket (_clientSocket, ackn.getXMLString ());
-                }
+        TaskAdapter adapterToServer = new TaskAdapter (_task.getLocalAdapterPort (), _task.getLocalAdapterIP ());
+        adapterToServer.sendAdoplixMsgToClient (_xmlContainer);
+        
+        // if client awaits acknowledge from adapter
+        // wait here for ackn
+        if (1 == _task.getAcknInitiator ()) {
+            Acknowledge acknowledge = adapterToServer.awaitAcknowledge (_task.getTimeOutAcknMillis ());
+            if (null == acknowledge) {
+                // server has send response
+                acknowledge = new Acknowledge();
+                acknowledge.setResult (1);
             }
-            _clientSocket.close ();
-            serverSocket.close ();
-            
-        } catch (IOException ioEx) {
-            _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+            sendAdoplixMsgToClient (acknowledge);
         }
-    }
-    
-    private void writeToClientSocket (Socket socket, String msg) {
-        try {
-            PrintWriter socketOut = new PrintWriter ( _clientSocket.getOutputStream () );
-            socketOut.println (msg);
-            socketOut.flush ();
-        } catch (IOException ioEx) {
-            _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
-        }
+        closeClientSocket ();
     }
 }

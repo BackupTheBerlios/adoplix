@@ -16,9 +16,6 @@ import java.net.Socket;
  */
 public class TaskAdapterToClass extends TaskAdapter {
     
-    /** Creates a new instance of TaskAdapterToPort */
-    public TaskAdapterToClass () {
-    }
     
     public TaskAdapterToClass (Task task, Socket clientSocket, XMLContainer xmlContainer) {
         super (task, clientSocket, xmlContainer);
