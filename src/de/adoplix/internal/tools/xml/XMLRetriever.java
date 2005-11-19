@@ -55,22 +55,19 @@ public class XMLRetriever {
         return _xmlObject;
     }
 
-    public XMLObject setXMLObject(XMLObject selectedXMLObject)
-            throws ConfigurationKeyNotFoundException {
+    public XMLObject setXMLObject(XMLObject selectedXMLObject) throws ConfigurationKeyNotFoundException {
         _xmlObject = selectedXMLObject;
         return _xmlObject;
     }
 
-    public XMLObject setXMLObjectByKey(String key, boolean startAtRoot)
-            throws ConfigurationKeyNotFoundException {
+    public XMLObject setXMLObjectByKey(String key, boolean startAtRoot) throws ConfigurationKeyNotFoundException {
         if (startAtRoot) {
             _xmlObject = _xmlRootObject;
         }
         return setXMLObjectByKey(key);
     }
 
-    public XMLObject setXMLObjectByKey(String key)
-            throws ConfigurationKeyNotFoundException {
+    public XMLObject setXMLObjectByKey(String key) throws ConfigurationKeyNotFoundException {
         /*
          * Solange . ein XMLObject mit search...() suchen. Wenn kein . mehr, den
          * Wert mit get...() lesen. Bsp.: ServerHandling.ServerId
@@ -85,7 +82,7 @@ public class XMLRetriever {
             _xmlObject = _xmlObject.searchXMLSubObject(key);
             return _xmlObject;
         } catch (Exception ex) {
-            throw new ConfigurationKeyNotFoundException();
+            throw new ConfigurationKeyNotFoundException(key);
         }
     }
 
@@ -100,7 +97,11 @@ public class XMLRetriever {
      * Liefert die Anzahl aller untergeordneten Objekte abhaengig vom Schluessel
      */
     public int countChildren(String key) {
+        try {
         return _xmlObject.getXMLSubObjectList(key).size();
+        } catch (Throwable th) {
+            return 0;
+        }
     }
 
     /**
@@ -144,7 +145,12 @@ public class XMLRetriever {
      * erste zurückgeliefert.
      */
     public XMLObject getChild(String key) throws ConfigurationKeyNotFoundException {
+        try {
         return getChildren(key).get(0);
+        }
+        catch (ConfigurationKeyNotFoundException cknfEx) {
+            throw new ConfigurationKeyNotFoundException(key);
+        }
     }
 
     /**

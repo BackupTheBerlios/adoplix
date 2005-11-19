@@ -1,21 +1,24 @@
 package de.adoplix.internal.server;
-import de.adoplix.adapter.TaskAdapterToAdmin;
-import de.adoplix.adapter.TaskAdapterToClass;
-import de.adoplix.adapter.TaskAdapterToPort;
-import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
-import de.adoplix.internal.configuration.TaskConfiguration;
-import de.adoplix.internal.runtimeInformation.AdopLog;
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
-import de.adoplix.internal.runtimeInformation.exceptions.TaskNotFoundException;
+import java.net.Socket;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
+
+import de.adoplix.adapter.TaskAdapterToAdmin;
+import de.adoplix.adapter.TaskAdapterToClass;
+import de.adoplix.adapter.TaskAdapterToPort;
 import de.adoplix.internal.configuration.ServerConfiguration;
+import de.adoplix.internal.configuration.TaskConfiguration;
+import de.adoplix.internal.connection.PortListenerAdmin;
+import de.adoplix.internal.connection.PortListenerExternal;
+import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.TaskNotFoundException;
 import de.adoplix.internal.tasks.Task;
 import de.adoplix.internal.telegram.XMLContainer;
-import java.net.Socket;
 
 /**
  * This class implements the central server functionality
@@ -113,13 +116,16 @@ public class AdoplixServer {
         long timeToReadConfiguration = System.currentTimeMillis ();
         _serverConfiguration = new ServerConfiguration (_pathConfiguration);
         timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
-        System.out.println (timeToReadConfiguration);
+        System.out.println ("SERVER lesen: " + timeToReadConfiguration);
         
+        timeToReadConfiguration = System.currentTimeMillis();
         String taskConfiguration = _serverConfiguration.getPathTaskConfiguration ();
         if (null != taskConfiguration &&
                 taskConfiguration.length () > 0) {
             _taskConfiguration = new TaskConfiguration (taskConfiguration);
         }
+        timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
+        System.out.println ("TASK lesen: " + timeToReadConfiguration);
     }
     
     /*
@@ -181,7 +187,7 @@ public class AdoplixServer {
         Date now = new Date ();
         threadId = dateF.format (now);
         Format decF = new DecimalFormat ("000");
-        threadId+= decF.format (_threadCounter++);
+        threadId+= decF.format ( new Integer(_threadCounter++));
         threadId+= obj.hashCode ();
         
         return threadId;

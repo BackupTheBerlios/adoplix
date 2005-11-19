@@ -58,7 +58,7 @@ public class SocketConnection {
     }
     
     public void sendMsg (String msg) {
-        sendMsg (socket, msg);
+        sendMsg (socket, msg);  
     }
     
     public void sendMsg (Socket socket, String msg) {

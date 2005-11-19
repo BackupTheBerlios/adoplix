@@ -3,12 +3,8 @@
  * @deprecated
  */
 
-package de.adoplix.internal.server;
+package de.adoplix.internal.connection;
 
-import de.adoplix.internal.connection.AdapterConnector;
-import de.adoplix.internal.connection.PortListener;
-import de.adoplix.internal.telegram.XMLMessage;
-import java.net.Socket;
 
 /**
  * PortListener which starts AdaptorConnector. <br>

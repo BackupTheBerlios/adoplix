@@ -3,11 +3,10 @@
  *
  */
 
-package de.adoplix.internal.server;
-import de.adoplix.internal.connection.PortListener;
-import de.adoplix.internal.runtimeInformation.AdopLog;
-import java.net.Socket;
+package de.adoplix.internal.connection;
 import java.util.logging.Logger;
+
+import de.adoplix.internal.runtimeInformation.AdopLog;
 
 /**
  * PortListener which starts AdaptorConnectorAdmin. <br>
@@ -23,11 +22,6 @@ public class PortListenerAdmin extends PortListener {
      */
     public PortListenerAdmin (int socketNr) {
         super (socketNr);
-    }
-    
-    public void run() {
-        // TODO
-        // Admin Listener benutzt keine weiteren Adapter, sondern ruft
-        // direkt die Methoden des Servers auf...
-    }
+        logger.info("Initialisiert...");
+    }    
 }

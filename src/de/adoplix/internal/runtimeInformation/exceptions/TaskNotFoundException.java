@@ -1,7 +1,6 @@
 package de.adoplix.internal.runtimeInformation.exceptions;
 
 import de.adoplix.internal.runtimeInformation.constants.*;
-import de.adoplix.internal.runtimeInformation.constants.*;
 
 /**
  *

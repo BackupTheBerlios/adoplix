@@ -7,7 +7,6 @@
 
 package de.adoplix.internal.connection;
 
-import de.adoplix.internal.telegram.XMLMessage;
 import java.net.Socket;
 
 /**

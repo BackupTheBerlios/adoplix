@@ -4,11 +4,11 @@
  */
 
 package de.adoplix.adapter;
+import java.net.Socket;
+
 import de.adoplix.internal.tasks.Task;
 import de.adoplix.internal.telegram.Acknowledge;
 import de.adoplix.internal.telegram.XMLContainer;
-import java.io.IOException;
-import java.net.Socket;
 
 /**
  *

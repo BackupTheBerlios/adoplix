@@ -43,7 +43,7 @@ public class AdopLog {
         // Logger doesn't exists yet
         String adoplixPath = System.getProperty ("ADOPLIX_PATH", ".");
         try{
-            fileHandler = new FileHandler (adoplixPath + "/adoplix_server.log", 1000000, 10, Boolean.TRUE);
+            fileHandler = new FileHandler(adoplixPath + "/adoplix_server.log", 1000000, 10, true);
         } catch (IOException ioEx) {}
         
         returnLogger = Logger.getLogger (canonicalClassName);

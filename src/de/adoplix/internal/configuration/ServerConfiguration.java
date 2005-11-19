@@ -1,10 +1,10 @@
 package de.adoplix.internal.configuration;
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
-import de.adoplix.internal.server.*;
+
 import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
 import de.adoplix.internal.tools.xml.XMLObjectList;
 import de.adoplix.internal.tools.xml.XMLRetriever;
 

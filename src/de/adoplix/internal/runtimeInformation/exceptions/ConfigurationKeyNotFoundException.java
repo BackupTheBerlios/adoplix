@@ -14,11 +14,11 @@ import de.adoplix.internal.runtimeInformation.constants.*;
     }
     
     public ConfigurationKeyNotFoundException (String msg) {
-        super(msg);
+        super(ErrorConstants.CONFIGURATION_KEY_NOT_FOUND + ": " +  ErrorConstants.getErrorMsg (ErrorConstants.CONFIGURATION_KEY_NOT_FOUND) + "; " + msg);
     }
     
     public ConfigurationKeyNotFoundException (int errNr, String msg) {
-        super(errNr + ": " + ErrorConstants.getErrorMsg(errNr) + " " + msg);
+        super(errNr + ": " + ErrorConstants.getErrorMsg(errNr) + "; " + msg);
     }
     
 }

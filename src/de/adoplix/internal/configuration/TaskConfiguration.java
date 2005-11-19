@@ -69,7 +69,7 @@ public class TaskConfiguration {
         }
         catch (Exception ex) {
             logger.severe(ex.getMessage ());
-            System.out.println("ERROR " + ": " + ex.getMessage ());
+            System.out.println("ERROR " + ": " + ex.getLocalizedMessage() + ";" +  ex.getMessage ());
         }
     }
     

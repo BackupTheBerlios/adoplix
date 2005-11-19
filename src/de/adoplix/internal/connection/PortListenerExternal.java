@@ -3,12 +3,12 @@
  *
  */
 
-package de.adoplix.internal.server;
+package de.adoplix.internal.connection;
 
-import de.adoplix.internal.connection.AdapterConnector;
-import de.adoplix.internal.connection.PortListener;
-import de.adoplix.internal.telegram.XMLMessage;
-import java.net.Socket;
+import java.util.logging.Logger;
+
+import de.adoplix.internal.runtimeInformation.AdopLog;
+
 
 /**
  * PortListener which starts AdaptorConnector. <br>
@@ -17,10 +17,13 @@ import java.net.Socket;
  */
 public class PortListenerExternal extends PortListener {
     
+    private Logger logger = AdopLog.getLogger(PortListenerExternal.class);
+    
     /**
-     * Creates a new instance of PortListenerAdmin 
+     * Creates a new instance of PortListenerExternal 
      */
     public PortListenerExternal (int socketNr) {
         super (socketNr);
+        logger.info("Initialisiert...");
     }
 }

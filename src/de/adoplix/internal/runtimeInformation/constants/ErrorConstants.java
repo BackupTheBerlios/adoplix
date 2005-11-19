@@ -13,89 +13,109 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- *
- * @author  dirk
+ * 
+ * @author dirk
  */
 public abstract class ErrorConstants {
-    
-    private static ErrorConstants errorConstants;
+
     private static Map errorMap = new HashMap();
-    private static Logger logger = AdopLog.getLogger (AdoplixServer.class);
-    
+
+    private static Logger logger = AdopLog.getLogger(AdoplixServer.class);
+
     /*
-     * Errors caused by main and starting up
-     * 0 - 99
+     * Errors caused by main and starting up 0 - 99
      */
     public static final int STARTUP_NO_CONF_FILE_SELECTED = 10;
 
     /*
-     * Basic Configuration - Errors
-     * 100 - 199
+     * Basic Configuration - Errors 100 - 199
      */
     public static final int CONFIGURATION_FILE_NOT_FOUND = 110;
+
     public static final int CONFIGURATION_KEY_NOT_FOUND = 120;
+
     public static final int CONFIGURATION_TYPE_FALSE = 122;
-    
+
     /*
-     * TaskConfiguration
-     * 200 - 299
+     * TaskConfiguration 200 - 299
      */
     public static final int CONFIGURATION_TASK_NOT_CONFIGURED = 200;
-    
+
     /*
-     * Communication (Sockets etc.)
-     * 300 - 399
+     * Communication (Sockets etc.) 300 - 399
      */
     public static final int COMMUNICATION_SOCKET_IO = 300;
+
     public static final int COMMUNICATION_SOCKET_ACCEPT = 301;
+
     public static final int COMMUNICATION_SEND_ERROR = 302;
-    
+
     /*
-     * Communication message faults
-     * 400 - 499
+     * Communication message faults 400 - 499
      */
     public static final int MESSAGE_CONTENT_MISSED = 400;
+
     public static final int MESSAGE_READ_ERROR = 401;
+
     public static final int MESSAGE_VALUE_TYPE_ERROR = 402;
+
     public static final int MESSAGE_NOT_AVAILABLE = 403;
-    
+
     /*
-     * Implementation errors
-     * 500 - 599
+     * Implementation errors 500 - 599
      */
     public static final int NOT_IMPLEMENTED_IN_CLASS = 500;
-    
-            
-    
-    private ErrorConstants() {
-        errorMap.put (new Integer (STARTUP_NO_CONF_FILE_SELECTED), "Start ohne Angabe einer Konfigurationsdatei.");
-        
-        errorMap.put (new Integer(CONFIGURATION_FILE_NOT_FOUND), "Konfigurationsdatei nicht gefunden.");
-        errorMap.put (new Integer(CONFIGURATION_KEY_NOT_FOUND), "Schluessel nicht gefunden. Evtl. fehlerhafte XML-Struktur.");
-        errorMap.put (new Integer(CONFIGURATION_TYPE_FALSE), "Konfigurierter Wert ist vom falschen Typ.");
 
-        errorMap.put (new Integer(CONFIGURATION_TASK_NOT_CONFIGURED), "Task in interner Task-Liste nicht gefunden.");
-        
-        errorMap.put (new Integer(COMMUNICATION_SOCKET_IO), "Socket konnte nicht belauscht werden.");
-        errorMap.put (new Integer(COMMUNICATION_SOCKET_ACCEPT), "Annahme einer Nachricht über Socket ist fehlgeschlagen.");
-        errorMap.put (new Integer(COMMUNICATION_SEND_ERROR), "Problem bei Versand einer Nachricht.");
-        
-        errorMap.put (new Integer(MESSAGE_CONTENT_MISSED), "Eine erforderliche Information innerhalb einer Nachricht fehlt.");
-        errorMap.put (new Integer(MESSAGE_READ_ERROR), "Eine Nachricht konnte nicht fehlerfrei gelesen werden.");
-        errorMap.put (new Integer(MESSAGE_VALUE_TYPE_ERROR), "Wert eines Nachrichtenelements ist vom falschen Typ.");
-        errorMap.put (new Integer(MESSAGE_NOT_AVAILABLE), "Kein Kommunikationspartner, oder keine Nachricht verfügbar.");
-        
-        errorMap.put (new Integer(NOT_IMPLEMENTED_IN_CLASS), "Funktionalität nicht in der verwendeten Klasse implementiert.");
+    private static void fillErrorMap() {
+        errorMap.put(new Integer(STARTUP_NO_CONF_FILE_SELECTED),
+                "Start ohne Angabe einer Konfigurationsdatei.");
+
+        errorMap.put(new Integer(CONFIGURATION_FILE_NOT_FOUND),
+                "Konfigurationsdatei nicht gefunden.");
+        errorMap.put(new Integer(CONFIGURATION_KEY_NOT_FOUND),
+                "Schluessel nicht gefunden. Evtl. fehlerhafte XML-Struktur.");
+        errorMap.put(new Integer(CONFIGURATION_TYPE_FALSE),
+                "Konfigurierter Wert ist vom falschen Typ.");
+
+        errorMap.put(new Integer(CONFIGURATION_TASK_NOT_CONFIGURED),
+                "Task in interner Task-Liste nicht gefunden.");
+
+        errorMap.put(new Integer(COMMUNICATION_SOCKET_IO),
+                "Socket konnte nicht belauscht werden.");
+        errorMap.put(new Integer(COMMUNICATION_SOCKET_ACCEPT),
+                "Annahme einer Nachricht über Socket ist fehlgeschlagen.");
+        errorMap.put(new Integer(COMMUNICATION_SEND_ERROR),
+                "Problem bei Versand einer Nachricht.");
+
+        errorMap
+                .put(new Integer(MESSAGE_CONTENT_MISSED),
+                        "Eine erforderliche Information innerhalb einer Nachricht fehlt.");
+        errorMap.put(new Integer(MESSAGE_READ_ERROR),
+                "Eine Nachricht konnte nicht fehlerfrei gelesen werden.");
+        errorMap.put(new Integer(MESSAGE_VALUE_TYPE_ERROR),
+                "Wert eines Nachrichtenelements ist vom falschen Typ.");
+        errorMap.put(new Integer(MESSAGE_NOT_AVAILABLE),
+                "Kein Kommunikationspartner, oder keine Nachricht verfügbar.");
+
+        errorMap
+                .put(new Integer(NOT_IMPLEMENTED_IN_CLASS),
+                        "Funktionalität nicht in der verwendeten Klasse implementiert.");
     }
-    
-    public static String getErrorMsg (int errorNr) {
+
+    private ErrorConstants() {
+    }
+
+    public static String getErrorMsg(int errorNr) {
+        if (errorMap.size() == 0) {
+            fillErrorMap();
+        }
         try {
-            return (String)errorMap.get(new Integer(errorNr));
+            return (String) errorMap.get(new Integer(errorNr));
+        } catch (Exception ex) {
+            logger.severe("Couldn't get error message by error number: "
+                    + errorNr);
         }
-        catch (Exception ex) {
-            logger.severe ("Couldn't get error message by error number: " + errorNr);
-        }
-        
+
         return "";
     }
 }
