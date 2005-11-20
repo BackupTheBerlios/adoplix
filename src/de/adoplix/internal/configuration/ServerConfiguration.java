@@ -19,6 +19,7 @@ public class ServerConfiguration {
     private String _serverPwd = null;
     private String _pathTaskConfiguration = null;
     private String _securityPwdAdmin = null;
+    private String _logLevel = null;
     private int _portExternal = 0;
     private int _portAdmin = 0;
     private int _portLocal = 0;
@@ -64,6 +65,10 @@ public class ServerConfiguration {
             // Active Configuration
             conf.setXMLRootObject ();
             _intervalGetProjectSec = conf.toInt (conf.setXMLObjectByKey (ServerConfigurationConstants.X_INTERVAL_GET_PROJECT_SEC).getValue());
+            
+            // Log Level
+            conf.setXMLRootObject ();
+            setLogLevel(conf.setXMLObjectByKey(ServerConfigurationConstants.LOG_LEVEL + "%" + ServerConfigurationConstants.LOG_LEVEL).getValue());
             
             // ValidServers
             conf.setXMLRootObject ();
@@ -128,5 +133,13 @@ public class ServerConfiguration {
     
     public String getValidServerId(int index) {
         return (String)_validServerIds.get(index);
+    }
+
+    public void setLogLevel(String _logLevel) {
+        this._logLevel = _logLevel;
+    }
+
+    public String getLogLevel() {
+        return _logLevel;
     }
 }

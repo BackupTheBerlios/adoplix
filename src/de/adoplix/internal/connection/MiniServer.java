@@ -19,9 +19,17 @@ public class MiniServer extends SocketConnection {
     
     private Logger logger = AdopLog.getLogger (MiniServer.class);
     
-    /** Creates a new instance of MiniClient */
+    /** Creates a new instance of MiniServer */
     public MiniServer (Socket socket) {
         super (socket);
+    }
+    
+    public MiniServer (int port, String ip) {
+        super (port, ip);
+    }
+    
+    public void acceptClientRequest() {
+        
     }
 
 }

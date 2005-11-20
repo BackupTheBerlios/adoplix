@@ -29,10 +29,9 @@ public class TaskAdapterToAdmin extends TaskAdapter {
     
     public TaskAdapterToAdmin (Task task, Socket clientSocket, XMLContainer xmlContainer) {
         super (task, clientSocket, xmlContainer);
-        executeServerAdmin ();
     }
     
-    private void executeServerAdmin () {
+    public void run () {
         // XMLContainer contains the Method-Name and Parameter
         // Task is not configured but fix implemented in console application
         
@@ -60,5 +59,7 @@ public class TaskAdapterToAdmin extends TaskAdapter {
         Acknowledge acknowledge = new Acknowledge ();
         acknowledge.setResult (0);
         sendAcknowledgeToClient (acknowledge);
+        
+        closeClientSocket();
     }
 }

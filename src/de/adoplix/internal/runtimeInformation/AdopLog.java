@@ -43,10 +43,16 @@ public class AdopLog {
         // Logger doesn't exists yet
         String adoplixPath = System.getProperty ("ADOPLIX_PATH", ".");
         try{
-            fileHandler = new FileHandler(adoplixPath + "/adoplix_server.log", 1000000, 10, true);
-        } catch (IOException ioEx) {}
+            fileHandler = new FileHandler(adoplixPath + "/log/adoplix_server.log", 1000000, 10, true);
+        } catch (Throwable th) {
+            System.out.println("Setting path for logfile not possible: " + th.getMessage());
+            System.out.println("Please verify if directory exists: " + adoplixPath + "/log/adoplix_server.log");
+            System.out.println("Therefore the programm is not be able to write or show log-messages it will be stopped now!");
+            System.exit (1);
+        }
         
         returnLogger = Logger.getLogger (canonicalClassName);
+        returnLogger.setLevel(level);
         fileHandler.setFormatter (new SimpleFormatter());
         returnLogger.addHandler (fileHandler);
         loggerList.add (returnLogger);
@@ -69,8 +75,21 @@ public class AdopLog {
 //        classLogger.log(level, msg);
 //    }
 //    
-    public static void setLevel (Level newLevel) {
-        level = newLevel;
+    public static void setLevel (Level level) {
+        AdopLog.level = level;
+    }
+    
+    public static void setLevel(String level) {
+        level = level.toUpperCase();
+        if (level.equals("severe")) setLevel(Level.SEVERE);
+        if (level.equals("all")) setLevel(Level.ALL);
+        if (level.equals("fine")) setLevel(Level.FINE);
+        if (level.equals("finer")) setLevel(Level.FINER);
+        if (level.equals("finest")) setLevel(Level.FINEST);
+        if (level.equals("info")) setLevel(Level.INFO);
+        if (level.equals("config")) setLevel(Level.CONFIG);
+        if (level.equals("warning")) setLevel(Level.WARNING);
+        if (level.equals("off")) setLevel(Level.OFF);
     }
     
     private static Logger searchLogger(String canonicalClassName) {

@@ -51,8 +51,11 @@ public class PortListener implements I_PortListener {
                  * of clients is reached */
                     Socket clientSocket = null;
                     // accept a new client for communicate with
-                    clientSocket = serverSocket.accept ();
+                    clientSocket = serverSocket.accept();
+                    if (clientSocket.isConnected() &&
+                            clientSocket.getInputStream() != null) {
                     startAdapterConnector (clientSocket);
+                    }
                     // spend a little time to other processes
                     this.wait (50);
                     // process data coming from client socket

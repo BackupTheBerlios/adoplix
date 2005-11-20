@@ -53,6 +53,9 @@ public class AdapterConnector extends Adapter {
         // the xml-container will be the right one for the derived subclass.
         // The subclass will use it later
         try {
+            System.out.println(_clientSocket.getInputStream());
+            System.out.flush();
+            
             _xmlContainer = LittleHelper.createXMLContainer (_clientSocket.getInputStream ());
         } catch (MessageContentException mcEx) {
             _logger.severe (mcEx.getMessage ());

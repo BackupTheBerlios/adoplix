@@ -59,6 +59,11 @@ public abstract class ServerConfigurationConstants {
             
     /** Security.PwdAdministration <br> Passwort für Service-Schnittstelle */
     public static final String X_PWD_ADMINISTRATION = SECURITY + "%PwdAdministration";
+    
+    /** Logging <br> Gruppe zum Logging */
+    public static final String LOGGING = "Logging";
+    /** LogLevel <br> Logging Level */
+    public static final String LOG_LEVEL = "LogLevel";
 
     /** Security.ServerValidation <br> Element ohne Wert */
     public static final String X_SERVER_VALIDATION = SECURITY + "%ServerValidation";

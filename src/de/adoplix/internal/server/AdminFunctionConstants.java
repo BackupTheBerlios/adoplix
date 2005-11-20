@@ -34,4 +34,7 @@ public abstract class AdminFunctionConstants {
     public static final String F_STOP_MONITOR = "StopMonitor";
     /** SetLoggingLevel <br> */
     public static final String F_SET_LOGGING_LEVEL = "SetLoggingLevel";
+    
+    public static final String P_SOFT = "Soft";
+    public static final String P_HARD = "Hard";
 }

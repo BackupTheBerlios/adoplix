@@ -44,6 +44,7 @@ public class AdoplixServer {
 //    private static Map _adapterServiceList = new HashMap();
 //    /** Hashmap to find the admin adaptors fast */
 //    private static Map _adapterAdminList = new HashMap();
+    private static String vid = "";
     
     
     private static Logger logger = AdopLog.getLogger (AdoplixServer.class);
@@ -79,13 +80,13 @@ public class AdoplixServer {
                     if (args.length > 1) {
                         _pathConfiguration = args[1];
                     } else {
-                        logger.severe (ErrorConstants.getErrorMsg (10));
-                        System.out.println (ErrorConstants.getErrorMsg (10));
+                        logger.severe (ErrorConstants.getErrorMsg (ErrorConstants.STARTUP_NO_CONF_FILE_SELECTED));
+                        System.out.println (ErrorConstants.getErrorMsg (ErrorConstants.STARTUP_NO_CONF_FILE_SELECTED));
                         System.exit (1);
                     }
                 } else {
                     // no configuration file selected - server exit
-                    logger.severe (ErrorConstants.getErrorMsg (10));
+                    logger.severe (ErrorConstants.getErrorMsg (ErrorConstants.STARTUP_NO_CONF_FILE_SELECTED));
                 }
             }
         }
@@ -116,7 +117,9 @@ public class AdoplixServer {
         long timeToReadConfiguration = System.currentTimeMillis ();
         _serverConfiguration = new ServerConfiguration (_pathConfiguration);
         timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
-        System.out.println ("SERVER lesen: " + timeToReadConfiguration);
+        logger.finest ("Zeitbedarf Lesen der Server-Konfiguration: " + timeToReadConfiguration);
+        
+//        AdopLog.setLevel(_serverConfiguration.getLogLevel());
         
         timeToReadConfiguration = System.currentTimeMillis();
         String taskConfiguration = _serverConfiguration.getPathTaskConfiguration ();
@@ -125,7 +128,7 @@ public class AdoplixServer {
             _taskConfiguration = new TaskConfiguration (taskConfiguration);
         }
         timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
-        System.out.println ("TASK lesen: " + timeToReadConfiguration);
+        logger.finest ("Zeitbedarf Lesen der Task-Konfiguration: " + timeToReadConfiguration);
     }
     
     /*

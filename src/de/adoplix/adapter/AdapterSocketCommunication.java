@@ -31,14 +31,19 @@ public class AdapterSocketCommunication extends Adapter {
         super();
     }
     
-    public AdapterSocketCommunication (int port, String ip) {
-        miniClient = new MiniClient(port, ip);
+    public AdapterSocketCommunication (int portClient, String ipClient, int portServer, String ipServer) {
+        miniClient = new MiniClient(portClient, ipClient);
+        if (portServer != 0 && ipServer != null) {
+            miniServer = new MiniServer(portServer, ipServer);
+        }
     }
     
-    public AdapterSocketCommunication (Socket clientSocket, XMLContainer xmlContainer) {
+    public AdapterSocketCommunication (Socket clientSocket, XMLContainer xmlContainer, int portServer, String ipServer) {
         miniClient = new MiniClient(clientSocket);
-        miniClient.setClientSocket(clientSocket);
         _xmlContainer = xmlContainer;
+        if (portServer != 0 && ipServer != null) {
+            miniServer = new MiniServer(portServer, ipServer);
+        }
     }
     
     public void stop() {
