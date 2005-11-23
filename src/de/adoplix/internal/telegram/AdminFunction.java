@@ -4,13 +4,13 @@
  */
 
 package de.adoplix.internal.telegram;
-import de.adoplix.internal.runtimeInformation.AdopLog;
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
-import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationTypeException;
-import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
-import de.adoplix.internal.tools.xml.XMLRetriever;
 import java.io.StringReader;
 import java.util.logging.Logger;
+
+import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.runtimeInformation.exceptions.ConfigurationKeyNotFoundException;
+import de.adoplix.internal.runtimeInformation.exceptions.MessageContentException;
+import de.adoplix.internal.tools.xml.XMLRetriever;
 
 /**
  * Container which stores connection informations from a local adapter
@@ -40,7 +40,7 @@ public class AdminFunction extends XMLContainer {
         try {
             // CDATA
             retriever.setXMLObjectByKey (XMLMessageConstants.MSG_BODY, true);
-            setCData(retriever.getChild (XMLMessageConstants.CDATA).getValue ());
+            setCData(retriever.getChild (XMLMessageConstants.CDATA_BEGIN).getValue ());
             
             // XML part of cdata in new 'container'
             XMLRetriever cDataRetriever = new XMLRetriever(new StringReader(getCData()));
@@ -60,14 +60,22 @@ public class AdminFunction extends XMLContainer {
      * @return XML-formatted values
      */
     public StringReader getXMLStringReader () {
+        prepareCData();
+        addCDataToBody (getCData());
+        return super.getXMLStringReader ();
+    }
+    
+    public String getXMLString () {
+        prepareCData();
+        addCDataToBody(getCData());
+        return super.getXMLString();
+    }
+    
+    private void prepareCData() {
         setCData("\n<" + XMLMessageConstants.MSG_BODY + ">");
         setCData(getCData() + ("\n<" + XMLMessageConstants.METHOD_NAME + ">" + getMethodName() + "</" + XMLMessageConstants.METHOD_NAME + ">"));
         setCData(getCData() + ("\n<" + XMLMessageConstants.PARAMETER_VALUE + ">" + getParameterValue() + "</" + XMLMessageConstants.PARAMETER_VALUE + ">"));
         setCData(getCData() + ("\n</" + XMLMessageConstants.MSG_BODY + ">"));
-        
-        addToBody (XMLMessageConstants.CDATA, getCData());
-        StringReader stringReader = super.getXMLStringReader ();
-        return stringReader;
     }
 
     public String getCData () {

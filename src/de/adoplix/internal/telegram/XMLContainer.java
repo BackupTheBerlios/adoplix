@@ -18,6 +18,7 @@ public class XMLContainer implements I_XMLContainer {
     private String _newMsgHeader = "";
     private String _newMsgBody = "";
     private String _taskId = null;
+    private boolean cDataIsPrepared = false;
     
     /**
      * Constructor for creating a blank container which is later used to
@@ -81,23 +82,26 @@ public class XMLContainer implements I_XMLContainer {
         return _taskId;
     }
     
-    /**
-     * Creates a StringReader which delivers the message content in xml-format.
-     * @return XML formatted buffered data
-     */
-    public StringReader getXMLStringReader() {
+    private void prepareXMLString() {
         _newMsg="<" + XMLMessageConstants.ADOPLIX_MESSAGE + ">";
         _newMsg+= "\n<" + XMLMessageConstants.MSG_HEADER + ">";
         _newMsg+= "\n<" + XMLMessageConstants.MSG_TYPE + ">" + _msgType + "</" + XMLMessageConstants.MSG_TYPE + ">";
         _newMsg+= "\n<" + XMLMessageConstants.ACKN_INITIATOR + ">" + String.valueOf(_acknInitiator).trim () + "</" + XMLMessageConstants.ACKN_INITIATOR + ">";
-        _newMsg+= "\n<" + XMLMessageConstants.AWAITING_RESPONSE + ">" + String.valueOf(_msgType).trim () + "</" + XMLMessageConstants.AWAITING_RESPONSE + ">";
+        _newMsg+= "\n<" + XMLMessageConstants.AWAITING_RESPONSE + ">" + String.valueOf(_awaitingResponse).trim () + "</" + XMLMessageConstants.AWAITING_RESPONSE + ">";
         _newMsg+= _newMsgHeader;
         _newMsg+= "\n</" + XMLMessageConstants.MSG_HEADER + ">";
         _newMsg+= "\n<" + XMLMessageConstants.MSG_BODY + ">";
         _newMsg+= _newMsgBody;
         _newMsg+= "\n</" + XMLMessageConstants.MSG_BODY + ">";
         _newMsg+= "\n</" + XMLMessageConstants.ADOPLIX_MESSAGE + ">";
-        
+    }
+    
+    /**
+     * Creates a StringReader which delivers the message content in xml-format.
+     * @return XML formatted buffered data
+     */
+    public StringReader getXMLStringReader() {
+        prepareXMLString();
         return new StringReader(_newMsg);
     }
     
@@ -130,6 +134,7 @@ public class XMLContainer implements I_XMLContainer {
     }
     
     public String getXMLString() {
+        prepareXMLString();
         return _newMsg;
     }
     
@@ -139,5 +144,12 @@ public class XMLContainer implements I_XMLContainer {
     
     protected void addToBody (String elementName, String elementValue) {
         _newMsgBody+= "\n<" + elementName + ">" + elementValue + "</" + elementName + ">";
+    }
+    
+    protected void addCDataToBody(String elementValue) {
+        if (!cDataIsPrepared) {
+            _newMsgBody += "\n<" + XMLMessageConstants.CDATA_BEGIN + elementValue + XMLMessageConstants.CDATA_END + ">";
+            cDataIsPrepared = true;
+        }
     }
 }

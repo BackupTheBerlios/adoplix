@@ -30,6 +30,13 @@ public class XMLRetriever {
         _xmlObject = xmlObject;
         _xmlRootObject = xmlObject;
     }
+    
+    public XMLRetriever(String string) {
+        _xmlObject = new XMLObject();
+        XMLParser xmlParser = new XMLParser(string, _xmlObject);
+        xmlParser.parse();
+        _xmlRootObject = _xmlObject;
+    }
 
     /**
      *

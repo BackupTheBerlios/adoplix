@@ -5,13 +5,17 @@
 
 package de.adoplix.internal.connection;
 
-import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
-import de.adoplix.internal.server.AdoplixServer;
-import de.adoplix.internal.runtimeInformation.AdopLog;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
+
+import de.adoplix.internal.runtimeInformation.AdopLog;
+import de.adoplix.internal.runtimeInformation.constants.ErrorConstants;
 
 /**
  *
@@ -40,6 +44,8 @@ public class PortListener implements I_PortListener {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket (_socketNr);
+            serverSocket.setReuseAddress(true);
+            serverSocket.setReceiveBufferSize(2048);
             
             /*
              * Accept client requests start connector and assign it to the client.
@@ -47,22 +53,49 @@ public class PortListener implements I_PortListener {
              */
             while (_waitForConnections) {
                 try {
+//                    serverSocket.setSoTimeout (1000);
                 /* don't start a new client (adapterconnector) when max. number
                  * of clients is reached */
                     Socket clientSocket = null;
                     // accept a new client for communicate with
                     clientSocket = serverSocket.accept();
-                    if (clientSocket.isConnected() &&
-                            clientSocket.getInputStream() != null) {
-                    startAdapterConnector (clientSocket);
+                    System.out.println("ClientSocket = <null>? " + clientSocket);
+//                    clientSocket.setReceiveBufferSize (serverSocket.getReceiveBufferSize ());
+                    if (clientSocket.isConnected()) {
+                        System.out.println("ClientSocket ist connected");
+                        System.out.println("Grösse + " + clientSocket.getReceiveBufferSize());
+                        clientSocket.setKeepAlive(true);
+                        StringBuffer dataInputString = new StringBuffer("");
+//                        try {
+//                            System.out.println("Kurz vor Lesen...");
+//                            BufferedReader in = new BufferedReader(
+//                                    new InputStreamReader( clientSocket.getInputStream()) );
+//                            String x = "";
+//                            while ((x = in.readLine()).length() > 0) {
+//                                dataInputString.append(x);
+//                                System.out.println(x);
+//                                System.out.println(dataInputString);
+//                            }
+//                            dataInputString.trimToSize();
+                            System.out.println(dataInputString);
+                            
+//                        } catch (IOException ioEx){
+//                            System.out.println(ioEx.getMessage());
+//                            dataInputString.setLength(0);
+//                        }
+//                        logger.finest(clientSocket.toString());
+//                        logger.finest(dataInputString.toString());
+                        startAdapterConnector (clientSocket);
                     }
                     // spend a little time to other processes
-                    this.wait (50);
+                    Thread.sleep (10);
                     // process data coming from client socket
+                } catch (InterruptedIOException irioEx) {
+                    // nothing to do here... enables to stop this process regulary
                 }catch (InterruptedException irEx)  {
                 }
-                serverSocket.close ();
             }
+            serverSocket.close ();
         } catch (IOException e) {
             logger.severe (ErrorConstants.COMMUNICATION_SOCKET_ACCEPT + ": " + ErrorConstants.getErrorMsg (ErrorConstants.COMMUNICATION_SOCKET_ACCEPT) + "; Socket = " + _socketNr);
         }

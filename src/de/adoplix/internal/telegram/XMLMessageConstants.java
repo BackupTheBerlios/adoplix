@@ -46,8 +46,10 @@ public abstract class XMLMessageConstants {
     public static final String TASK_ID = "TaskId";
     /** ResponseTaskId <br> Local ID of Task when response comes in. */
     public static final String RESPONSE_TASK_ID = "ResponseTaskId";
-    /** CDATA <br> Unformatierter Nachrichtentext */
-    public static final String CDATA = "CDATA";
+    /** ![CDATA[ <br> Unformatierter Nachrichtentext */
+    public static final String CDATA_BEGIN = "![CDATA[";
+    /** ]] <br> Unformatierter Nachrichtentext Ende*/
+    public static final String CDATA_END = "]]";
     /** ExternalPort <br> Port für Kommunikation nach aussen */
     public static final String EXTERNAL_PORT = "ExternalPort";
     /** TimeOutAcknMillis <br> Wartezeit auf Quittung (nicht Response) */

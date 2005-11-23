@@ -48,6 +48,7 @@ public class XMLDocumentHandler implements ContentHandler {
      */
     public void processingInstruction (String target, String data) throws SAXException {
         _xmlObject.setTarget(target);
+        System.out.println("XMLDoc processingInstruction " + target);
         if (data != null && data.length () > 0) {
             _xmlObject.setData(data);
         }
@@ -63,7 +64,7 @@ public class XMLDocumentHandler implements ContentHandler {
      */
     public void characters (char[] chars, int start, int length) throws SAXException {
         _xmlObject.setValue(new String (chars, start, length).trim());
-//        System.out.print (new String (chars, start, length));
+        System.out.print ("XMLDoc characters " + new String (chars, start, length));
     }
     
     public void ignorableWhitespace (char[] chars, int start, int length) throws SAXException {
@@ -84,7 +85,7 @@ public class XMLDocumentHandler implements ContentHandler {
         XMLObject xmlObject = new XMLObject(uri, qName, localName, attributeList, _xmlObject);
         _xmlObject.addXMLSubObject(xmlObject);
         _xmlObject = xmlObject;
-//        System.out.print ("</" + qName + ">");
+        System.out.print ("XMLDoc: </" + qName + ">");
     }
     
     /**
@@ -101,10 +102,10 @@ public class XMLDocumentHandler implements ContentHandler {
     }
     
     public void startPrefixMapping (String a, String b) {
-//        System.out.println("startPrefixMapping");
+        System.out.println("startPrefixMapping");
     }
     public void endPrefixMapping (String a) {
-//        System.out.println("endPrefixMapping");
+        System.out.println("endPrefixMapping");
     }
     public void startElement () {
 //        System.out.println("startElement");

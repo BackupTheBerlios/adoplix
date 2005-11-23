@@ -44,7 +44,7 @@ public class AdoplixServer {
 //    private static Map _adapterServiceList = new HashMap();
 //    /** Hashmap to find the admin adaptors fast */
 //    private static Map _adapterAdminList = new HashMap();
-    private static String vid = "";
+    private static String vid = " ";
     
     
     private static Logger logger = AdopLog.getLogger (AdoplixServer.class);

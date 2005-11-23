@@ -6,6 +6,7 @@ import java.io.StringReader;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 
@@ -19,6 +20,7 @@ public class XMLParser {
     private StringReader _inputStreamString = null;
     private FileReader _inputStreamFile = null;
     private XMLObject _xmlObject = null;
+    private String    _inputString = null;
 
     public static void main(String[] args) {
         try {
@@ -65,6 +67,11 @@ public class XMLParser {
         _xmlObject = xmlObject;
     }
     
+    public XMLParser(String inputString, XMLObject xmlObject) {
+        _inputString = inputString;
+        _xmlObject = xmlObject;
+    }
+    
     /**
      * Veranlasst das Parsen der XML-Daten.
      * Verwendet die Klasse XMLDocumentHandler zur 'Verwaltung' der geparsten
@@ -84,8 +91,14 @@ public class XMLParser {
             } else {
                 inputSource = new InputSource(_inputStreamFile);
             }
+            
             reader.setContentHandler(xmlDocumentHandler);
-            reader.parse(inputSource);
+            
+            if (_inputString != null) {
+                reader.parse(_inputString);
+            } else {
+                reader.parse(inputSource);
+            }
 
         } catch (IOException ioEx) {
             System.err.println("IO Fehler beim parsen: ");

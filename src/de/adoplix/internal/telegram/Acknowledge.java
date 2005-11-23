@@ -54,9 +54,13 @@ public class Acknowledge extends XMLContainer {
         _result = result;
     }
 
+    public String getXMLString() {
+        addToBody (XMLMessageConstants.RESULT, String.valueOf (_result).trim ());
+        return super.getXMLString();
+    }
+    
     public StringReader getXMLStringReader () {
         addToBody (XMLMessageConstants.RESULT, String.valueOf (_result).trim ());
-        StringReader stringReader = super.getXMLStringReader ();
-        return stringReader;
+        return super.getXMLStringReader ();
     }
 }

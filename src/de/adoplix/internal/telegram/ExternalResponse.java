@@ -41,7 +41,7 @@ public class ExternalResponse extends XMLContainer {
             setResponseId(retriever.getChild (XMLMessageConstants.RESPONSE_ID).getValue ());
             retriever.setXMLRootObject ();
             retriever.setXMLObjectByKey (XMLMessageConstants.MSG_BODY);
-            getCData().append (retriever.getChild (XMLMessageConstants.CDATA).getValue ());
+            getCData().append (retriever.getChild (XMLMessageConstants.CDATA_BEGIN).getValue ());
         }
         catch (ConfigurationKeyNotFoundException cknfEx) {
             _logger.warning (new MessageContentException().getMessage ());

@@ -42,7 +42,7 @@ public class ExternalEvent extends XMLContainer {
             setTaskId(retriever.getChild (XMLMessageConstants.TASK_ID).getValue ());
             setResponseTaskId(retriever.getChild (XMLMessageConstants.RESPONSE_TASK_ID).getValue ());
             setInitialAddress(retriever.getChild (XMLMessageConstants.INITIAL_ADDRESS).getValue ());
-            getCData().append (retriever.getChild (XMLMessageConstants.CDATA).getValue ()).trimToSize ();
+            getCData().append (retriever.getChild (XMLMessageConstants.CDATA_BEGIN).getValue ()).trimToSize ();
         }
         catch (ConfigurationKeyNotFoundException cknfEx) {
             throw new MessageContentException();

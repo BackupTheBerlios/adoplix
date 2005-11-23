@@ -26,7 +26,7 @@ public class AdopLog {
     
 //    public  static AdopLog adoplog;
     private static FileHandler fileHandler;
-    private static Level level = Level.INFO;
+    private static Level level = Level.ALL;
     private static List loggerList = new ArrayList();
     private static String vid = "AdopLog.java,v 1.1 2005/11/10 22:33:29 dirkg Exp";
     
@@ -40,20 +40,23 @@ public class AdopLog {
             return returnLogger;
         }
         
-        // Logger doesn't exists yet
-        String adoplixPath = System.getProperty ("ADOPLIX_PATH", ".");
-        try{
-            fileHandler = new FileHandler(adoplixPath + "/log/adoplix_server.log", 1000000, 10, true);
-        } catch (Throwable th) {
-            System.out.println("Setting path for logfile not possible: " + th.getMessage());
-            System.out.println("Please verify if directory exists: " + adoplixPath + "/log/adoplix_server.log");
-            System.out.println("Therefore the programm is not be able to write or show log-messages it will be stopped now!");
-            System.exit (1);
-        }
-        
         returnLogger = Logger.getLogger (canonicalClassName);
         returnLogger.setLevel(level);
-        fileHandler.setFormatter (new SimpleFormatter());
+        if (fileHandler == null) {
+            // Logger doesn't exists yet
+            String adoplixPath = System.getProperty ("ADOPLIX_PATH", ".");
+            try{
+                fileHandler = new FileHandler(adoplixPath + "/log/adoplix_server.log", 1000000, 10, true);
+            } catch (Throwable th) {
+                System.out.println("Setting path for logfile not possible: " + th.getMessage());
+                System.out.println("Please verify if directory exists: " + adoplixPath + "/log/adoplix_server.log");
+                System.out.println("Therefore the programm is not be able to write or show log-messages it will be stopped now!");
+                System.exit (1);
+            }
+            fileHandler.setFormatter (new SimpleFormatter());
+            returnLogger.addHandler (fileHandler);
+        }
+        
         returnLogger.addHandler (fileHandler);
         loggerList.add (returnLogger);
         return returnLogger;
