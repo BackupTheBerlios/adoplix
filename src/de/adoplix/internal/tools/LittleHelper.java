@@ -51,8 +51,7 @@ public class LittleHelper {
     public static synchronized String streamToString (InputStream dataInputStream) {
         String dataInputString = "";
         try {
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader( dataInputStream) );
+        BufferedReader in = new BufferedReader(new InputStreamReader( dataInputStream) );
         String x = "";
         while ((x = in.readLine()).length() > 0) {
             dataInputString+=x;
@@ -73,13 +72,19 @@ public class LittleHelper {
         String x="";
         String dataInputString = "";
         BufferedReader br = new BufferedReader(new InputStreamReader(dataInputStream));
+        BufferedInputStream bi = new BufferedInputStream(dataInputStream);
         
         try {
-            while( (x= br.readLine()) != null ) {
-                dataInputString+=x;
-            }
+            int available = bi.available ();
+            char[] characters = new char[available];
+            int count = br.read (characters);
+            System.out.println("Anzahl Zeichen "+ count);
+            dataInputString = new String(characters);
+//            while( (x= br.readLine()) != null ) {
+//                dataInputString+=x;
+//            }
         } catch (IOException ioEx){
-            //
+            int a = 1;
         }
         return new StringReader (dataInputString);
     }

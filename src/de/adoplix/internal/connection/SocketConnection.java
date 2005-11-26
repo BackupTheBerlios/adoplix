@@ -66,8 +66,8 @@ public class SocketConnection {
     
     public void sendMsg (Socket socket, String msg) {
         acknowledge = null;
-        if (! socket.isConnected ()) logger.warning ("Socket ist nicht verbunden." + socket.toString ());
         try {
+            if (! socket.isConnected ()) logger.warning ("Socket ist nicht verbunden." + socket.toString ());
             System.out.println("sendMsg");
             System.out.println("MSG: " + msg);
             System.out.flush();
@@ -85,8 +85,10 @@ public class SocketConnection {
     
     public void sendAdoplixMsg (Socket socket, XMLContainer msg) {
         acknowledge = null;
-        if (! socket.isConnected ()) logger.warning ("Socket ist nicht verbunden." + socket.toString ());
         try {
+            if (! socket.isConnected ()) logger.warning ("Socket ist nicht verbunden." + socket.toString ());
+            msg.setTimeStampSend();
+            System.out.println("timeStamp: " + msg.getTimeStampSend());
             System.out.println("sendAdoplixMsg");
             System.out.println("MSG: " + msg.getXMLString());
             System.out.flush();
@@ -96,9 +98,10 @@ public class SocketConnection {
             logger.finest("OutputStream msg: " + msg);
             outputStream.println ( msg.getXMLString ());
             outputStream.flush ();
-            outputStream.notifyAll();
         } catch (IOException ioEx) {
             logger.warning (new MessageSendException ().getMessage ());
+        } catch (Throwable th) {
+            logger.severe (th.getMessage ());
         }
     }
     
