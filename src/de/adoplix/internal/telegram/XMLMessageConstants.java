@@ -50,6 +50,8 @@ public abstract class XMLMessageConstants {
     public static final String CDATA_BEGIN = "![CDATA[";
     /** ]] <br> Unformatierter Nachrichtentext Ende*/
     public static final String CDATA_END = "]]";
+    /** CDataContent <br> Inhalt eines CDATA-Blocks */
+    public static final String CDATA_CONTENT = "CDataContent";
     /** ExternalPort <br> Port für Kommunikation nach aussen */
     public static final String EXTERNAL_PORT = "ExternalPort";
     /** TimeOutAcknMillis <br> Wartezeit auf Quittung (nicht Response) */

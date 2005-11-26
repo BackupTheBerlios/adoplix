@@ -1,7 +1,9 @@
 package de.adoplix.internal.tools.xml;
 
-import org.xml.sax.*;
-import de.adoplix.internal.tools.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 
 /**
  * Ist die Klasse, die vom Parser verwendet wird, um XML-Inhalte abzulegen.
