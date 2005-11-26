@@ -61,7 +61,7 @@ public class AdapterConnector extends Adapter {
 //          BufferedReader in = new BufferedReader(
 //                  new InputStreamReader( _clientSocket.getInputStream()) );
 //          String x = in.readLine();
-          System.out.println("clientsocket recBufSize: " + _clientSocket.getReceiveBufferSize());
+//          System.out.println("clientsocket recBufSize: " + _clientSocket.getReceiveBufferSize());
 //          while (x != null) {
 //              dataInputString+=x;
 //              System.out.println(x);
