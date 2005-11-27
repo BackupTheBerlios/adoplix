@@ -69,7 +69,6 @@ public class LittleHelper {
      * Takes a Byte-Stream (InputStream) and copies the content to a StringReader
      */
     public static synchronized StringReader streamToStringReader (InputStream dataInputStream) {
-        String x="";
         String dataInputString = "";
         BufferedReader br = new BufferedReader(new InputStreamReader(dataInputStream));
         BufferedInputStream bi = new BufferedInputStream(dataInputStream);
@@ -80,58 +79,12 @@ public class LittleHelper {
             int count = br.read (characters);
             System.out.println("Anzahl Zeichen "+ count);
             dataInputString = new String(characters);
-//            while( (x= br.readLine()) != null ) {
-//                dataInputString+=x;
-//            }
         } catch (IOException ioEx){
-            int a = 1;
+            dataInputString = "";
         }
         return new StringReader (dataInputString);
     }
     
-//    public static synchronized XMLContainer createXMLContainer (String dataInputString) throws MessageContentException {
-//        String msgType = "";
-//        XMLContainer xmlContainer = null;
-//        XMLRetriever retriever = new XMLRetriever (dataInputString);
-//        try {
-//            _logger.finest("Versuche Zugriff auf Header...");
-//            retriever.setXMLObjectByKey (XMLMessageConstants.MSG_HEADER);
-//            msgType = retriever.getChild (XMLMessageConstants.MSG_TYPE).getValue ();
-//            
-//        } catch (ConfigurationKeyNotFoundException cknfEx) {
-//            _logger.warning("Zugriff auf Logger fehlgeschlagen...");
-//            throw new MessageContentException();
-//        }
-//        
-//        // the returned object depends to the msgtype.
-//        // The type was read above
-//        
-////        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_LOCAL_CONNECTION)) {
-////            xmlContainer = new LocalConnection (retriever);
-////        }
-//        
-//        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_EVENT)) {
-//            xmlContainer = new ExternalEvent (retriever);
-//        }
-//        
-//        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_RESPONSE)) {
-//            xmlContainer = new ExternalResponse (retriever);
-//        }
-//        
-//        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_ACKNOWLEDGE)) {
-//            xmlContainer = new Acknowledge (retriever);
-//        }
-//        
-//        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_PING)) {
-//            xmlContainer = new Ping (retriever);
-//        }
-//        
-//        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_PONG)) {
-//            xmlContainer = new Pong (retriever);
-//        }
-//        
-//        return xmlContainer;
-//    }
     
     public static synchronized XMLContainer createXMLContainer (BufferedReader dataInputBuffer) throws MessageContentException {
         return createXMLContainer (streamBufferToStringReader(dataInputBuffer));
@@ -146,7 +99,6 @@ public class LittleHelper {
      * named within the XML-code.
      */
     public static synchronized XMLContainer createXMLContainer (InputStream dataInputStream) throws MessageContentException {
-//        return createXMLContainer (new StringReader(streamToString(dataInputStream)));
         return createXMLContainer (streamToStringReader(dataInputStream));
     }
     
@@ -161,7 +113,6 @@ public class LittleHelper {
         String msgType = "";
         XMLContainer xmlContainer = null;
         XMLRetriever retriever = new XMLRetriever (stringReader);
-//        XMLRetriever retriever = new XMLRetriever (stringReader.toString());
         try {
             retriever.setXMLObjectByKey (XMLMessageConstants.MSG_HEADER);
             msgType = retriever.getChild (XMLMessageConstants.MSG_TYPE).getValue ();
@@ -172,10 +123,6 @@ public class LittleHelper {
         
         // the returned object depends to the msgtype.
         // The type was read above
-        
-//        if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_LOCAL_CONNECTION)) {
-//            xmlContainer = new LocalConnection (retriever);
-//        }
         
         if (msgType.equalsIgnoreCase (XMLMessageConstants.MSG_TYPE_EVENT)) {
             xmlContainer = new ExternalEvent (retriever);

@@ -36,4 +36,8 @@
 	<ActiveConfiguration>
 		<IntervalGetProjectSec>80000</IntervalGetProjectSec>
 	</ActiveConfiguration>
+	
+	<Logging>
+		<LogLevel>INFO</LogLevel>
+	</Logging>
 </ServerConfiguration>

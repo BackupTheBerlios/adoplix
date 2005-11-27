@@ -71,10 +71,9 @@ public class XMLContainer implements I_XMLContainer {
 
         try {
             // CDATA
-            retriever.setXMLObjectByKey(XMLMessageConstants.MSG_BODY, true);
-            // setCData(retriever.getChild
-            // (XMLMessageConstants.CDATA_BEGIN).getValue ());
-
+//            retriever.setXMLObjectByKey(XMLMessageConstants.CDATA_CONTENT, true);
+//            System.out.println("CDATA_CONTENT = " + retriever.getElementValue());
+            
             // XML part of cdata in new 'container'
             XMLRetriever cDataRetriever = new XMLRetriever(new StringReader(retriever.getElementValue()));
             cDataRetriever.setXMLObjectByKey(XMLMessageConstants.CDATA_CONTENT, true);
@@ -114,9 +113,10 @@ public class XMLContainer implements I_XMLContainer {
     }
 
     private void prepareXMLString() {
+        String cData = _newCData;
         _newMsg="";
         _newMsgBody="";
-        _newCData="";
+//        _newCData="";
         
         // header always has the same structure
         _newMsg = "<" + XMLMessageConstants.ADOPLIX_MESSAGE + ">";
@@ -128,20 +128,22 @@ public class XMLContainer implements I_XMLContainer {
         _newMsg += _newMsgHeader;
         _newMsg += "\n</" + XMLMessageConstants.MSG_HEADER + ">";
 
-        // CData always is part of body
+        // if CData is used, always it is part of body
         if (_cDataList.size() > 0) {
             Collection col = _cDataList.values();
             Object[] cDataArray = col.toArray();
-            _newMsgBody += "\n<" + XMLMessageConstants.CDATA_BEGIN + ">";
+            _newMsgBody += "\n<" + XMLMessageConstants.CDATA_BEGIN;
             _newMsgBody += "\n<" + XMLMessageConstants.CDATA_CONTENT + ">";
             for (int i = 0; i < cDataArray.length; i++) {
                 String[] cDataEntry = (String[]) cDataArray[i];
-                _newCData += "\n<" + cDataEntry[0] + ">" + cDataEntry[1] + "</" + cDataEntry[0] + ">";
+                cData += "\n<" + cDataEntry[0] + ">" + cDataEntry[1] + "</" + cDataEntry[0] + ">";
             }
-            _newMsgBody += _newCData;
+            _newMsgBody += cData;
             _newMsgBody += "\n</" + XMLMessageConstants.CDATA_CONTENT + ">";
-            _newMsgBody += "\n</" + XMLMessageConstants.CDATA_END + ">";
+            _newMsgBody += "\n" + XMLMessageConstants.CDATA_END + ">";
         }
+        
+        System.out.println("XMLContainer: "+ _newMsgBody);
 
         // add body to msg
         _newMsg += "\n<" + XMLMessageConstants.MSG_BODY + ">";
@@ -219,8 +221,8 @@ public class XMLContainer implements I_XMLContainer {
         _cDataList.put(elementName, cDataEntry);
     }
 
-    protected void addToCData(String content) {
-        _newCData += content;
+    protected void setCData(String content) {
+        _newCData = content;
     }
 
     public String getCDataEntry(String elementName) {

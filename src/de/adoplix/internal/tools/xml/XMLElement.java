@@ -80,7 +80,7 @@ public class XMLElement {
      * @param elementValue Ist der Wert, den ein XML-Element annehmen kann.
      */
     public void setValue(String elementValue) {
-        _elementValue = elementValue;
+        _elementValue += elementValue;
     }
     
     /**

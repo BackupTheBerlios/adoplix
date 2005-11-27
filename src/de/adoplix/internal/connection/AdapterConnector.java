@@ -85,25 +85,28 @@ public class AdapterConnector extends Adapter {
             _logger.severe (ErrorConstants.MESSAGE_READ_ERROR + ": " + ErrorConstants.getErrorMsg (ErrorConstants.MESSAGE_READ_ERROR));
         }
         
-        // let server look for task and start TaskAdapter by server
-        // server retrieves TaskAdapter
-        // set xml container to TaskAdapter (enables the adapter to handle the data)
-        System.out.println("AdapterConnector HHIIIIEEEERRRRR");
-        AdoplixServer.startTaskAdapter (_clientSocket, _xmlContainer);
+        if (null != _xmlContainer) {
         
-        try {
-            if (_xmlContainer.acknByServer ()) {
-                Acknowledge ackn = new Acknowledge ();
-                ackn.setResult (0);
-                String msg = ackn.getXMLString ();
-                
-                PrintWriter socketOut = new PrintWriter ( _clientSocket.getOutputStream () );
-                socketOut.println (msg);
-                socketOut.flush ();
+            // let server look for task and start TaskAdapter by server
+            // server retrieves TaskAdapter
+            // set xml container to TaskAdapter (enables the adapter to handle the data)
+            System.out.println("AdapterConnector HHIIIIEEEERRRRR");
+            AdoplixServer.startTaskAdapter (_clientSocket, _xmlContainer);
+            
+            try {
+                if (_xmlContainer.acknByServer ()) {
+                    Acknowledge ackn = new Acknowledge ();
+                    ackn.setResult (0);
+                    String msg = ackn.getXMLString ();
+                    
+                    PrintWriter socketOut = new PrintWriter ( _clientSocket.getOutputStream () );
+                    socketOut.println (msg);
+                    socketOut.flush ();
+                }
+                _clientSocket.close ();
+            } catch (IOException ioEx) {
+                _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
             }
-            _clientSocket.close ();
-        } catch (IOException ioEx) {
-            _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
     }
 }
