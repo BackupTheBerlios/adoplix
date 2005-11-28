@@ -18,7 +18,9 @@ public class Task {
     private String _localTaskId = "";
     private int _taskType = 0;
     private String _taskAlias = "";
-    private String _remoteServerAddress = "";
+//    private String _remoteServerAddress = "";
+    private String _remoteServerIP = "";
+    private int    _remoteServerPort = 0;
     private String _remoteTaskId = "";
     private String _responseTaskId = "";
     private String _localAdapterIP = "";
@@ -34,7 +36,9 @@ public class Task {
         this.setTaskType(conf);
         this.setLocalTaskId(taskId);
         this.setTaskAlias(conf);
-        this.setRemoteServerAddress(conf);
+//        this.setRemoteServerAddress(conf);
+        this.setRemoteServerIP(conf);
+        this.setRemoteServerPort(conf);
         this.setRemoteTaskId(conf);
         this.setLocalAdapterClass(conf);
         this.setAcknInitiator(conf);
@@ -157,30 +161,29 @@ public class Task {
         }
     }
 
-    /**
-     * @return Returns the _remoteServerAddress.
-     */
-    public String getRemoteServerAddress() {
-        return _remoteServerAddress;
-    }
-
-    /**
-     * @param serverAddress
-     *            The _remoteServerAddress to set.
-     */
-    public void setRemoteServerAddress(String serverAddress) {
-        _remoteServerAddress = serverAddress;
-    }
-
-    private void setRemoteServerAddress(Configuration conf) {
-        try {
-            _remoteServerAddress = conf.getChild(
-                    TaskConfigurationConstants.REMOTE_SERVER_ADDRESS)
-                    .getValue();
-        } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
-        }
-    }
+//    /**
+//     * @return Returns the _remoteServerAddress.
+//     */
+//    public String getRemoteServerAddress() {
+//        return _remoteServerAddress;
+//    }
+//
+//    /**
+//     * @param serverAddress
+//     *            The _remoteServerAddress to set.
+//     */
+//    public void setRemoteServerAddress(String serverAddress) {
+//        _remoteServerAddress = serverAddress;
+//    }
+//
+//    private void setRemoteServerAddress(Configuration conf) {
+//        try {
+//            _remoteServerAddress = conf.getChild(
+//                    TaskConfigurationConstants.REMOTE_SERVER_ADDRESS).getValue();
+//        } catch (ConfigurationKeyNotFoundException confEx) {
+//            _logger.info(confEx.getMessage());
+//        }
+//    }
 
     /**
      * @return Returns the _remoteTaskId.
@@ -346,5 +349,39 @@ public class Task {
         } catch (ConfigurationKeyNotFoundException confEx) {
             _logger.info(confEx.getMessage());
         }
+    }
+
+    public void setRemoteServerIP(Configuration conf) {
+        try {
+            _remoteServerIP = conf.getChild(TaskConfigurationConstants.REMOTE_SERVER_IP).getValue();
+        } catch (ConfigurationKeyNotFoundException confEx) {
+            _logger.info(confEx.getMessage());
+        }
+    }
+    
+    public void setRemoteServerIP(String _remoteServerIP) {
+        this._remoteServerIP = _remoteServerIP;
+    }
+
+    public String getRemoteServerIP() {
+        return _remoteServerIP;
+    }
+
+    public void setRemoteServerPort(int _remoteServerPort) {
+        this._remoteServerPort = _remoteServerPort;
+    }
+    
+    public void setRemoteServerPort(Configuration conf) {
+        try {
+            _remoteServerPort = conf.toInt(conf.getChild(TaskConfigurationConstants.REMOTE_SERVER_PORT).getValue());
+        } catch (ConfigurationKeyNotFoundException confEx) {
+            _logger.info(confEx.getMessage());
+        } catch (ConfigurationTypeException ctEx) {
+            _logger.warning(ctEx.getMessage());
+        }
+    }
+
+    public int getRemoteServerPort() {
+        return _remoteServerPort;
     }
 }

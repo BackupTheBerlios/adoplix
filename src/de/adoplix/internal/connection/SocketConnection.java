@@ -6,12 +6,11 @@
 package de.adoplix.internal.connection;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
@@ -30,7 +29,8 @@ public class SocketConnection {
     
     private Logger logger = AdopLog.getLogger (SocketConnection.class);
     private Acknowledge acknowledge = null;
-    private Socket socket;
+    private Socket socket = null;
+    private ServerSocket serverSocket = null;
 
     /**
      * Creates a new instance of SocketConnection 
@@ -45,6 +45,19 @@ public class SocketConnection {
         }
     }
     
+    /**
+     * Creates a new instance of SocketConnection 
+     */
+    public SocketConnection (int port) {
+        try {
+            serverSocket = new ServerSocket ( port );
+        } catch (UnknownHostException uhEx) {
+            logger.warning (uhEx.getMessage ());
+        } catch (IOException ioEx) {
+            logger.warning (ioEx.getMessage ());
+        }
+    }
+
     public SocketConnection(Socket socket) {
         this.socket = socket;
     }

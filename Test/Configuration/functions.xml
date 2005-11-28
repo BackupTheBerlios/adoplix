@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<!-- This file contains important internal tasks of the adoplix server.
+     Please change entries only if you are absolutely sure what you do.
+-->
+<TaskConfiguration>
+
+	<TaskList>
+	    <!-- Tasks used as Service when Request comes in -->
+	    <TaskTypesService>
+	        <!-- Shutdown -->
+			<LocalTaskId>F0-000</LocalTaskId>
+			<!-- Restart -->
+			<LocalTaskId>F0-001</LocalTaskId>
+			<!-- SetTime -->
+			<LocalTaskId>F0-002</LocalTaskId>
+			<!-- GetTime -->
+			<LocalTaskId>F0-003</LocalTaskId>
+			<!-- GetLifeTimeMillis -->
+			<LocalTaskId>F0-004</LocalTaskId>
+			<!-- ReReadServerConf -->
+			<LocalTaskId>F0-005</LocalTaskId>
+			<!-- ReReadTaskConf -->
+			<LocalTaskId>F0-006</LocalTaskId>
+			<!-- GetVersion -->
+			<LocalTaskId>F0-007</LocalTaskId>
+			<!-- SendEvent -->
+			<LocalTaskId>F0-008</LocalTaskId>
+			<!-- StartMonitor -->
+			<LocalTaskId>F0-009</LocalTaskId>
+			<!-- StopMonitor -->
+			<LocalTaskId>F0-010</LocalTaskId>
+			<!-- SetLoggingLevel -->
+			<LocalTaskId>F0-011</LocalTaskId>
+		</TaskTypesService>
+	</TaskList>
+
+	<TaskDetails>
+		<F0-000>
+			<TaskAlias>Shutdown</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-000>
+	
+		<F0-001>
+			<TaskAlias>Restart</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-001>
+	
+		<F0-002>
+			<TaskAlias>SetTime</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-002>
+		
+		<F0-003>
+			<TaskAlias>GetTime</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-003>
+		
+		<F0-004>
+			<TaskAlias>GetLifeTimeMillis</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-004>
+		
+		<F0-005>
+			<TaskAlias>ReReadServerConf</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-005>
+		
+		<F0-006>
+			<TaskAlias>ReReadServerTaskConf</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-006>
+		
+		<F0-007>
+			<TaskAlias>GetVersion</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-007>
+		
+		<F0-008>
+			<TaskAlias>SendEvent</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-008>
+		
+		<F0-009>
+			<TaskAlias>StartMonitor</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-009>
+		
+		<F0-010>
+			<TaskAlias>StopMonitor</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-010>
+		
+		<F0-011>
+			<TaskAlias>SetLoggingLevel</TaskAlias>
+			<TaskType>2</TaskType>
+			<RemoteServerIP>localhost</RemoteServerIP>
+			<RemoteServerPort>2002</RemoteServerPort>
+			<LocalAdapterPort>3000</LocalAdapterPort>
+			<AcknInitiator>0</AcknInitiator>
+			<TimeOutAcknMillis>2000</TimeOutAcknMillis>
+			<LocalAdapterConnType>0</LocalAdapterConnType>
+		</F0-011>
+		
+	</TaskDetails>
+
+</TaskConfiguration>

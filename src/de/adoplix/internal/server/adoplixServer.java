@@ -32,6 +32,8 @@ public class AdoplixServer {
     private static ServerConfiguration _serverConfiguration = null;
     /** Container of task configuration */
     private static TaskConfiguration _taskConfiguration = null;
+    /** Container of function configuration */
+    private static TaskConfiguration _functionConfiguration = null;
     /** Counter for generating ThreadID's */
     private static int _threadCounter = 0;
     /** Max. number of Clients allowed */
@@ -129,6 +131,15 @@ public class AdoplixServer {
         }
         timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
         logger.finest ("Zeitbedarf Lesen der Task-Konfiguration: " + timeToReadConfiguration);
+        
+        timeToReadConfiguration = System.currentTimeMillis();
+        taskConfiguration = _serverConfiguration.getPathFunctionConfiguration();
+        if (null != taskConfiguration &&
+            taskConfiguration.length() > 0) {
+            _functionConfiguration = new TaskConfiguration (taskConfiguration);
+        }
+        timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
+        logger.finest ("Zeitbedarf Lesen der Funktions-Konfiguration: " + timeToReadConfiguration);
     }
     
     /*
@@ -149,32 +160,39 @@ public class AdoplixServer {
      * @param xmlContainer Transports the message received from a client-application.
      */
     public static synchronized void startTaskAdapter (Socket clientSocket, XMLContainer xmlContainer) {
-        if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
-            try {
-                Task task = _taskConfiguration.getTask (xmlContainer.getTaskId ());
+        try {
+            Task task = _taskConfiguration.getTask (xmlContainer.getTaskId ());
+            if (null != task) {
                 switch (task.getLocalAdapterConnType ()) {
-                    case (0):   // connection via port
+                case (0):   // connection via port
+                    if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
                         TaskAdapterToPort taskAdapterPort = new TaskAdapterToPort (task, clientSocket, xmlContainer);
                         Thread taskAdapterPortThread = new Thread (taskAdapterPort);
                         taskAdapterPortThread.start ();
-                        
-                    case (1):
+                    }
+                    
+                case (1):
+                    if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
                         TaskAdapterToClass taskAdapterClass = new TaskAdapterToClass (task, clientSocket, xmlContainer);
                         Thread taskAdapterClassThread = new Thread (taskAdapterClass);
                         taskAdapterClassThread.start ();
-                        
-                    case (2):
-                        TaskAdapterToAdmin taskAdapterAdmin = new TaskAdapterToAdmin (task, clientSocket, xmlContainer);
-                        Thread taskAdapterAdminThread = new Thread (taskAdapterAdmin);
-                        taskAdapterAdminThread.start ();
-                        
+                    }
                 }
                 _activeClientThreadsCount++;
-            } catch (ConfigurationKeyNotFoundException cknfEx) {
-                logger.warning (cknfEx.getMessage () + "; TaskId / TaskAdapter");
-            } catch (TaskNotFoundException tnfEx) {
-                logger.warning (tnfEx.getMessage ());
             }
+            else {
+                task = _functionConfiguration.getTask(xmlContainer.getTaskId());
+                TaskAdapterToAdmin taskAdapterAdmin = new TaskAdapterToAdmin (task, clientSocket, xmlContainer);
+                Thread taskAdapterAdminThread = new Thread (taskAdapterAdmin);
+                taskAdapterAdminThread.start ();
+            }
+            
+        } catch (ConfigurationKeyNotFoundException cknfEx) {
+            logger.warning (cknfEx.getMessage () + "; TaskId / TaskAdapter");
+        } catch (TaskNotFoundException tnfEx) {
+            logger.warning (tnfEx.getMessage ());
+        } catch (Throwable th) {
+            logger.warning(th.getMessage());
         }
     }
     

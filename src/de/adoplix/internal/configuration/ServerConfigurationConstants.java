@@ -20,6 +20,8 @@ public abstract class ServerConfigurationConstants {
     public static final String CLIENT_HANDLING = "ClientHandling";
     /** TaskConfiguration <br> Wurzel ohne Wert */
     public static final String TASK_CONFIGURATION = "TaskConfiguration";
+    /** FunctionConfiguration <br> Wurzel ohne Wert */
+    public static final String FUNCTION_CONFIGURATION = "FunctionConfiguration";
     /** Security <br> Wurzel ohne Wert */
     public static final String SECURITY = "Security";
     /** ActiveConfiguration <br> Wurzel ohne Wert */
@@ -57,6 +59,9 @@ public abstract class ServerConfigurationConstants {
     /** TaskConfiguration.PathTaskConfiguration <br> Pfad der XML-Datei für Tasks */
     public static final String X_PATH_TASK_CONFIGURATION = TASK_CONFIGURATION + "%PathTaskConfiguration";      
             
+    /** FunctionConfiguration.PathFunctionConfiguration <br> Pfad der XML-Datei für Funktionen */
+    public static final String X_PATH_FUNCTION_CONFIGURATION = FUNCTION_CONFIGURATION + "%PathFunctionConfiguration";
+    
     /** Security.PwdAdministration <br> Passwort für Service-Schnittstelle */
     public static final String X_PWD_ADMINISTRATION = SECURITY + "%PwdAdministration";
     

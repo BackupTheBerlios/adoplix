@@ -18,6 +18,7 @@ public class ServerConfiguration {
     private String _serverId = null;
     private String _serverPwd = null;
     private String _pathTaskConfiguration = null;
+    private String _pathFunctionConfiguration = null;
     private String _securityPwdAdmin = null;
     private String _logLevel = null;
     private int _portExternal = 0;
@@ -62,6 +63,10 @@ public class ServerConfiguration {
             conf.setXMLRootObject ();
             _pathTaskConfiguration = conf.setXMLObjectByKey (ServerConfigurationConstants.X_PATH_TASK_CONFIGURATION).getValue();
             
+            // PathFunctionConfiguration
+            conf.setXMLRootObject();
+            _pathTaskConfiguration = conf.setXMLObjectByKey (ServerConfigurationConstants.X_PATH_FUNCTION_CONFIGURATION).getValue();
+            
             // Active Configuration
             conf.setXMLRootObject ();
             _intervalGetProjectSec = conf.toInt (conf.setXMLObjectByKey (ServerConfigurationConstants.X_INTERVAL_GET_PROJECT_SEC).getValue());
@@ -101,7 +106,9 @@ public class ServerConfiguration {
     public String getPwd() {
         return _serverPwd;
     }
-
+    public String getPathFunctionConfiguration() {
+        return _pathFunctionConfiguration;
+    }
     public String getPathTaskConfiguration() {
         return _pathTaskConfiguration;
     }

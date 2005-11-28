@@ -19,11 +19,11 @@ public class TaskAdapter extends AdapterSocketCommunication {
     protected Task _task;
     
     public TaskAdapter (int port, String ip) {
-        super (port, ip, 0, null);
+        super (port, ip, 0);
     }
     
     public TaskAdapter (Task task, Socket clientSocket, XMLContainer xmlContainer) {
-        super(clientSocket, xmlContainer, 0 , null);
+        super(clientSocket, xmlContainer, 0);
         _task = task;
     }   
 }

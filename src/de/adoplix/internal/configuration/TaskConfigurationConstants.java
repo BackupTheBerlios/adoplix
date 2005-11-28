@@ -34,6 +34,8 @@ public abstract class TaskConfigurationConstants {
     public final static String TASK_TYPE = "TaskType";
     /** RemoteServerAddress <br> IP-Adresse des Servers */
     public final static String REMOTE_SERVER_ADDRESS = "RemoteServerAddress";
+    public final static String REMOTE_SERVER_IP = "RemoteServerIP";
+    public final static String REMOTE_SERVER_PORT = "RemoteServerPort";
     /** RemoteTaskId <br> Die TaskID, die auf der Gegenseite die Arbeit macht <br>
       * Kann auch die gleiche sein ;-)
       */

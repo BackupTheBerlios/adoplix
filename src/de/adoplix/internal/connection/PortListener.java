@@ -5,10 +5,7 @@
 
 package de.adoplix.internal.connection;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
 import java.net.ServerSocket;
 import java.net.Socket;

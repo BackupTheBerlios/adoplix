@@ -21,6 +21,10 @@
 		<PathTaskConfiguration>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/tasks.xml</PathTaskConfiguration>
 	</TaskConfiguration>
 
+        <FunctionConfiguration>
+            <PathFunctionConfiguration>C:/Dokumente und Einstellungen/dirk/Eigene Dateien/Adoplix/Test/Configuration/functions.xml</PathFunctionConfiguration>
+        </FunctionConfiguration>
+
 	<Security>
 		<PwdAdministration>i_Password</PwdAdministration>
 		<ServerValidation>

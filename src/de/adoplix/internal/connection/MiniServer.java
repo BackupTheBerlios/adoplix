@@ -24,8 +24,8 @@ public class MiniServer extends SocketConnection {
         super (socket);
     }
     
-    public MiniServer (int port, String ip) {
-        super (port, ip);
+    public MiniServer (int port) {
+        super (port);
     }
     
     public void acceptClientRequest() {
