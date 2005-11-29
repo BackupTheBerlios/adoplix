@@ -22,7 +22,6 @@ public class AdminFunction extends XMLContainer {
 
     public AdminFunction () {
         _msgType = XMLMessageConstants.MSG_TYPE_FUNCTION;
-        
     }
     
     public AdminFunction (XMLRetriever retriever) throws MessageContentException {

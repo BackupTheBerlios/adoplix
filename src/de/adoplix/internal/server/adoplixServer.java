@@ -40,6 +40,14 @@ public class AdoplixServer {
     private static int _maxClientThreadNumber = 0;
     /** Counter for active ClientThreads */
     private static int _activeClientThreadsCount = 0;
+    
+    private static boolean _run = true;
+    private static boolean _reRun = false;
+    
+    private static Thread portListenerExternalThread = null;
+    private static Thread portListenerAdminThread = null;
+    
+    
 //    /** Hashmap to find the event adaptors fast */
 //    private static Map _adapterEventList = new HashMap();
 //    /** Hashmap to find the service adaptors fast */
@@ -54,10 +62,19 @@ public class AdoplixServer {
     public static void main (String[] args) {
         logger.info ("adoplix start");
         parseArguments (args);
-        AdoplixServer server = new AdoplixServer (args);
-        while (null != server) {
+        AdoplixServer adoplixServer = new AdoplixServer (args);
+        while (_run) {
             try {
                 Thread.sleep ( 1000 );
+                if (_reRun) {
+                    try {
+                    adoplixServer.finalize();
+                    adoplixServer = null;
+                    System.gc();
+                    } catch (Throwable th) {}
+                    Thread.sleep( 2500 );
+                    adoplixServer = new AdoplixServer (args);
+                }
             } catch (Exception ex) {}
         }
         System.exit (0);
@@ -84,11 +101,13 @@ public class AdoplixServer {
                     } else {
                         logger.severe (ErrorConstants.getErrorMsg (ErrorConstants.STARTUP_NO_CONF_FILE_SELECTED));
                         System.out.println (ErrorConstants.getErrorMsg (ErrorConstants.STARTUP_NO_CONF_FILE_SELECTED));
-                        System.exit (1);
+                        _run = false;
+//                        System.exit (1);
                     }
                 } else {
                     // no configuration file selected - server exit
                     logger.severe (ErrorConstants.getErrorMsg (ErrorConstants.STARTUP_NO_CONF_FILE_SELECTED));
+                    _run = false;
                 }
             }
         }
@@ -115,11 +134,15 @@ public class AdoplixServer {
         startPortListener ();
     }
     
+    public void finalize() {
+        
+    }
+    
     private void readConfigurations () {
         long timeToReadConfiguration = System.currentTimeMillis ();
         _serverConfiguration = new ServerConfiguration (_pathConfiguration);
         timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
-        logger.finest ("Zeitbedarf Lesen der Server-Konfiguration: " + timeToReadConfiguration);
+        logger.info ("Zeitbedarf Lesen der Server-Konfiguration: " + timeToReadConfiguration);
         
 //        AdopLog.setLevel(_serverConfiguration.getLogLevel());
         
@@ -130,7 +153,7 @@ public class AdoplixServer {
             _taskConfiguration = new TaskConfiguration (taskConfiguration);
         }
         timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
-        logger.finest ("Zeitbedarf Lesen der Task-Konfiguration: " + timeToReadConfiguration);
+        logger.info ("Zeitbedarf Lesen der Task-Konfiguration: " + timeToReadConfiguration);
         
         timeToReadConfiguration = System.currentTimeMillis();
         taskConfiguration = _serverConfiguration.getPathFunctionConfiguration();
@@ -139,7 +162,7 @@ public class AdoplixServer {
             _functionConfiguration = new TaskConfiguration (taskConfiguration);
         }
         timeToReadConfiguration = System.currentTimeMillis () - timeToReadConfiguration;
-        logger.finest ("Zeitbedarf Lesen der Funktions-Konfiguration: " + timeToReadConfiguration);
+        logger.info ("Zeitbedarf Lesen der Funktions-Konfiguration: " + timeToReadConfiguration);
     }
     
     /*
@@ -148,8 +171,8 @@ public class AdoplixServer {
     private void startPortListener () {
         PortListenerExternal portListenerExternal = new PortListenerExternal (_serverConfiguration.getPortExternal ());
         PortListenerAdmin portListenerAdmin = new PortListenerAdmin (_serverConfiguration.getPortAdmin ());
-        Thread portListenerExternalThread = new Thread (portListenerExternal);
-        Thread portListenerAdminThread = new Thread (portListenerAdmin);
+        portListenerExternalThread = new Thread (portListenerExternal);
+        portListenerAdminThread = new Thread (portListenerAdmin);
         portListenerAdminThread.start ();
         portListenerExternalThread.start ();
     }
@@ -162,31 +185,34 @@ public class AdoplixServer {
     public static synchronized void startTaskAdapter (Socket clientSocket, XMLContainer xmlContainer) {
         try {
             Task task = _taskConfiguration.getTask (xmlContainer.getTaskId ());
-            if (null != task) {
-                switch (task.getLocalAdapterConnType ()) {
-                case (0):   // connection via port
-                    if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
-                        TaskAdapterToPort taskAdapterPort = new TaskAdapterToPort (task, clientSocket, xmlContainer);
-                        Thread taskAdapterPortThread = new Thread (taskAdapterPort);
-                        taskAdapterPortThread.start ();
-                    }
-                    
-                case (1):
-                    if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
-                        TaskAdapterToClass taskAdapterClass = new TaskAdapterToClass (task, clientSocket, xmlContainer);
-                        Thread taskAdapterClassThread = new Thread (taskAdapterClass);
-                        taskAdapterClassThread.start ();
-                    }
+            switch (task.getLocalAdapterConnType ()) {
+            case (0):   // connection via port
+                if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
+                    TaskAdapterToPort taskAdapterPort = new TaskAdapterToPort (task, clientSocket, xmlContainer);
+                    Thread taskAdapterPortThread = new Thread (taskAdapterPort);
+                    taskAdapterPortThread.start ();
                 }
-                _activeClientThreadsCount++;
+                
+            case (1):
+                if (_activeClientThreadsCount < _serverConfiguration.getMaxClientThreads ()) {
+                    TaskAdapterToClass taskAdapterClass = new TaskAdapterToClass (task, clientSocket, xmlContainer);
+                    Thread taskAdapterClassThread = new Thread (taskAdapterClass);
+                    taskAdapterClassThread.start ();
+                }
             }
-            else {
-                task = _functionConfiguration.getTask(xmlContainer.getTaskId());
-                TaskAdapterToAdmin taskAdapterAdmin = new TaskAdapterToAdmin (task, clientSocket, xmlContainer);
-                Thread taskAdapterAdminThread = new Thread (taskAdapterAdmin);
-                taskAdapterAdminThread.start ();
-            }
-            
+            _activeClientThreadsCount++;
+        } catch (ConfigurationKeyNotFoundException cknfEx) {
+            logger.warning (cknfEx.getMessage () + "; TaskId / TaskAdapter");
+        } catch (TaskNotFoundException tnfEx) {
+            logger.warning (tnfEx.getMessage ());
+        }
+        
+        try {
+            Task task = _functionConfiguration.getTask(xmlContainer.getTaskId());
+            TaskAdapterToAdmin taskAdapterAdmin = new TaskAdapterToAdmin (task, clientSocket, xmlContainer);
+            Thread taskAdapterAdminThread = new Thread (taskAdapterAdmin);
+            taskAdapterAdminThread.start ();
+                
         } catch (ConfigurationKeyNotFoundException cknfEx) {
             logger.warning (cknfEx.getMessage () + "; TaskId / TaskAdapter");
         } catch (TaskNotFoundException tnfEx) {
@@ -227,6 +253,16 @@ public class AdoplixServer {
      * If 'soft' the server stops the threads (adapors) regulary by using their 'stop'-mechanism.
      */
     public static void shutdown(String hardOrSoft){
+        if (hardOrSoft.equalsIgnoreCase("soft")) {
+            portListenerExternalThread.interrupt();
+            portListenerAdminThread.interrupt();
+            
+//            while (portListenerExternalThread.isAlive() ||
+//                    portListenerAdminThread.isAlive()){
+//                try {Thread.sleep(100);} catch (Throwable th) {}
+//            }
+        }
+        _run = false;
     }
 
     /**
@@ -238,6 +274,16 @@ public class AdoplixServer {
      * If 'soft' the server waits until the adaptors have finished their jobs.
      */
     public static void restart(String hardOrSoft){
+        if (hardOrSoft.equalsIgnoreCase("soft")) {
+            portListenerExternalThread.interrupt();
+            portListenerAdminThread.interrupt();
+            
+            while (portListenerExternalThread.isAlive() ||
+                    portListenerAdminThread.isAlive()){
+                try {Thread.sleep(100);} catch (Throwable th) {}
+            }
+        }
+        _reRun = true;
     }
     
     /**

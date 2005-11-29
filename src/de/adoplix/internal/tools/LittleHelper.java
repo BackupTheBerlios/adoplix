@@ -7,6 +7,7 @@
 package de.adoplix.internal.tools;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -72,6 +73,8 @@ public class LittleHelper {
         String dataInputString = "";
         BufferedReader br = new BufferedReader(new InputStreamReader(dataInputStream));
         BufferedInputStream bi = new BufferedInputStream(dataInputStream);
+        
+        DataInputStream in = new DataInputStream(dataInputStream);
         
         try {
             int available = bi.available ();

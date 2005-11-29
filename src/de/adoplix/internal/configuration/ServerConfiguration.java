@@ -65,7 +65,7 @@ public class ServerConfiguration {
             
             // PathFunctionConfiguration
             conf.setXMLRootObject();
-            _pathTaskConfiguration = conf.setXMLObjectByKey (ServerConfigurationConstants.X_PATH_FUNCTION_CONFIGURATION).getValue();
+            _pathFunctionConfiguration = conf.setXMLObjectByKey (ServerConfigurationConstants.X_PATH_FUNCTION_CONFIGURATION).getValue();
             
             // Active Configuration
             conf.setXMLRootObject ();

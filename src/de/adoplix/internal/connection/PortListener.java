@@ -33,7 +33,7 @@ public class PortListener implements I_PortListener {
 //        this.run();
     }
     
-    public void stop () {
+    public void interrupt () {
         _waitForConnections=false;
     }
     
@@ -50,38 +50,17 @@ public class PortListener implements I_PortListener {
              */
             while (_waitForConnections) {
                 try {
-//                    serverSocket.setSoTimeout (1000);
                 /* don't start a new client (adapterconnector) when max. number
                  * of clients is reached */
                     Socket clientSocket = null;
                     // accept a new client for communicate with
                     clientSocket = serverSocket.accept();
                     System.out.println("ClientSocket = <null>? " + clientSocket);
-//                    clientSocket.setReceiveBufferSize (serverSocket.getReceiveBufferSize ());
-                    if (clientSocket.isConnected()) {
+                    if (clientSocket.isConnected() &&
+                            clientSocket.getReceiveBufferSize() > 0) {
                         System.out.println("ClientSocket ist connected");
                         System.out.println("Grösse + " + clientSocket.getReceiveBufferSize());
                         clientSocket.setKeepAlive(true);
-                        StringBuffer dataInputString = new StringBuffer("");
-//                        try {
-//                            System.out.println("Kurz vor Lesen...");
-//                            BufferedReader in = new BufferedReader(
-//                                    new InputStreamReader( clientSocket.getInputStream()) );
-//                            String x = "";
-//                            while ((x = in.readLine()).length() > 0) {
-//                                dataInputString.append(x);
-//                                System.out.println(x);
-//                                System.out.println(dataInputString);
-//                            }
-//                            dataInputString.trimToSize();
-                            System.out.println(dataInputString);
-                            
-//                        } catch (IOException ioEx){
-//                            System.out.println(ioEx.getMessage());
-//                            dataInputString.setLength(0);
-//                        }
-//                        logger.finest(clientSocket.toString());
-//                        logger.finest(dataInputString.toString());
                         startAdapterConnector (clientSocket);
                     }
                     // spend a little time to other processes
@@ -90,12 +69,16 @@ public class PortListener implements I_PortListener {
                 } catch (InterruptedIOException irioEx) {
                     // nothing to do here... enables to stop this process regulary
                 }catch (InterruptedException irEx)  {
+                    // Interrupt from external process to stop this thread
+                    _waitForConnections = false;
                 }
             }
             serverSocket.close ();
         } catch (IOException e) {
             logger.severe (ErrorConstants.COMMUNICATION_SOCKET_ACCEPT + ": " + ErrorConstants.getErrorMsg (ErrorConstants.COMMUNICATION_SOCKET_ACCEPT) + "; Socket = " + _socketNr);
         }
+        
+        try {this.finalize();} catch (Throwable th) {}
     }
     
     /**

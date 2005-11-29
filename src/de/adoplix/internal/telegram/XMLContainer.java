@@ -111,11 +111,16 @@ public class XMLContainer implements I_XMLContainer {
         }
         return _taskId;
     }
+    
+    public void setTaskId(String taskId) {
+        _taskId = taskId;
+    }
 
     private void prepareXMLString() {
         String cData = _newCData;
+        String msgBody = _newMsgBody;
         _newMsg="";
-        _newMsgBody="";
+//        _newMsgBody="";
 //        _newCData="";
         
         // header always has the same structure
@@ -127,27 +132,30 @@ public class XMLContainer implements I_XMLContainer {
         _newMsg += "\n<" + XMLMessageConstants.AWAITING_RESPONSE + ">" + String.valueOf(_awaitingResponse).trim() + "</" + XMLMessageConstants.AWAITING_RESPONSE + ">";
         _newMsg += _newMsgHeader;
         _newMsg += "\n</" + XMLMessageConstants.MSG_HEADER + ">";
+        
+        if (null != _taskId) {
+            msgBody += "\n<" + XMLMessageConstants.TASK_ID + ">" + _taskId + "</" + XMLMessageConstants.TASK_ID + ">";
+        }
 
         // if CData is used, always it is part of body
         if (_cDataList.size() > 0) {
             Collection col = _cDataList.values();
             Object[] cDataArray = col.toArray();
-            _newMsgBody += "\n<" + XMLMessageConstants.CDATA_BEGIN;
-            _newMsgBody += "\n<" + XMLMessageConstants.CDATA_CONTENT + ">";
+            msgBody += "\n<" + XMLMessageConstants.CDATA_BEGIN;
+            msgBody += "\n<" + XMLMessageConstants.CDATA_CONTENT + ">";
             for (int i = 0; i < cDataArray.length; i++) {
                 String[] cDataEntry = (String[]) cDataArray[i];
                 cData += "\n<" + cDataEntry[0] + ">" + cDataEntry[1] + "</" + cDataEntry[0] + ">";
             }
-            _newMsgBody += cData;
-            _newMsgBody += "\n</" + XMLMessageConstants.CDATA_CONTENT + ">";
-            _newMsgBody += "\n" + XMLMessageConstants.CDATA_END + ">";
+            msgBody += cData;
+            msgBody += "\n</" + XMLMessageConstants.CDATA_CONTENT + ">";
+            msgBody += "\n" + XMLMessageConstants.CDATA_END + ">";
+            
         }
         
-        System.out.println("XMLContainer: "+ _newMsgBody);
-
         // add body to msg
         _newMsg += "\n<" + XMLMessageConstants.MSG_BODY + ">";
-        _newMsg += _newMsgBody;
+        _newMsg += msgBody;
         _newMsg += "\n</" + XMLMessageConstants.MSG_BODY + ">";
 
         // close complete structure

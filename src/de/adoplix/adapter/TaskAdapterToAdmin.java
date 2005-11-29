@@ -36,22 +36,22 @@ public class TaskAdapterToAdmin extends TaskAdapter {
         // Task is not configured but fix implemented in console application
         
         // use server admin method
-        String _function = ((AdminFunction)_xmlContainer).getMethodName ().toUpperCase ();
-        String _parameterValue = ((AdminFunction)_xmlContainer).getParameterValue ().toUpperCase ();
+        String _function = ((AdminFunction)_xmlContainer).getMethodName ();
+        String _parameterValue = ((AdminFunction)_xmlContainer).getParameterValue ();
         String serverReturnValue = "";
         
-        if (_function.equals (AdminFunctionConstants.F_SHUTDOWN)) {AdoplixServer.shutdown (_parameterValue);}
-        if (_function.equals (AdminFunctionConstants.F_RESTART)) {AdoplixServer.restart (_parameterValue);}
-        if (_function.equals (AdminFunctionConstants.F_SET_TIME)) {AdoplixServer.setTime (_parameterValue);}
-        if (_function.equals (AdminFunctionConstants.F_GET_TIME)) {serverReturnValue = AdoplixServer.getTime ();}
-        if (_function.equals (AdminFunctionConstants.F_GET_LIFETIME_MILLIS)) {serverReturnValue = AdoplixServer.getLifetimeMillis ();}
-        if (_function.equals (AdminFunctionConstants.F_REREAD_SERVER_CONF)) {AdoplixServer.reReadServerConf ();}
-        if (_function.equals (AdminFunctionConstants.F_REREAD_TASK_CONF)) {AdoplixServer.reReadTaskConf ();}
-        if (_function.equals (AdminFunctionConstants.F_GET_VERSION)) {serverReturnValue = AdoplixServer.getVersion ();}
-        if (_function.equals (AdminFunctionConstants.F_SEND_EVENT)) {serverReturnValue = AdoplixServer.sendEvent (_parameterValue);}
-        if (_function.equals (AdminFunctionConstants.F_START_MONITOR)) {AdoplixServer.startMonitor ();}
-        if (_function.equals (AdminFunctionConstants.F_STOP_MONITOR)) {AdoplixServer.stopMonitor ();}
-        if (_function.equals (AdminFunctionConstants.F_SET_LOGGING_LEVEL)) {AdoplixServer.setLoggingLevel (_parameterValue);}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_SHUTDOWN)) {AdoplixServer.shutdown (_parameterValue);}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_RESTART)) {AdoplixServer.restart (_parameterValue);}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_SET_TIME)) {AdoplixServer.setTime (_parameterValue);}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_GET_TIME)) {serverReturnValue = AdoplixServer.getTime ();}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_GET_LIFETIME_MILLIS)) {serverReturnValue = AdoplixServer.getLifetimeMillis ();}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_REREAD_SERVER_CONF)) {AdoplixServer.reReadServerConf ();}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_REREAD_TASK_CONF)) {AdoplixServer.reReadTaskConf ();}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_GET_VERSION)) {serverReturnValue = AdoplixServer.getVersion ();}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_SEND_EVENT)) {serverReturnValue = AdoplixServer.sendEvent (_parameterValue);}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_START_MONITOR)) {AdoplixServer.startMonitor ();}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_STOP_MONITOR)) {AdoplixServer.stopMonitor ();}
+        if (_function.equalsIgnoreCase (AdminFunctionConstants.F_SET_LOGGING_LEVEL)) {AdoplixServer.setLoggingLevel (_parameterValue);}
         
         
         // acknowledge must be send for every function call

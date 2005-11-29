@@ -54,24 +54,6 @@ public class AdapterConnector extends Adapter {
         // the xml-container will be the right one for the derived subclass.
         // The subclass will use it later
         try {
-//            System.out.println("AdapterConnector " + _clientSocket);
-//            String dataInputString = "";
-//          BufferedReader in = new BufferedReader(
-//                  new InputStreamReader( _clientSocket.getInputStream()) );
-//          String x = in.readLine();
-//          System.out.println("clientsocket recBufSize: " + _clientSocket.getReceiveBufferSize());
-//          while (x != null) {
-//              dataInputString+=x;
-//              System.out.println(x);
-//              System.out.println("aljfsdfsdaj" + dataInputString);
-//              try {
-//              x = in.readLine();
-//              } catch (IOException ioEx) {
-//                  break;
-//              }
-//          }
-//          dataInputString.trimToSize();
-//          _logger.finest("aaaaaaaaaaaaaaaaaaa\n" + dataInputString);
           
             
           _xmlContainer = LittleHelper.createXMLContainer (_clientSocket.getInputStream ());
@@ -101,10 +83,11 @@ public class AdapterConnector extends Adapter {
                     socketOut.println (msg);
                     socketOut.flush ();
                 }
-                _clientSocket.close ();
             } catch (IOException ioEx) {
                 _logger.warning ("aaaaaaaaaaaaaaaaaaaaaaaaaa");
             }
         }
+        
+        stop();
     }
 }

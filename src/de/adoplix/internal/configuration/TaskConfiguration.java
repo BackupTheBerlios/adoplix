@@ -37,8 +37,9 @@ public class TaskConfiguration {
         /** List which contains Service-Id's */
         ArrayList _listServiceIds = new ArrayList();
 
+        Configuration conf = null;
         try {
-            Configuration conf = new Configuration(configurationFile);
+            conf = new Configuration(configurationFile);
             
             // TaskListe
             // Typ Service
@@ -55,7 +56,17 @@ public class TaskConfiguration {
             for (int i = 0; i < xmlObjectList.size (); i++) {
                 _listClientIds.add(xmlObjectList.get(i));
             }
-            
+        }
+        catch (ConfigurationKeyNotFoundException confEx){
+            logger.finest(confEx.getMessage ());
+            System.out.println(confEx.getMessage());
+        }
+        catch (Exception ex) {
+            logger.severe(ex.getMessage ());
+            ex.printStackTrace();
+        }
+
+        try {
             conf.setXMLRootObject();
             conf.setXMLObjectByKey(TaskConfigurationConstants.TASK_DETAILS);
             // fill hashmaps with client-tasks
@@ -63,14 +74,14 @@ public class TaskConfiguration {
             // fill hashmap with service-tasks
             fillHashMaps (conf, _listServiceIds, _mapTasksServiceObjectsById, _mapTasksServiceIdsByAlias);
         }
-        catch (ConfigurationKeyNotFoundException confEx){
-        	logger.severe(confEx.getMessage ());
-        	System.out.println(confEx.getMessage());
-        }
-        catch (Exception ex) {
-            logger.severe(ex.getMessage ());
-            System.out.println("ERROR " + ": " + ex.getLocalizedMessage() + ";" +  ex.getMessage ());
-        }
+            catch (ConfigurationKeyNotFoundException confEx){
+                logger.finest(confEx.getMessage ());
+                System.out.println(confEx.getMessage());
+            }
+            catch (Exception ex) {
+                logger.severe(ex.getMessage ());
+                ex.printStackTrace();
+            }
     }
     
     /*
@@ -92,7 +103,7 @@ public class TaskConfiguration {
             }
         }
         catch (ConfigurationKeyNotFoundException confEx){
-        	logger.warning(confEx.getMessage ());
+        	logger.finest(confEx.getMessage ());
         	System.out.println(confEx.getMessage());
         }
         catch (Exception ex) {

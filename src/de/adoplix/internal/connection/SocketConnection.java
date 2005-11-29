@@ -6,6 +6,7 @@
 package de.adoplix.internal.connection;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -98,12 +99,19 @@ public class SocketConnection {
         try {
             if (! socket.isConnected ()) logger.warning ("Socket ist nicht verbunden." + socket.toString ());
             msg.setTimeStampSend();
+            socket.setSendBufferSize(msg.getXMLString ().length());
             logger.finest ("Socket.getSendBufferSize " + socket.getSendBufferSize ());
+//            DataOutputStream os = new DataOutputStream(socket.getOutputStream ());
             PrintStream outputStream = new PrintStream (socket.getOutputStream () );
+            outputStream.flush ();
             logger.finest("Socket: " + socket.toString());
             logger.finest("OutputStream msg: " + msg);
-            outputStream.println ( msg.getXMLString ());
+//            os.writeBytes(msg.getXMLString ());
+            outputStream.print(msg.getXMLString ());
+//            outputStream.println ( msg.getXMLString ());
             outputStream.flush ();
+//            os.flush();
+//            os.close();
         } catch (IOException ioEx) {
             logger.warning (new MessageSendException ().getMessage ());
         } catch (Throwable th) {

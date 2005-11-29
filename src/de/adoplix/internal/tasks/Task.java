@@ -70,7 +70,7 @@ public class Task {
         try {
         _acknInitiator = conf.toInt(conf.getChild(TaskConfigurationConstants.ACKN_INITIATOR).getValue());
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         } catch (ConfigurationTypeException ctEx) {
             _logger.warning(ctEx.getMessage());
         }
@@ -95,7 +95,7 @@ public class Task {
         try {
             _defaultData = new StringBuffer(conf.getChild(TaskConfigurationConstants.DEFAULT_DATA).getValue());
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
 
@@ -119,7 +119,7 @@ public class Task {
             _localAdapterClass = conf.getChild(TaskConfigurationConstants.LOCAL_ADAPTER_CLASS)
                     .getValue();
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
 
@@ -157,7 +157,7 @@ public class Task {
         try {
             _pathAdapterConfig = conf.getChild(TaskConfigurationConstants.PATH_ADAPTER_CONFIG).getValue();
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
 
@@ -204,7 +204,7 @@ public class Task {
         try {
             _remoteTaskId = conf.getChild(TaskConfigurationConstants.REMOTE_TASK_ID).getValue();
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
 
@@ -228,7 +228,7 @@ public class Task {
             _taskAlias = conf.getChild(TaskConfigurationConstants.TASK_ALIAS)
                     .getValue();
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
 
@@ -252,7 +252,7 @@ public class Task {
             _taskType = conf.toInt(conf.getChild(
                     TaskConfigurationConstants.TASK_TYPE).getValue());
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         } catch (ConfigurationTypeException ctEx) {
             _logger.warning(ctEx.getMessage());
         }
@@ -277,7 +277,7 @@ public class Task {
         try {
         _timeOutAcknMillis = conf.toLong(conf.getChild(TaskConfigurationConstants.TIME_OUT_ACKN_MILLIS).getValue());
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         } catch (ConfigurationTypeException ctEx) {
             _logger.warning(ctEx.getMessage());
         }
@@ -295,7 +295,7 @@ public class Task {
         try {
             _localAdapterIP = conf.getChild(TaskConfigurationConstants.LOCAL_ADAPTER_IP).getValue();
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
 
@@ -311,7 +311,7 @@ public class Task {
         try {
             _localAdapterPort = conf.toInt(conf.getChild(TaskConfigurationConstants.LOCAL_ADAPTER_PORT).getValue());
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         } catch (ConfigurationTypeException ctEx) {
             _logger.warning(ctEx.getMessage());
         }
@@ -329,7 +329,7 @@ public class Task {
         try {
             _localAdapterConnType = conf.toInt(conf.getChild(TaskConfigurationConstants.LOCAL_ADAPTER_CONN_TYPE).getValue());
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         } catch (ConfigurationTypeException ctEx) {
             _logger.warning(ctEx.getMessage());
         }
@@ -347,7 +347,7 @@ public class Task {
         try {
             _responseTaskId = conf.getChild(TaskConfigurationConstants.RESPONSE_TASK_ID).getValue();
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
 
@@ -355,7 +355,7 @@ public class Task {
         try {
             _remoteServerIP = conf.getChild(TaskConfigurationConstants.REMOTE_SERVER_IP).getValue();
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         }
     }
     
@@ -375,7 +375,7 @@ public class Task {
         try {
             _remoteServerPort = conf.toInt(conf.getChild(TaskConfigurationConstants.REMOTE_SERVER_PORT).getValue());
         } catch (ConfigurationKeyNotFoundException confEx) {
-            _logger.info(confEx.getMessage());
+            _logger.finest(confEx.getMessage());
         } catch (ConfigurationTypeException ctEx) {
             _logger.warning(ctEx.getMessage());
         }

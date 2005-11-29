@@ -143,7 +143,12 @@ public class XMLRetriever {
      * Liefert alle Kinder des aktuellen Objekts.
      */
     public XMLObjectList getChildren() throws ConfigurationKeyNotFoundException {
+        try {
         return _xmlObject.getXMLSubObjectList();
+        }
+        catch (Throwable th) {
+            throw new ConfigurationKeyNotFoundException("Object ist <null>");
+        }
     }
 
     /**
